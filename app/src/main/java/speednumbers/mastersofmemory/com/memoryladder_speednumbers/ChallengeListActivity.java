@@ -28,11 +28,11 @@ public class ChallengeListActivity extends AppCompatActivity {
         ChallengeCard card2 = new ChallengeCard(this);
         ChallengeCardDataModel model2 = new ChallengeCardDataModel(20);
         card2.setDataModel(model2);
-        //root.addView(card2, 1);
+        root.addView(card2, 1);
 
         ChallengeCard card3 = new ChallengeCard(this);
         ChallengeCardDataModel model3 = new ChallengeCardDataModel(30);
         card3.setDataModel(model3);
-        //root.addView(card3, 2);
+        root.addView(card3, 2);
     }
 }

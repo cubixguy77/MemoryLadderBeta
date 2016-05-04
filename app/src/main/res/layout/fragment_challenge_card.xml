@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
-    android:layout_weight="0"
+    android:layout_weight="1"
     card_view:cardElevation="4dp">
 
         <LinearLayout
@@ -44,7 +44,8 @@
             <RelativeLayout
                 android:id="@+id/digitGroupingContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <View
                     android:id="@+id/dividerDigitGrouping"
@@ -108,7 +109,8 @@
                 android:id="@+id/memorizationTimerContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:visibility="gone">
 
                 <View
                     android:id="@+id/dividerMemorization"
@@ -151,7 +153,8 @@
             <RelativeLayout
                 android:id="@+id/recallTimerContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <View
                     android:id="@+id/dividerRecall"
@@ -195,7 +198,8 @@
                 android:textSize="20sp"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:theme="@style/PlayButton"
-                android:text="Play" />
+                android:text="Play"
+                android:visibility="gone" />
 
 
         </LinearLayout>

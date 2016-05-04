@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ChallengeCard extends CardView {
+public class ChallengeCard extends CardView implements IChallengeCard.View {
     @BindView(R.id.challengeCard) CardView challengeCard;
     @BindView(R.id.digitGroupingContainer) RelativeLayout digitGroupingContainer;
     @BindView(R.id.vertcontainer) LinearLayout vertcontainer;
@@ -30,46 +30,25 @@ public class ChallengeCard extends CardView {
 
     public ChallengeCard(Context context) {
         super(context);
-        initializeViews(context);
     }
 
     public ChallengeCard(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initializeViews(context);
     }
 
     public ChallengeCard(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initializeViews(context);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        digitGroupingContainer.setVisibility(View.GONE);
-        memorizationTimerContainer.setVisibility(View.GONE);
-        recallTimerContainer.setVisibility(View.GONE);
-        playButton.setVisibility(View.GONE);
-    }
-
-    private void initializeViews(Context context) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.fragment_challenge_card, this);
-        ButterKnife.bind(this, view);
-        onFinishInflate();
     }
 
     @OnClick(R.id.downButton) void onArrowClicked() {
         if (!open) {
             //CardView.LayoutParams layoutParams = (CardView.LayoutParams) challengeCard.getLayoutParams();
-            challengeCard.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1f));
-
+            //challengeCard.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             downButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_arrow_up));
-            //digitGroupingContainer.setVisibility(View.VISIBLE);
-            //memorizationTimerContainer.setVisibility(View.VISIBLE);
-            //recallTimerContainer.setVisibility(View.VISIBLE);
-            //playButton.setVisibility(View.VISIBLE);
-
+            digitGroupingContainer.setVisibility(View.VISIBLE);
+            memorizationTimerContainer.setVisibility(View.VISIBLE);
+            recallTimerContainer.setVisibility(View.VISIBLE);
+            playButton.setVisibility(View.VISIBLE);
             open = true;
         }
         else {
@@ -84,5 +63,20 @@ public class ChallengeCard extends CardView {
 
     public void setDataModel(ChallengeCardDataModel model) {
         challengeText.setText(model.getNumDigits() + " digits");
+    }
+
+    @Override
+    public void play(IChallengeSettingsModel model) {
+
+    }
+
+    @Override
+    public void expand() {
+
+    }
+
+    @Override
+    public void contract() {
+
     }
 }
