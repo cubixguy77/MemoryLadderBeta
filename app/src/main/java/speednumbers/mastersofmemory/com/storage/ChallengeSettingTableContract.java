@@ -13,8 +13,8 @@ public class ChallengeSettingTableContract {
         protected static final String CREATE_CHALLENGE_SETTING_TABLE =
                 "CREATE TABLE " + TABLE_NAME +
                 "(" +
-                    CHALLENGE_SETTING_CHALLENGE_KEY + " INTEGER PRIMARY KEY REFERENCES " + ChallengeTableContract.ChallengeTable.TABLE_NAME + "," +
-                    CHALLENGE_SETTING_SETTING_KEY + " INTEGER PRIMARY KEY REFERENCES " + SettingTableContract.SettingTable.TABLE_NAME + "," +
+                    CHALLENGE_SETTING_CHALLENGE_KEY + " INTEGER REFERENCES " + ChallengeTableContract.ChallengeTable.TABLE_NAME + "," +
+                    CHALLENGE_SETTING_SETTING_KEY + " INTEGER REFERENCES " + SettingTableContract.SettingTable.TABLE_NAME + "," +
                     CHALLENGE_SETTING_VALUE + " INTEGER" +
                 ")";
     }

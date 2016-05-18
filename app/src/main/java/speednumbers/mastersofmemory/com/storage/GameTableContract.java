@@ -13,8 +13,8 @@ public class GameTableContract {
         protected static final String CREATE_GAME_TABLE =
                 "CREATE TABLE " + TABLE_NAME +
                 "(" +
-                    GAME_GAME_KEY + " INTEGER PRIMARY KEY," +
-                    GAME_TITLE + " TEXT," +
+                    GAME_GAME_KEY + " INTEGER PRIMARY KEY" + "," +
+                    GAME_TITLE + " TEXT" + "," +
                     GAME_ICON_PATH + " TEXT" +
                 ")";
     }

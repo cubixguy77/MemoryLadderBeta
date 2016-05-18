@@ -37,13 +37,14 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(GameTableContract.GameTable.CREATE_GAME_TABLE);
         db.execSQL(ChallengeTableContract.ChallengeTable.CREATE_CHALLENGE_TABLE);
+        System.out.println(ChallengeTableContract.ChallengeTable.CREATE_CHALLENGE_TABLE);
         db.execSQL(ChallengeSettingTableContract.ChallengeSettingTable.CREATE_CHALLENGE_SETTING_TABLE);
         db.execSQL(SettingTableContract.SettingTable.CREATE_SETTING_TABLE);
 
-        long gameKey = insertGame(new Game("Speed Numbers", "speedNumbersIcon.png"));
-        insertChallenge(new Challenge(gameKey, -1, "10 Digits", false, null));
-        insertChallenge(new Challenge(gameKey, -1, "20 Digits", false, null));
-        insertChallenge(new Challenge(gameKey, -1, "30 Digits", false, null));
+        long gameKey = insertGame(db, new Game("Speed Numbers", "speedNumbersIcon.png"));
+        //insertChallenge(db, new Challenge(gameKey, -1, "10 Digits", false, null));
+        //insertChallenge(db, new Challenge(gameKey, -1, "20 Digits", false, null));
+        //insertChallenge(db, new Challenge(gameKey, -1, "30 Digits", false, null));
     }
 
     @Override
@@ -95,8 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         callback.onGamesLoaded(games);
     }
 
-    private long insertGame(Game game) {
-        SQLiteDatabase db = getWritableDatabase();
+    private long insertGame(SQLiteDatabase db, Game game) {
         db.beginTransaction();
         long gameKey = -1;
         try {
@@ -125,17 +125,17 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         List<Challenge> challenges = new ArrayList<>();
 
         String SELECT_QUERY = String.format
-                (
-                        "SELECT " +
-                            ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
-                            ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
-                            ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
-                            ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
-                        "FROM %s" +
-                        "WHERE %s.%s = %s",
-                        ChallengeTableContract.ChallengeTable.TABLE_NAME,
-                        ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey
-                );
+        (
+            "SELECT " +
+                ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
+                ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
+                ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
+                ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
+            "FROM %s " +
+            "WHERE %s.%s = %s",
+            ChallengeTableContract.ChallengeTable.TABLE_NAME,
+            ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey
+        );
 
         Cursor cursor = db.rawQuery(SELECT_QUERY, null);
         try {
@@ -154,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 } while(cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d("ERROR", "Error while trying to get games from database!");
+            Log.d("ERROR", "Error while trying to get challenges from database!");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -176,7 +176,10 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public long insertChallenge(Challenge challenge) {
-        SQLiteDatabase db = getWritableDatabase();
+        return insertChallenge(getWritableDatabase(), challenge);
+    }
+
+    private long insertChallenge(SQLiteDatabase db, Challenge challenge) {
         db.beginTransaction();
 
         long challengeKey = -1;
@@ -187,23 +190,23 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
             values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED, challenge.isLocked() ? 1 : 0);
             challengeKey = db.insert(ChallengeTableContract.ChallengeTable.TABLE_NAME, null, values);
 
-            for (Setting setting : challenge.getSettings()) {
-                setting.setChallengeKey(challengeKey);
-                insertSetting(setting);
+            if (challenge.getSettings() != null) {
+                for (Setting setting : challenge.getSettings()) {
+                    setting.setChallengeKey(challengeKey);
+                    insertSetting(setting);
+                }
             }
-
             db.setTransactionSuccessful();
         }
         catch (Exception e) {
             Log.d("ERROR", "Error while trying to add challenge to database");
+            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
 
         return challengeKey;
     }
-
-
 
 
 
@@ -225,8 +228,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 SettingTableContract.SettingTable.SETTING_VISIBLE + " " +
             "FROM %s " +
             "JOIN %s " +
-            "  ON %s.%s = %s.%s" +
-            "WHERE %s.%s = %s" +
+            "  ON %s.%s = %s.%s " +
+            "WHERE %s.%s = %s " +
             "ORDER BY %s",
             ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME,
             SettingTableContract.SettingTable.TABLE_NAME,
@@ -253,7 +256,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 } while(cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d("ERROR", "Error while trying to get challenges from database!");
+            Log.d("ERROR", "Error while trying to get settings from database!");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();

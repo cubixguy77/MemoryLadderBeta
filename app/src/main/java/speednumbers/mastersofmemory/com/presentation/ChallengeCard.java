@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import speednumbers.mastersofmemory.com.domain.model.Challenge;
 
 public class ChallengeCard extends CardView implements IChallengeCard.View {
     @BindView(R.id.challengeCard) CardView challengeCard;
@@ -24,10 +25,17 @@ public class ChallengeCard extends CardView implements IChallengeCard.View {
     @BindView(R.id.expandContractButton) ImageView expandContractButton;
     @BindView(R.id.challengeText) TextView challengeText;
 
+
     private boolean open = false;
+    private Challenge challenge;
 
     public ChallengeCard(Context context) {
         super(context);
+    }
+
+    public ChallengeCard(Context context, Challenge challenge) {
+        super(context);
+        this.challenge = challenge;
     }
 
     public ChallengeCard(Context context, AttributeSet attrs) {

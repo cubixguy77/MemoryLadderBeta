@@ -16,7 +16,7 @@ public class SettingTableContract {
                 "(" +
                     SETTING_SETTING_KEY + " INTEGER PRIMARY KEY," +
                     SETTING_NAME + " TEXT" + "," +
-                    SETTING_SORT_ORDER + " INTEGER" +
+                    SETTING_SORT_ORDER + " INTEGER" + "," +
                     SETTING_VISIBLE + " INTEGER" +
                 ")";
     }

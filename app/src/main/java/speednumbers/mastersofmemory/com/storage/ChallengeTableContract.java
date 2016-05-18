@@ -12,12 +12,13 @@ public class ChallengeTableContract {
         protected static final String CHALLENGE_TITLE = "Title";
         protected static final String CHALLENGE_LOCKED = "Locked";
         protected static final String CREATE_CHALLENGE_TABLE =
-                "CREATE TABLE " + TABLE_NAME +
+                "CREATE TABLE " + TABLE_NAME + " " +
                 "(" +
-                CHALLENGE_CHALLENGE_KEY + " INTEGER PRIMARY KEY," +
-                CHALLENGE_GAME_KEY + " INTEGER REFERENCES " + GameTableContract.GameTable.TABLE_NAME + "," + // Define a foreign key
-                CHALLENGE_TITLE + " TEXT" +
-                CHALLENGE_LOCKED + " INTEGER" +
+                CHALLENGE_CHALLENGE_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT" + "," +
+                CHALLENGE_GAME_KEY + " INTEGER " + "," +
+                CHALLENGE_TITLE + " TEXT" + "," +
+                CHALLENGE_LOCKED + " INTEGER" + "," +
+                " FOREIGN KEY (" + CHALLENGE_GAME_KEY + ") REFERENCES " + GameTableContract.GameTable.TABLE_NAME + " (" + GameTableContract.GameTable.GAME_GAME_KEY + ")" +
                 ")";
     }
 }
