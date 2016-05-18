@@ -1,4 +1,6 @@
-package speednumbers.mastersofmemory.com.memoryladder_speednumbers;
+package speednumbers.mastersofmemory.com.presentation;
+
+import speednumbers.mastersofmemory.com.domain.model.TimeModel;
 
 public class ChallengeCardPresenter implements IChallengeCard.Presenter {
     public ChallengeCardPresenter() {

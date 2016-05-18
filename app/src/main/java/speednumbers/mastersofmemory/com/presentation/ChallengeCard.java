@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.com.memoryladder_speednumbers;
+package speednumbers.mastersofmemory.com.presentation;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;

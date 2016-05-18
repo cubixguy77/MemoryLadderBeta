@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.com.memoryladder_speednumbers;
+package speednumbers.mastersofmemory.com.presentation;
 
 public interface IChallengeCard extends IMemTime.View, IRecallTime.View {
     interface View {

@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.com.memoryladder_speednumbers;
+package speednumbers.mastersofmemory.com.presentation;
 
 public interface IChallengeCardNumbers {
     interface View extends IChallengeCard.View {

@@ -1,6 +1,6 @@
-package speednumbers.mastersofmemory.com.memoryladder_speednumbers;
+package speednumbers.mastersofmemory.com.presentation;
 
-import speednumbers.mastersofmemory.com.memoryladder_speednumbers.TimeModel;
+import speednumbers.mastersofmemory.com.domain.model.TimeModel;
 
 public interface IRecallTime {
     interface View {
