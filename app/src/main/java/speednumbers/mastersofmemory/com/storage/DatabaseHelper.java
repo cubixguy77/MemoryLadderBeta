@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper sInstance;
@@ -29,26 +30,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(ChallengeTableContract.ChallengeTable.CREATE_CHALLENGE_TABLE);
 
 
-        long gameKey = insertGame(db, "Speed Numbers", "speedNumbersIcon.png");
-        insertChallenge(db, gameKey, "10 Digits", false);
-        insertChallenge(db, gameKey, "20 Digits", false);
-        insertChallenge(db, gameKey, "30 Digits", false);
+        long gameKey = insertGame("Speed Numbers", "speedNumbersIcon.png");
+        insertChallenge(gameKey, "10 Digits", false);
+        insertChallenge(gameKey, "20 Digits", false);
+        insertChallenge(gameKey, "30 Digits", false);
     }
 
-    private long insertGame(SQLiteDatabase db, String title, String iconPath) {
-        ContentValues values = new ContentValues();
-        values.put(GameTableContract.GameTable.GAME_TITLE, title);
-        values.put(GameTableContract.GameTable.GAME_ICON_PATH, iconPath);
-        long gameKey = db.insert(GameTableContract.GameTable.TABLE_NAME, null, values);
+    public long insertGame(String title, String iconPath) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        long gameKey = -1;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(GameTableContract.GameTable.GAME_TITLE, title);
+            values.put(GameTableContract.GameTable.GAME_ICON_PATH, iconPath);
+            gameKey = db.insert(GameTableContract.GameTable.TABLE_NAME, null, values);
+            db.setTransactionSuccessful();
+        }
+        catch (Exception e) {
+            Log.d("ERROR", "Error while trying to add game to database");
+        } finally {
+            db.endTransaction();
+        }
+
         return gameKey;
     }
 
-    private long insertChallenge(SQLiteDatabase db, long gameKey, String title, boolean locked) {
-        ContentValues values = new ContentValues();
-        values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey);
-        values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE, title);
-        values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED, locked ? 1 : 0);
-        long challengeKey = db.insert(ChallengeTableContract.ChallengeTable.TABLE_NAME, null, values);
+    private long insertChallenge(long gameKey, String title, boolean locked) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        long challengeKey = -1;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey);
+            values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE, title);
+            values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED, locked ? 1 : 0);
+            challengeKey = db.insert(ChallengeTableContract.ChallengeTable.TABLE_NAME, null, values);
+            db.setTransactionSuccessful();
+        }
+        catch (Exception e) {
+            Log.d("ERROR", "Error while trying to add challenge to database");
+        } finally {
+            db.endTransaction();
+        }
+
         return challengeKey;
     }
 
