@@ -2,34 +2,38 @@ package speednumbers.mastersofmemory.com.domain.repository;
 
 import java.util.List;
 
+import speednumbers.mastersofmemory.com.domain.model.Challenge;
+import speednumbers.mastersofmemory.com.domain.model.Game;
 import speednumbers.mastersofmemory.com.domain.model.Setting;
 
 public interface IRepository {
 
     interface GetGamesCallback {
-        void onGamesLoaded(List<speednumbers.mastersofmemory.com.domain.model.Game> games);
+        void onGamesLoaded(List<Game> games);
     }
 
     interface GetChallengesCallback {
-        void onChallengesLoaded(List<speednumbers.mastersofmemory.com.domain.model.Challenge> challenges);
+        void onChallengesLoaded(List<Challenge> challenges);
     }
 
     interface GetSettingsCallback {
-        void onSettingsLoaded(List<speednumbers.mastersofmemory.com.domain.model.Setting> settings);
+        void onSettingsLoaded(List<Setting> settings);
     }
 
-    interface Game {
-        List<speednumbers.mastersofmemory.com.domain.model.Game> getGameList(GetGamesCallback callback);
+
+
+    interface GameCallbacks {
+        void getGameList(GetGamesCallback callback);
     }
 
-    interface Challenge {
-        List<speednumbers.mastersofmemory.com.domain.model.Challenge> getChallengeList(int gameKey, GetChallengesCallback callback);
+    interface ChallengeCallbacks {
+        void getChallengeList(int gameKey, GetChallengesCallback callback);
         boolean deleteChallenge(Challenge challenge);
         boolean insertChallenge(Challenge challenge);
     }
 
-    interface ChallengeSettings {
-        List<speednumbers.mastersofmemory.com.domain.model.Setting> getSettingsList(int challengeKey, GetSettingsCallback callback);
+    interface ChallengeSettingsCallbacks {
+        void getSettingsList(int challengeKey, GetSettingsCallback callback);
         boolean updateSetting(Setting setting);
     }
 }

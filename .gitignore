@@ -70,3 +70,4 @@ build/intermediates/dex-cache/cache.xml
 gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
 local.properties
+MemoryLadderBeta.iml

@@ -1,6 +1,6 @@
 package speednumbers.mastersofmemory.com.domain.model;
 
-public class Setting {
+public class ChallengeSetting {
     private long challengeKey;
     private long settingKey;
     private int value;
@@ -8,7 +8,7 @@ public class Setting {
     private int sortOrder;
     private boolean visible;
 
-    public Setting(long challengeKey, long settingKey, int value, String settingName, int sortOrder, boolean visible) {
+    public ChallengeSetting(int challengeKey, int settingKey, int value, String settingName, int sortOrder, boolean visible) {
         this.challengeKey = challengeKey;
         this.settingKey = settingKey;
         this.value = value;
