@@ -15,7 +15,7 @@ public class ChallengeTableContract {
                 "CREATE TABLE " + TABLE_NAME + " " +
                 "(" +
                 CHALLENGE_CHALLENGE_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT" + "," +
-                CHALLENGE_GAME_KEY + " INTEGER " + "," +
+                CHALLENGE_GAME_KEY + " INTEGER" + "," +
                 CHALLENGE_TITLE + " TEXT" + "," +
                 CHALLENGE_LOCKED + " INTEGER" + "," +
                 " FOREIGN KEY (" + CHALLENGE_GAME_KEY + ") REFERENCES " + GameTableContract.GameTable.TABLE_NAME + " (" + GameTableContract.GameTable.GAME_GAME_KEY + ")" +

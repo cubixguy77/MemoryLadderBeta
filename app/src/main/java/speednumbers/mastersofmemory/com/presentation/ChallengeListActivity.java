@@ -28,11 +28,9 @@ public class ChallengeListActivity extends AppCompatActivity {
     {
         Repository repo = new Repository(DatabaseHelper.getInstance(this));
 
-        repo.insertChallenge(new Challenge(1, -1, "10 Digits", false, null));
-        repo.insertChallenge(new Challenge(1, -1, "20 Digits", false, null));
-        repo.insertChallenge(new Challenge(1, -1, "30 Digits", false, null));
+        int gameKey = 1; /* This will be passed in the intent bundle from the games screen eventually */
 
-        repo.getChallengeList(1, new IRepository.GetChallengesCallback() {
+        repo.getChallengeList(gameKey, new IRepository.GetChallengesCallback() {
             @Override
             public void onChallengesLoaded(List<Challenge> challenges) {
                 for (Challenge challenge : challenges) {

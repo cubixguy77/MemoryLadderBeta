@@ -42,9 +42,9 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         db.execSQL(SettingTableContract.SettingTable.CREATE_SETTING_TABLE);
 
         long gameKey = insertGame(db, new Game("Speed Numbers", "speedNumbersIcon.png"));
-        //insertChallenge(db, new Challenge(gameKey, -1, "10 Digits", false, null));
-        //insertChallenge(db, new Challenge(gameKey, -1, "20 Digits", false, null));
-        //insertChallenge(db, new Challenge(gameKey, -1, "30 Digits", false, null));
+        insertChallenge(db, new Challenge(gameKey, -1, "11 Digits", false, null));
+        insertChallenge(db, new Challenge(gameKey, -1, "22 Digits", false, null));
+        insertChallenge(db, new Challenge(gameKey, -1, "33 Digits", false, null));
     }
 
     @Override
