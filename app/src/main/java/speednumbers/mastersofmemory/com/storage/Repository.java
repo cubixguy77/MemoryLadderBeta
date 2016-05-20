@@ -10,8 +10,16 @@ import speednumbers.mastersofmemory.com.domain.repository.IRepository;
 public class Repository implements IRepository.ChallengeCallbacks, IRepository.GameCallbacks, IRepository.ChallengeSettingsCallbacks {
 
     private final DatabaseAPI db;
+    private static Repository sInstance;
 
-    public Repository(DatabaseAPI db) {
+    public static synchronized Repository getInstance(DatabaseAPI db) {
+        if (sInstance == null) {
+            sInstance = new Repository(db);
+        }
+        return sInstance;
+    }
+
+    private Repository(DatabaseAPI db) {
         this.db = db;
     }
 
