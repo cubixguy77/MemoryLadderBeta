@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import speednumbers.mastersofmemory.com.MyApplication;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.domain.model.Game;
 import speednumbers.mastersofmemory.com.domain.model.Setting;
@@ -22,15 +23,15 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     private static final String DATABASE_NAME = "MemoryDatabase";
     private static final int DATABASE_VERSION = 1;
 
-    public static synchronized DatabaseHelper getInstance(Context context) {
+    public static synchronized DatabaseHelper getInstance() {
         if (sInstance == null) {
-            sInstance = new DatabaseHelper(context.getApplicationContext());
+            sInstance = new DatabaseHelper();
         }
         return sInstance;
     }
 
-    private DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    private DatabaseHelper() {
+        super(MyApplication.getAppContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

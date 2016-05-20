@@ -26,7 +26,7 @@ public class ChallengeListActivity extends AppCompatActivity implements IChallen
 
     private void initViews()
     {
-        Repository repo = Repository.getInstance(DatabaseHelper.getInstance(this));
+        Repository repo = Repository.getInstance(DatabaseHelper.getInstance());
 
         int gameKey = 1; /* TODO Get this value from the intent bundle passed in from previous activity */
 
