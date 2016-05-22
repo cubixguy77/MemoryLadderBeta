@@ -1,6 +1,5 @@
 package speednumbers.mastersofmemory.com.presentation;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -10,11 +9,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
-import speednumbers.mastersofmemory.com.storage.DatabaseHelper;
-import speednumbers.mastersofmemory.com.storage.Repository;
 
-public class ChallengeListActivity extends AppCompatActivity implements IChallengeSelectionListener {
+public class ChallengeListActivity extends BaseActivity implements IChallengeSelectionListener {
     @BindView(R.id.ChallengeListContainer) LinearLayout root;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,11 @@ public class ChallengeListActivity extends AppCompatActivity implements IChallen
 
     private void initViews()
     {
-        Repository repo = Repository.getInstance(DatabaseHelper.getInstance());
+
+
+        //((MyApplication)getApplication()).getApplicationComponent().inject(this);
+
+        //Repository repo = Repository.getInstance(DatabaseHelper.getInstance());
 
         int gameKey = 1; /* TODO Get this value from the intent bundle passed in from previous activity */
 
@@ -39,6 +42,7 @@ public class ChallengeListActivity extends AppCompatActivity implements IChallen
                 }
             }
         });
+
     }
 
     @Override

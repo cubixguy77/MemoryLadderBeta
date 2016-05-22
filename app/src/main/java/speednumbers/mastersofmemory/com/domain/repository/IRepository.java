@@ -22,18 +22,15 @@ public interface IRepository {
 
 
 
-    interface GameCallbacks {
         void getGameList(GetGamesCallback callback);
-    }
 
-    interface ChallengeCallbacks {
+
         void getChallengeList(int gameKey, GetChallengesCallback callback);
         boolean deleteChallenge(Challenge challenge);
         boolean insertChallenge(Challenge challenge);
-    }
 
-    interface ChallengeSettingsCallbacks {
+
         void getSettingsList(int challengeKey, GetSettingsCallback callback);
         boolean updateSetting(Setting setting);
-    }
+
 }
