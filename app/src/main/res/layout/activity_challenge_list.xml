@@ -7,6 +7,7 @@
     tools:context="speednumbers.mastersofmemory.com.presentation.ChallengeListActivity">
 
     <ScrollView
+        android:id="@+id/ChallengeListScroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">

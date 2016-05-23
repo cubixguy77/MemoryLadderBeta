@@ -20,18 +20,24 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_list);
         ButterKnife.bind(this);
-        initViews();
+
+
+
+        if (savedInstanceState == null) {
+            addFragment(R.id.ChallengeListScroller, new ChallengeListFragment());
+        }
+
+
+
+        //initViews();
     }
 
     private void initViews()
     {
-
-
-        //((MyApplication)getApplication()).getApplicationComponent().inject(this);
-
-        //Repository repo = Repository.getInstance(DatabaseHelper.getInstance());
-
         int gameKey = 1; /* TODO Get this value from the intent bundle passed in from previous activity */
+
+
+
 
         repo.getChallengeList(gameKey, new IRepository.GetChallengesCallback() {
             @Override

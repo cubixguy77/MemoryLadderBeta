@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import speednumbers.mastersofmemory.com.MyApplication;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ApplicationComponent;
+import speednumbers.mastersofmemory.com.presentation.injection.modules.ActivityModule;
 
 /**
  * Base {@link Activity} class for every Activity in this application.
@@ -39,5 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   protected ApplicationComponent getApplicationComponent() {
     return ((MyApplication)getApplication()).getApplicationComponent();
+  }
+
+  protected ActivityModule getActivityModule() {
+    return new ActivityModule(this);
   }
 }

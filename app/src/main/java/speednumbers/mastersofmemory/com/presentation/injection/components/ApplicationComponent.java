@@ -2,9 +2,13 @@ package speednumbers.mastersofmemory.com.presentation.injection.components;
 
 import android.content.Context;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
+import speednumbers.mastersofmemory.com.domain.executor.Executor;
+import speednumbers.mastersofmemory.com.domain.executor.MainThread;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
 import speednumbers.mastersofmemory.com.presentation.BaseActivity;
 import speednumbers.mastersofmemory.com.presentation.injection.modules.ApplicationModule;
@@ -19,5 +23,8 @@ public interface ApplicationComponent {
 
   //Exposed to sub-graphs.
   Context context();
-  IRepository repository();
+  Executor executor();
+  MainThread maainThread();
+  ThreadPoolExecutor threadPoolExecutor();
+  //IRepository repository();
 }
