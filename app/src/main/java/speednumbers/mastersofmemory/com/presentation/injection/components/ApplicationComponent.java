@@ -24,7 +24,7 @@ public interface ApplicationComponent {
   //Exposed to sub-graphs.
   Context context();
   Executor executor();
-  MainThread maainThread();
+  MainThread mainThread();
   ThreadPoolExecutor threadPoolExecutor();
-  //IRepository repository();
+  IRepository repository();
 }

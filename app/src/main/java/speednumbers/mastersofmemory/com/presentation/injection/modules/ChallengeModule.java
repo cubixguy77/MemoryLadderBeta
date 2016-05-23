@@ -17,7 +17,7 @@ public class ChallengeModule {
 
   private int gameKey;
 
-  public ChallengeModule() {}
+
   public ChallengeModule(int gameKey) {
     this.gameKey = gameKey;
   }
@@ -25,8 +25,11 @@ public class ChallengeModule {
   @Provides
   @PerActivity
   @Named("challengeList")
-  GetChallengeListInteractor provideGetChallengeListInteractor(Executor threadExecutor, MainThread mainThread, GetChallengeListInteractor.Callback callback, IRepository repository) {
-    return new GetChallengeListInteractorImpl(threadExecutor, mainThread, callback, repository);
+  //GetChallengeListInteractor provideGetChallengeListInteractor(GetChallengeListInteractorImpl impl) {
+  //  return impl;
+  //}
+  GetChallengeListInteractor provideGetChallengeListInteractor(Executor threadExecutor, MainThread mainThread, IRepository repository) {
+    return new GetChallengeListInteractorImpl(gameKey, threadExecutor, mainThread, repository);
   }
 
   @Provides

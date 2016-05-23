@@ -27,12 +27,13 @@ public class ChallengeListPresenter implements IChallengeListPresenter, GetChall
 
     @Override
     public void loadChallengeList() {
+        System.out.println("Presenter: Requesting challenges");
         getChallengeListInteractor.execute();
     }
 
     @Override
     public void resume() {
-
+        getChallengeListInteractor.setCallback(this);
     }
 
     @Override
@@ -42,11 +43,13 @@ public class ChallengeListPresenter implements IChallengeListPresenter, GetChall
 
     @Override
     public void destroy() {
-
+        this.getChallengeListInteractor.setCallback(null);
+        this.view = null;
     }
 
     @Override
     public void onChallengeListLoaded(List<Challenge> challenges) {
+        System.out.println("Presenter: Challenges received");
         view.renderChallengeList(challenges);
     }
 }

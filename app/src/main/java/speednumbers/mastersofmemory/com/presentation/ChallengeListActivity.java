@@ -9,11 +9,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
+import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
+import speednumbers.mastersofmemory.com.presentation.injection.components.DaggerActivityComponent;
+import speednumbers.mastersofmemory.com.presentation.injection.components.DaggerChallengeComponent;
+import speednumbers.mastersofmemory.com.presentation.injection.modules.ChallengeModule;
 
 public class ChallengeListActivity extends BaseActivity implements IChallengeSelectionListener {
-    @BindView(R.id.ChallengeListContainer) LinearLayout root;
-
-
+    private ChallengeComponent challengeComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,34 +23,39 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         setContentView(R.layout.activity_challenge_list);
         ButterKnife.bind(this);
 
-
+        this.initializeInjector();
 
         if (savedInstanceState == null) {
             addFragment(R.id.ChallengeListScroller, new ChallengeListFragment());
         }
+    }
 
+    private void initializeInjector() {
+        this.challengeComponent = DaggerChallengeComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .challengeModule(new ChallengeModule(1))
+                .build();
+    }
 
-
-        //initViews();
+    @Override
+    public ChallengeComponent getComponent() {
+        return challengeComponent;
     }
 
     private void initViews()
     {
         int gameKey = 1; /* TODO Get this value from the intent bundle passed in from previous activity */
 
-
-
-
-        repo.getChallengeList(gameKey, new IRepository.GetChallengesCallback() {
-            @Override
-            public void onChallengesLoaded(List<Challenge> challenges) {
-                for (Challenge challenge : challenges) {
-                    ChallengeCardNumbers card = new ChallengeCardNumbers(ChallengeListActivity.this, challenge);
-                    root.addView(card);
-                }
-            }
-        });
-
+        //repo.getChallengeList(gameKey, new IRepository.GetChallengesCallback() {
+        //    @Override
+        //    public void onChallengesLoaded(List<Challenge> challenges) {
+        //        for (Challenge challenge : challenges) {
+        //            ChallengeCardNumbers card = new ChallengeCardNumbers(ChallengeListActivity.this, challenge);
+                    //root.addView(card);
+        //        }
+        //    }
+       // });
     }
 
     @Override

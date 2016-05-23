@@ -8,6 +8,8 @@ import speednumbers.mastersofmemory.com.domain.model.Challenge;
 
 public interface GetChallengeListInteractor extends Interactor {
 
+    void setCallback(GetChallengeListInteractor.Callback callback);
+
     interface Callback {
         void onChallengeListLoaded(List<Challenge> challenges);
     }

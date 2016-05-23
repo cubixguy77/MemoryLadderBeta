@@ -10,13 +10,15 @@ import javax.inject.Inject;
 
 import speednumbers.mastersofmemory.com.MyApplication;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
+import speednumbers.mastersofmemory.com.presentation.injection.HasComponent;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ApplicationComponent;
+import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
 import speednumbers.mastersofmemory.com.presentation.injection.modules.ActivityModule;
 
 /**
  * Base {@link Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements HasComponent<ChallengeComponent> {
 
   @Inject IRepository repo;
 
