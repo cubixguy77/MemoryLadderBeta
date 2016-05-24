@@ -3,8 +3,6 @@ package speednumbers.mastersofmemory.com.presentation;
 public interface IChallengeCard extends IMemTime.View, IRecallTime.View {
     interface View {
         void play(IChallengeSettingsModel model);
-        void expand();
-        void contract();
     }
 
     interface Presenter extends IMemTime.Presenter, IRecallTime.UserActions {

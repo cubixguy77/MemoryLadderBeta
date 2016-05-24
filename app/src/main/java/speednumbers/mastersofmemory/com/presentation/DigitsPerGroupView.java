@@ -28,6 +28,7 @@ public class DigitsPerGroupView extends RelativeLayout {
     public DigitsPerGroupView(Context context, Setting setting) {
         super(context);
         this.setting = setting;
+        System.out.println("Setting provided: " + setting.getSettingName() + " " + setting.getValue());
         initializeViews(context);
     }
 
@@ -48,7 +49,11 @@ public class DigitsPerGroupView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        deselectDigits();
+        selectDigitsPerGroup(this.setting.getValue());
+    }
+
+    public void setModel(Setting setting) {
+        this.setting = setting;
         selectDigitsPerGroup(this.setting.getValue());
     }
 
