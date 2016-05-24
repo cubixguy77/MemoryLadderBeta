@@ -25,13 +25,6 @@ public class DigitsPerGroupView extends RelativeLayout {
         initializeViews(context);
     }
 
-    public DigitsPerGroupView(Context context, Setting setting) {
-        super(context);
-        this.setting = setting;
-        System.out.println("Setting provided: " + setting.getSettingName() + " " + setting.getValue());
-        initializeViews(context);
-    }
-
     public DigitsPerGroupView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setting = new Setting(1,1,3,"Test",1,true);

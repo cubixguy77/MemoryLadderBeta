@@ -1,7 +1,6 @@
 package speednumbers.mastersofmemory.com.presentation;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,11 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.domain.model.NumberChallenge;
-import speednumbers.mastersofmemory.com.domain.model.Setting;
 
 public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCardNumbers.View {
     private Challenge challenge;
-
 
     @BindView(R.id.challengeText) TextView challengeText;
     @BindView(R.id.memorizationTimerContainer) RelativeLayout memorizationTimerContainer;
