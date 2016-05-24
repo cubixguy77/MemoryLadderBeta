@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
+import speednumbers.mastersofmemory.com.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.com.domain.model.Setting;
 
 public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCardNumbers.View {
@@ -69,7 +70,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         recallTimerContainer.setVisibility(View.GONE);
         playButton.setVisibility(View.GONE);
         challengeText.setText(challenge.getTitle());
-        digitsPerGroupView.setModel(challenge.getSettings().get(0));
+        digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
     }
 
     @Override
