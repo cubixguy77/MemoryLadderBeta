@@ -2,17 +2,17 @@
 
 <android.support.v7.widget.CardView
     android:id="@+id/challengeCard"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
     android:layout_weight="1"
     card_view:cardElevation="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
         <LinearLayout
-            android:id="@+id/vertcontainer"
+            android:id="@+id/vertContainer"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,159 +40,17 @@
                     android:src="@drawable/ic_arrow_down"/>
             </LinearLayout>
 
-
-
-            <RelativeLayout
+            <speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView
                 android:id="@+id/digitGroupingContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible">
+            </speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView>
 
-                <View
-                    android:id="@+id/dividerDigitGrouping"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/border_top" />
+            <include layout="@layout/viewgroup_setting_memorization_timer"></include>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_below="@+id/dividerDigitGrouping"
-                    android:text="Digit Grouping"
-                    android:textSize="20sp"
-                    android:id="@+id/digitsPerGroupTitle" />
-
-                <TextView
-                    android:id="@+id/onePerGroup"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/digitsPerGroupTitle"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="1"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:background="@drawable/border" />
-
-                <TextView
-                    android:id="@+id/twoPerGroup"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/digitsPerGroupTitle"
-                    android:layout_toRightOf="@+id/onePerGroup"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="2"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:background="@drawable/border" />
-
-                <TextView
-                    android:id="@+id/threePerGroup"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/digitsPerGroupTitle"
-                    android:layout_toRightOf="@+id/twoPerGroup"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="3"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:background="@drawable/border" />
-
-            </RelativeLayout>
-
-
-
-
-            <RelativeLayout
-                android:id="@+id/memorizationTimerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <View
-                    android:id="@+id/dividerMemorization"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/border_top"                   />
-
-                <TextView
-                    android:id="@+id/memorizationTimerTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerMemorization"
-                    android:layout_marginBottom="4dp"
-                    android:text="Memorization Timer"
-                    android:textSize="20sp"    />
-
-                <Switch
-                    android:id="@+id/memorizationTimerSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerMemorization"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/memorizationTimeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="5:00"
-                    android:textSize="30sp"
-                    android:layout_below="@+id/memorizationTimerTitle" />
-            </RelativeLayout>
-
-
-
-
-
-            <RelativeLayout
-                android:id="@+id/recallTimerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <View
-                    android:id="@+id/dividerRecall"
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@drawable/border_top" />
-
-                <TextView
-                    android:id="@+id/recallTimerTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerRecall"
-                    android:layout_marginBottom="4dp"
-                    android:text="Recall Timer"
-                    android:textSize="20sp"  />
-
-                <Switch
-                    android:id="@+id/recallTimerSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/dividerRecall"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-                <TextView
-                    android:id="@+id/recallTimeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="5:00"
-                    android:textSize="30sp"
-                    android:layout_below="@+id/recallTimerTitle" />
-            </RelativeLayout>
+            <include layout="@layout/viewgroup_setting_recall_timer"></include>
 
             <Button
                 android:id="@+id/playButton"
@@ -205,8 +63,6 @@
                 android:text="Play"
                 android:visibility="gone"
                 tools:visibility="visible" />
-
-
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>

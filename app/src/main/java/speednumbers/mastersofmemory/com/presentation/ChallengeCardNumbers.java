@@ -9,11 +9,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
+import speednumbers.mastersofmemory.com.domain.model.Setting;
 
 public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCardNumbers.View {
     private Challenge challenge;
-    @BindView(R.id.challengeText)
-    TextView challengeText;
+    @BindView(R.id.challengeText) TextView challengeText;
+    @BindView(R.id.digitGroupingContainer) DigitsPerGroupView digitsPerGroupView;
 
     public ChallengeCardNumbers(Context context) {
         super(context);
@@ -31,7 +32,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     }
 
     public ChallengeCardNumbers(Context context, Challenge challenge) {
-        super(context);
+        super(context, challenge);
         this.challenge = challenge;
         initializeViews(context);
     }
@@ -40,7 +41,6 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.fragment_challenge_card, this);
         ButterKnife.bind(this, view);
-        onFinishInflate();
     }
 
     @Override
@@ -51,8 +51,8 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         memorizationTimerContainer.setVisibility(View.GONE);
         recallTimerContainer.setVisibility(View.GONE);
         playButton.setVisibility(View.GONE);
-
         challengeText.setText(challenge.getTitle());
+        digitsPerGroupView = new DigitsPerGroupView(getContext(), new Setting(1,1,3,"Test",1,true));
     }
 
     @Override

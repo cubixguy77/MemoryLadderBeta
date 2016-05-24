@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,8 +16,7 @@ import speednumbers.mastersofmemory.com.domain.model.Challenge;
 
 public class ChallengeCard extends CardView implements IChallengeCard.View {
     @BindView(R.id.challengeCard) CardView challengeCard;
-    @BindView(R.id.digitGroupingContainer) RelativeLayout digitGroupingContainer;
-    @BindView(R.id.vertcontainer) LinearLayout vertcontainer;
+    @BindView(R.id.digitGroupingContainer) DigitsPerGroupView digitGroupingContainer;
     @BindView(R.id.memorizationTimerContainer) RelativeLayout memorizationTimerContainer;
     @BindView(R.id.recallTimerContainer) RelativeLayout recallTimerContainer;
     @BindView(R.id.playButton) Button playButton;

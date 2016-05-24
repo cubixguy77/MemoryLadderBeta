@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/recallTimerContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    tools:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/dividerRecall"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/border_top" />
+
+    <TextView
+        android:id="@+id/recallTimerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerRecall"
+        android:layout_marginBottom="4dp"
+        android:text="Recall Timer"
+        android:textSize="20sp"  />
+
+    <Switch
+        android:id="@+id/recallTimerSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerRecall"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/recallTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="5:00"
+        android:textSize="30sp"
+        android:layout_below="@+id/recallTimerTitle" />
+</RelativeLayout>
