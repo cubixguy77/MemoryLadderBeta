@@ -9,6 +9,7 @@ import speednumbers.mastersofmemory.com.domain.executor.MainThread;
 import speednumbers.mastersofmemory.com.domain.interactors.GetChallengeListInteractor;
 import speednumbers.mastersofmemory.com.domain.interactors.base.AbstractInteractor;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
+import speednumbers.mastersofmemory.com.domain.model.Setting;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
 
 /**
@@ -20,10 +21,10 @@ public class GetChallengeListInteractorImpl extends AbstractInteractor implement
     @Inject
     public GetChallengeListInteractor.Callback mCallback;
     private IRepository                mRepository;
-    private int gameKey;
+    private long gameKey;
 
     @Inject
-    public GetChallengeListInteractorImpl(int gameKey, Executor threadExecutor, MainThread mainThread, IRepository repository) {
+    public GetChallengeListInteractorImpl(long gameKey, Executor threadExecutor, MainThread mainThread, IRepository repository) {
         super(threadExecutor, mainThread);
         this.gameKey = gameKey;
         mRepository = repository;
@@ -41,6 +42,19 @@ public class GetChallengeListInteractorImpl extends AbstractInteractor implement
             @Override
             public void onChallengesLoaded(List<Challenge> challenges) {
                 System.out.println("Interactor: Challenges Received");
+
+
+                for (final Challenge challenge : challenges) {
+                    long challengeKey = challenge.getChallengeKey();
+                    mRepository.getSettingsList(challengeKey, new IRepository.GetSettingsCallback() {
+                        @Override
+                        public void onSettingsLoaded(List<Setting> settings) {
+                            System.out.println("Interactor: Settings Received");
+                            challenge.setSettings(settings);
+                        }
+                    });
+                }
+
                 mCallback.onChallengeListLoaded(challenges);
             }
         });

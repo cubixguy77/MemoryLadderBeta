@@ -70,9 +70,9 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
 
     @Override
     public void renderChallengeList(List<Challenge> challenges) {
+        System.out.println("View: Challenges received");
         for (Challenge challenge : challenges) {
-            System.out.println("View: Challenge Received: " + challenge.getTitle());
-
+            System.out.println(challenge.toString());
             ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge);
             challengeListContainer.addView(card);
         }

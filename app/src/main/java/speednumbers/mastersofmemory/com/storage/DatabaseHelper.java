@@ -1,7 +1,6 @@
 package speednumbers.mastersofmemory.com.storage;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -26,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     private static final int DATABASE_VERSION = 1;
 
     @Inject
-    public DatabaseHelper() {
+    DatabaseHelper() {
         super(MyApplication.getAppContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -39,9 +38,32 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         db.execSQL(SettingTableContract.SettingTable.CREATE_SETTING_TABLE);
 
         long gameKey = insertGame(db, new Game("Speed Numbers", "speedNumbersIcon.png"));
-        insertChallenge(db, new Challenge(gameKey, -1, "11 Digits", false, null));
-        insertChallenge(db, new Challenge(gameKey, -1, "22 Digits", false, null));
-        insertChallenge(db, new Challenge(gameKey, -1, "33 Digits", false, null));
+
+        ArrayList<Setting> settings = new ArrayList<>();
+        Setting digitsPerGroup = new Setting(-1, -1, 1, "Digits Per Group", 1, true);
+        Setting memTimer = new Setting(-1, -1, 30, "Memorization Timer", 2, true);
+        Setting recallTimer = new Setting(-1, -1, 60, "Recall Timer", 3, true);
+
+        insertSetting(db, digitsPerGroup);
+        settings.add(digitsPerGroup);
+        insertSetting(db, memTimer);
+        settings.add(memTimer);
+        insertSetting(db, recallTimer);
+        settings.add(recallTimer);
+
+        insertChallenge(db, new Challenge(gameKey, -1, "11 Digits", false, settings));
+
+        settings.get(0).setValue(2);  // Digits Per Group
+        settings.get(1).setValue(45); // Mem Timer
+        settings.get(2).setValue(90); // Recall Timer
+
+        insertChallenge(db, new Challenge(gameKey, -1, "22 Digits", false, settings));
+
+        settings.get(0).setValue(3);   // Digits Per Group
+        settings.get(1).setValue(60);  // Mem Timer
+        settings.get(2).setValue(120); // Recall Timer
+
+        insertChallenge(db, new Challenge(gameKey, -1, "33 Digits", false, settings));
     }
 
     @Override
@@ -117,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
 
     @Override
-    public void getChallengeList(int gameKey, IRepository.GetChallengesCallback callback) {
+    public void getChallengeList(long gameKey, IRepository.GetChallengesCallback callback) {
         SQLiteDatabase db = getReadableDatabase();
         List<Challenge> challenges = new ArrayList<>();
 
@@ -190,7 +212,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
             if (challenge.getSettings() != null) {
                 for (Setting setting : challenge.getSettings()) {
                     setting.setChallengeKey(challengeKey);
-                    insertSetting(setting);
+                    insertSetting(db, setting);
                 }
             }
             db.setTransactionSuccessful();
@@ -210,7 +232,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
 
     @Override
-    public void getSettingsList(int challengeKey, IRepository.GetSettingsCallback callback) {
+    public void getSettingsList(long challengeKey, IRepository.GetSettingsCallback callback) {
         SQLiteDatabase db = getReadableDatabase();
         List<Setting> settings = new ArrayList<>();
 
@@ -218,7 +240,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         (
             "SELECT " +
                 ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY + "," +
-                ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_SETTING_KEY + "," +
+                ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME + "." + ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_SETTING_KEY + "," +
                 ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_VALUE + "," +
                 SettingTableContract.SettingTable.SETTING_NAME + "," +
                 SettingTableContract.SettingTable.SETTING_SORT_ORDER + "," +
@@ -276,22 +298,39 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         return true;
     }
 
-    private boolean insertSetting(Setting setting) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(SettingTableContract.SettingTable.SETTING_NAME, setting.getSettingName());
-        values.put(SettingTableContract.SettingTable.SETTING_SORT_ORDER, setting.getSortOrder());
-        values.put(SettingTableContract.SettingTable.SETTING_VISIBLE, setting.isVisible() ? 1 : 0);
-        long settingKey = db.insert(ChallengeTableContract.ChallengeTable.TABLE_NAME, null, values);
-
-        values = new ContentValues();
-        values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY, setting.getChallengeKey());
-        values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_SETTING_KEY, settingKey);
-        values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_VALUE, setting.getValue());
-        db.insert(ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME, null, values);
-
+    /*
+    private boolean recordExists(String TableName, String dbfield, String fieldValue) {
+        SQLiteDatabase db = getReadableDatabase();
+        String Query = "Select * from " + TableName + " where " + dbfield + " = " + fieldValue;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
         return true;
+    }
+    */
+
+    private long insertSetting(SQLiteDatabase db, Setting setting) {
+        if (setting.getSettingKey() <= 0) {
+            ContentValues values = new ContentValues();
+            values.put(SettingTableContract.SettingTable.SETTING_NAME, setting.getSettingName());
+            values.put(SettingTableContract.SettingTable.SETTING_SORT_ORDER, setting.getSortOrder());
+            values.put(SettingTableContract.SettingTable.SETTING_VISIBLE, setting.isVisible() ? 1 : 0);
+            long settingKey = db.insert(SettingTableContract.SettingTable.TABLE_NAME, null, values);
+            setting.setSettingKey(settingKey);
+        }
+
+        if (setting.getChallengeKey() > 0 && setting.getSettingKey() > 0) {
+            ContentValues values = new ContentValues();
+            values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY, setting.getChallengeKey());
+            values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_SETTING_KEY, setting.getSettingKey());
+            values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_VALUE, setting.getValue());
+            db.insert(ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME, null, values);
+        }
+
+        return setting.getSettingKey();
     }
 
     private boolean deleteSetting(Setting setting) {

@@ -69,7 +69,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         recallTimerContainer.setVisibility(View.GONE);
         playButton.setVisibility(View.GONE);
         challengeText.setText(challenge.getTitle());
-        digitsPerGroupView.setModel(new Setting(1,1,2,"Test",1,true));
+        digitsPerGroupView.setModel(challenge.getSettings().get(0));
     }
 
     @Override

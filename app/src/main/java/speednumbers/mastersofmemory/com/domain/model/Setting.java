@@ -21,10 +21,17 @@ public class Setting {
         return challengeKey;
     }
 
+    public void setSettingKey(long settingKey) {
+        this.settingKey = settingKey;
+    }
+
     public long getSettingKey() {
         return settingKey;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
     public int getValue() {
         return value;
     }
@@ -43,5 +50,19 @@ public class Setting {
 
     public void setChallengeKey(long challengeKey) {
         this.challengeKey = challengeKey;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("----- Setting -----"); sb.append(System.getProperty("line.separator"));
+        sb.append("Name: " + settingName); sb.append(System.getProperty("line.separator"));
+        sb.append("Challenge Key: " + challengeKey); sb.append(System.getProperty("line.separator"));
+        sb.append("Setting Key: " + settingKey); sb.append(System.getProperty("line.separator"));
+        sb.append("Sort Order: " + sortOrder); sb.append(System.getProperty("line.separator"));
+        sb.append("Visible: " + (visible ? "True" : "False")); sb.append(System.getProperty("line.separator"));
+        sb.append("Value: " + value); sb.append(System.getProperty("line.separator"));
+        sb.append("----- End Setting -----"); sb.append(System.getProperty("line.separator"));
+        return sb.toString();
     }
 }

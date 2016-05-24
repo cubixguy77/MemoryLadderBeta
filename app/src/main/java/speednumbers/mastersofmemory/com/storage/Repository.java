@@ -33,7 +33,7 @@ public class Repository implements IRepository {
 
 
     @Override
-    public void getChallengeList(int gameKey, final IRepository.GetChallengesCallback callback) {
+    public void getChallengeList(long gameKey, final IRepository.GetChallengesCallback callback) {
         db.getChallengeList(gameKey, new IRepository.GetChallengesCallback() {
             @Override
             public void onChallengesLoaded(List<Challenge> challenges) {
@@ -58,7 +58,7 @@ public class Repository implements IRepository {
 
 
     @Override
-    public void getSettingsList(int challengeKey, final IRepository.GetSettingsCallback callback) {
+    public void getSettingsList(long challengeKey, final IRepository.GetSettingsCallback callback) {
         db.getSettingsList(challengeKey, new IRepository.GetSettingsCallback() {
             @Override
             public void onSettingsLoaded(List<Setting> settings) {

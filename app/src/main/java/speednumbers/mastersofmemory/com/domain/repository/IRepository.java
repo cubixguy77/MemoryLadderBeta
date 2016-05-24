@@ -25,12 +25,12 @@ public interface IRepository {
         void getGameList(GetGamesCallback callback);
 
 
-        void getChallengeList(int gameKey, GetChallengesCallback callback);
+        void getChallengeList(long gameKey, GetChallengesCallback callback);
         boolean deleteChallenge(Challenge challenge);
         boolean insertChallenge(Challenge challenge);
 
 
-        void getSettingsList(int challengeKey, GetSettingsCallback callback);
+        void getSettingsList(long challengeKey, GetSettingsCallback callback);
         boolean updateSetting(Setting setting);
 
 }

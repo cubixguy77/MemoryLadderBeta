@@ -8,11 +8,11 @@ import speednumbers.mastersofmemory.com.domain.repository.IRepository;
 public interface DatabaseAPI {
         void getGameList(IRepository.GetGamesCallback callback);
 
-        void getChallengeList(int gameKey, IRepository.GetChallengesCallback callback);
+        void getChallengeList(long gameKey, IRepository.GetChallengesCallback callback);
         boolean deleteChallenge(Challenge challenge);
         long insertChallenge(Challenge challenge);
 
-        void getSettingsList(int challengeKey, IRepository.GetSettingsCallback callback);
+        void getSettingsList(long challengeKey, IRepository.GetSettingsCallback callback);
         boolean updateSetting(Setting setting);
 
 }

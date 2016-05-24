@@ -15,7 +15,7 @@ import speednumbers.mastersofmemory.com.presentation.injection.PerActivity;
 @Module
 public class ChallengeModule {
 
-  private int gameKey;
+  private long gameKey;
 
 
   public ChallengeModule(int gameKey) {
