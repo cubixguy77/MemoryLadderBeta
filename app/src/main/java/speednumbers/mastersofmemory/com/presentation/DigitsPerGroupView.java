@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -12,7 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import speednumbers.mastersofmemory.com.domain.model.Setting;
 
-public class DigitsPerGroupView extends RelativeLayout {
+public class DigitsPerGroupView extends BaseSettingView {
     @BindView(R.id.onePerGroup) TextView onePerGroup;
     @BindView(R.id.twoPerGroup) TextView twoPerGroup;
     @BindView(R.id.threePerGroup) TextView threePerGroup;
@@ -66,15 +65,23 @@ public class DigitsPerGroupView extends RelativeLayout {
         }
     }
 
+    private void onSelectValue(int value) {
+        if (this.setting.getValue() != value) {
+            this.setting.setValue(value);
+            selectDigitsPerGroup(value);
+            updateSettingValue(setting);
+        }
+    }
+
     @OnClick(R.id.onePerGroup) void onSelectOne() {
-        selectDigitsPerGroup(1);
+        onSelectValue(1);
     }
 
     @OnClick(R.id.twoPerGroup) void onSelectTwo() {
-        selectDigitsPerGroup(2);
+        onSelectValue(2);
     }
 
     @OnClick(R.id.threePerGroup) void onSelectThree() {
-        selectDigitsPerGroup(3);
+        onSelectValue(3);
     }
 }
