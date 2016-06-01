@@ -20,17 +20,21 @@ public class DigitsPerGroupView extends BaseSettingView {
 
     public DigitsPerGroupView(Context context) {
         super(context);
-        this.setting = new Setting(1,1,3,"Test",1,true);
+        this.setting = new Setting(1,1,3,"Test1",1,true);
         initializeViews(context);
     }
 
     public DigitsPerGroupView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.setting = new Setting(1,1,3,"Test",1,true);
+        this.setting = new Setting(1,1,3,"Test2",1,true);
         initializeViews(context);
     }
 
-    public DigitsPerGroupView(Context context, AttributeSet attrs, int defStyle) { super(context, attrs, defStyle); }
+    public DigitsPerGroupView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        this.setting = new Setting(1,1,3,"Test3",1,true);
+        initializeViews(context);
+    }
 
     private void initializeViews(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

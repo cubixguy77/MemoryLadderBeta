@@ -25,6 +25,10 @@ public class MyApplication extends Application {
 
     }
 
+    public static MyApplication get(Context context) {
+        return (MyApplication) context.getApplicationContext();
+    }
+
     public ApplicationComponent getApplicationComponent() {
         return this.applicationComponent;
     }
