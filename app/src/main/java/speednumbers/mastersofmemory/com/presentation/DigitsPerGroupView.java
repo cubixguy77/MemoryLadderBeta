@@ -21,18 +21,21 @@ public class DigitsPerGroupView extends BaseSettingView {
     public DigitsPerGroupView(Context context) {
         super(context);
         this.setting = new Setting(1,1,3,"Test1",1,true);
+        System.out.println("Digits Per Group Constructor: 1");
         initializeViews(context);
     }
 
     public DigitsPerGroupView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setting = new Setting(1,1,3,"Test2",1,true);
+        System.out.println("Digits Per Group Constructor: 2");
         initializeViews(context);
     }
 
     public DigitsPerGroupView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.setting = new Setting(1,1,3,"Test3",1,true);
+        System.out.println("Digits Per Group Constructor: 3");
         initializeViews(context);
     }
 
@@ -40,15 +43,19 @@ public class DigitsPerGroupView extends BaseSettingView {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.viewgroup_setting_digits_per_group, this);
         ButterKnife.bind(this, view);
+        System.out.println("Digits Per Group: Views initialized");
+        //onFinishInflate();
     }
 
     @Override
     protected void onFinishInflate() {
+        System.out.println("Digits Per Group: on finish inflate");
         super.onFinishInflate();
         selectDigitsPerGroup(this.setting.getValue());
     }
 
     public void setModel(Setting setting) {
+        System.out.println("Digits Per Group: set model");
         this.setting = setting;
         selectDigitsPerGroup(this.setting.getValue());
     }

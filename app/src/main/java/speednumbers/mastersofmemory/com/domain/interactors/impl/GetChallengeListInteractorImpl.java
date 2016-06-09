@@ -41,7 +41,7 @@ public class GetChallengeListInteractorImpl extends AbstractInteractor implement
         mRepository.getChallengeList(gameKey, new IRepository.GetChallengesCallback() {
             @Override
             public void onChallengesLoaded(List<Challenge> challenges) {
-                System.out.println("Interactor: Challenges Received");
+                System.out.println("Interactor: " + challenges.size() + " Challenges Received");
 
 
                 for (final Challenge challenge : challenges) {
@@ -49,7 +49,7 @@ public class GetChallengeListInteractorImpl extends AbstractInteractor implement
                     mRepository.getSettingsList(challengeKey, new IRepository.GetSettingsCallback() {
                         @Override
                         public void onSettingsLoaded(List<Setting> settings) {
-                            System.out.println("Interactor: Settings Received");
+                            System.out.println("Interactor: " + settings.size() + " Settings Received");
                             challenge.setSettings(settings);
                         }
                     });
