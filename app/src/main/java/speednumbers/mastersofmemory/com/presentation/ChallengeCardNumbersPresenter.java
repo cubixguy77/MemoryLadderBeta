@@ -14,8 +14,8 @@ public class ChallengeCardNumbersPresenter extends ChallengeCardPresenter implem
         if (digitsPerGroup == model.getDigitsPerGroup())
             return;
 
-        view.deselectDigitsPerGroup(model.getDigitsPerGroup());
+        //view.deselectDigitsPerGroup(model.getDigitsPerGroup());
         model.setDigitsPerGroup(digitsPerGroup);
-        view.selectDigitsPerGroup(model.getDigitsPerGroup());
+        //view.selectDigitsPerGroup(model.getDigitsPerGroup());
     }
 }

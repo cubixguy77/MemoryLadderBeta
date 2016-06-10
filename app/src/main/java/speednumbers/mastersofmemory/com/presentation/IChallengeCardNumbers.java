@@ -2,8 +2,8 @@ package speednumbers.mastersofmemory.com.presentation;
 
 public interface IChallengeCardNumbers {
     interface View extends IChallengeCard.View {
-        void selectDigitsPerGroup(int digitsPerGroup);
-        void deselectDigitsPerGroup(int digitsPerGroup);
+        //void selectDigitsPerGroup(int digitsPerGroup);
+        //void deselectDigitsPerGroup(int digitsPerGroup);
     }
 
     interface Presenter extends IChallengeCard.Presenter {

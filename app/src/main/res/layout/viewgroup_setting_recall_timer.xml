@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/recallTimerContainer"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    tools:visibility="visible"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <View
         android:id="@+id/dividerRecall"
@@ -39,4 +33,4 @@
         android:text="5:00"
         android:textSize="30sp"
         android:layout_below="@+id/recallTimerTitle" />
-</RelativeLayout>
+</merge>

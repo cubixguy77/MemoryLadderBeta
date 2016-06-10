@@ -53,7 +53,14 @@
                 tools:visibility="visible">
             </speednumbers.mastersofmemory.com.presentation.MemTimerSettingView>
 
-            <include layout="@layout/viewgroup_setting_recall_timer"></include>
+            <speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView
+                android:id="@+id/recallTimerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+            </speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView>
 
             <Button
                 android:id="@+id/playButton"
