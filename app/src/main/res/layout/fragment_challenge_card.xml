@@ -26,6 +26,8 @@
                     android:textSize="40sp"
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:layout_weight="5"/>
 
                 <ImageView
@@ -33,6 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground"
                     android:src="@drawable/ic_arrow_down"/>
             </LinearLayout>
 

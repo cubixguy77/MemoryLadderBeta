@@ -34,8 +34,23 @@ public abstract class ChallengeCard extends CardView implements IChallengeCard.V
     public ChallengeCard(Context context, AttributeSet attrs, int defStyle) { super(context, attrs, defStyle); }
 
     @Override
-    public void play(IChallengeSettingsModel model) {
+    public void play() {
+        try {
+            IChallengeSelectionListener listener = (IChallengeSelectionListener) getContext();
+            listener.onChallengeSelected(this.challenge);
+        }
+        catch (ClassCastException e) {
+            throw new ClassCastException(getContext().toString() + " must implement IChallengeSelectionListener");
+        }
 
+    }
+
+    @OnClick(R.id.playButton) void onPlayClicked() {
+        play();
+    }
+
+    @OnClick(R.id.challengeText) void onCardClicked() {
+        play();
     }
 
     abstract void onExpand();

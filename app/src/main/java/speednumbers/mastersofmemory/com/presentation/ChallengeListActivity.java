@@ -2,6 +2,7 @@ package speednumbers.mastersofmemory.com.presentation;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;
+import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
 import speednumbers.mastersofmemory.com.presentation.injection.components.DaggerChallengeComponent;
 import speednumbers.mastersofmemory.com.presentation.injection.modules.ChallengeModule;
@@ -35,7 +36,8 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     }
 
     @Override
-    public void onChallengeSelected(long challengeKey) {
-        /* TODO Navigate to game play */
+    public void onChallengeSelected(Challenge challenge) {
+        System.out.println("Navigating to hte following challenge gameplay");
+        System.out.println(challenge.toString());
     }
 }
