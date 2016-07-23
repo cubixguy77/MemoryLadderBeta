@@ -38,8 +38,8 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         initializeViews(context);
     }
 
-    public ChallengeCardNumbers(Context context, Challenge challenge) {
-        super(context, challenge);
+    public ChallengeCardNumbers(Context context, Challenge challenge, IDeleteChallengeListener deleteChallengeListener) {
+        super(context, challenge, deleteChallengeListener);
         this.challenge = challenge;
         initializeViews(context);
     }

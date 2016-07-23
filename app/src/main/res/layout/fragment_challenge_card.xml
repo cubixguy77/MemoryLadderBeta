@@ -1,70 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<merge
+<merge xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/challengeCard"
     style="@style/CardStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <LinearLayout
+        android:id="@+id/vertContainer"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
         <LinearLayout
-            android:id="@+id/vertContainer"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:animateLayoutChanges="true">
+            android:layout_height="80dp">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="80dp">
+            <TextView
+                android:id="@+id/challengeText"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:text="10 Digits"
+                android:textSize="40sp"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:layout_weight="5"/>
 
-                <TextView
-                    android:id="@+id/challengeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="80dp"
-                    android:text="10 Digits"
-                    android:textSize="40sp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dp"
-                    android:clickable="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_weight="5"/>
+            <ImageView
+                android:id="@+id/expandContractButton"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/ic_arrow_down"/>
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/expandContractButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_arrow_down"/>
-            </LinearLayout>
+        <speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView
+            android:id="@+id/digitGroupingContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible">
+        </speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView>
 
-            <speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView
-                android:id="@+id/digitGroupingContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible">
-            </speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView>
+        <speednumbers.mastersofmemory.com.presentation.MemTimerSettingView
+            android:id="@+id/memorizationTimerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+        </speednumbers.mastersofmemory.com.presentation.MemTimerSettingView>
 
-            <speednumbers.mastersofmemory.com.presentation.MemTimerSettingView
-                android:id="@+id/memorizationTimerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                tools:visibility="visible">
-            </speednumbers.mastersofmemory.com.presentation.MemTimerSettingView>
+        <speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView
+            android:id="@+id/recallTimerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+        </speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView>
 
-            <speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView
-                android:id="@+id/recallTimerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                tools:visibility="visible">
-            </speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:id="@+id/deleteButton" />
 
             <Button
                 android:id="@+id/playButton"
@@ -77,6 +88,9 @@
                 android:text="Play"
                 android:visibility="gone"
                 tools:visibility="visible" />
+
+
         </LinearLayout>
+    </LinearLayout>
 
 </merge>

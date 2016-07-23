@@ -5,6 +5,7 @@ import speednumbers.mastersofmemory.com.domain.model.Challenge;
 public interface IChallengeCard extends IMemTime.View, IRecallTime.View {
     interface View {
         void play();
+        void delete();
     }
 
     interface Presenter extends IMemTime.Presenter, IRecallTime.UserActions {

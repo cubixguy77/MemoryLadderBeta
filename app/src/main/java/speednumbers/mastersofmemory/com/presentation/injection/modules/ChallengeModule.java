@@ -6,8 +6,10 @@ import dagger.Module;
 import dagger.Provides;
 import speednumbers.mastersofmemory.com.domain.executor.Executor;
 import speednumbers.mastersofmemory.com.domain.executor.MainThread;
+import speednumbers.mastersofmemory.com.domain.interactors.DeleteChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.interactors.GetChallengeListInteractor;
 import speednumbers.mastersofmemory.com.domain.interactors.UpdateSettingInteractor;
+import speednumbers.mastersofmemory.com.domain.interactors.impl.DeleteChallengeInteractorImpl;
 import speednumbers.mastersofmemory.com.domain.interactors.impl.GetChallengeListInteractorImpl;
 import speednumbers.mastersofmemory.com.domain.interactors.impl.UpdateSettingInteractorImpl;
 import speednumbers.mastersofmemory.com.domain.repository.IRepository;
@@ -32,6 +34,12 @@ public class ChallengeModule {
   //}
   GetChallengeListInteractor provideGetChallengeListInteractor(Executor threadExecutor, MainThread mainThread, IRepository repository) {
     return new GetChallengeListInteractorImpl(gameKey, threadExecutor, mainThread, repository);
+  }
+
+  @Provides
+  @PerActivity
+  DeleteChallengeInteractor provideDeleteChallengeInteractor(Executor threadExecutor, MainThread mainThread, IRepository repository) {
+    return new DeleteChallengeInteractorImpl(threadExecutor, mainThread, repository);
   }
 
   @Provides

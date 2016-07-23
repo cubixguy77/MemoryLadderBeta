@@ -185,12 +185,15 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public boolean deleteChallenge(Challenge challenge) {
-        for (Setting setting : challenge.getSettings()) {
-            deleteSetting(setting);
-        }
-
+        deleteChallengeSettings(challenge);
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "=" + challenge.getChallengeKey(), null) > 0;
+    }
+
+    private boolean deleteChallengeSettings(Challenge challenge) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME, ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY + "=" + challenge.getChallengeKey(), null);
+        return true;
     }
 
     @Override
@@ -332,6 +335,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
         return setting.getSettingKey();
     }
+
+
 
     private boolean deleteSetting(Setting setting) {
         SQLiteDatabase db = getWritableDatabase();

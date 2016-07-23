@@ -13,6 +13,7 @@ import speednumbers.mastersofmemory.com.domain.model.Challenge;
 
 public abstract class ChallengeCard extends CardView implements IChallengeCard.View {
     private Challenge challenge;
+    private IDeleteChallengeListener deleteChallengeListener;
     private boolean open = false;
 
     @BindView(R.id.playButton) Button playButton;
@@ -22,9 +23,10 @@ public abstract class ChallengeCard extends CardView implements IChallengeCard.V
         super(context, null, R.attr.cardStyle);
     }
 
-    public ChallengeCard(Context context, Challenge challenge) {
+    public ChallengeCard(Context context, Challenge challenge, IDeleteChallengeListener deleteChallengeListener) {
         super(context, null, R.attr.cardStyle);
         this.challenge = challenge;
+        this.deleteChallengeListener = deleteChallengeListener;
     }
 
     public ChallengeCard(Context context, AttributeSet attrs) {
@@ -42,7 +44,11 @@ public abstract class ChallengeCard extends CardView implements IChallengeCard.V
         catch (ClassCastException e) {
             throw new ClassCastException(getContext().toString() + " must implement IChallengeSelectionListener");
         }
+    }
 
+    @Override
+    public void delete() {
+        deleteChallengeListener.onDeleteChallenge(this.challenge);
     }
 
     @OnClick(R.id.playButton) void onPlayClicked() {
@@ -51,6 +57,10 @@ public abstract class ChallengeCard extends CardView implements IChallengeCard.V
 
     @OnClick(R.id.challengeText) void onCardClicked() {
         play();
+    }
+
+    @OnClick(R.id.deleteButton) void onDeleteClicked() {
+        delete();
     }
 
     abstract void onExpand();

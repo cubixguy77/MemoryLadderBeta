@@ -2,6 +2,7 @@ package speednumbers.mastersofmemory.com.presentation;
 
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import speednumbers.mastersofmemory.com.domain.interactors.DeleteChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
 
-public class ChallengeListFragment extends BaseFragment implements  IChallengeListView {
+public class ChallengeListFragment extends BaseFragment implements  IChallengeListView, IDeleteChallengeListener  {
 
     @Inject ChallengeListPresenter challengeListPresenter;
+    @Inject public DeleteChallengeInteractor deleteChallengeInteractor;
     @BindView(R.id.ChallengeListContainer) LinearLayout challengeListContainer;
 
     public ChallengeListFragment() {
@@ -63,7 +66,40 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
         this.challengeListPresenter = null;
     }
 
+    @Override
+    public void onDeleteChallenge(Challenge challenge) {
+        System.out.println("~~~~~~Deleting the following challenge~~~~~~~");
+        System.out.println(challenge.toString());
+        removeChallenge(challenge);
+    }
 
+    public void removeChallenge(final Challenge challenge) {
+        final int viewIndex = 0;
+        final View challengeCardToDelete = challengeListContainer.getChildAt(viewIndex);
+        challengeCardToDelete.setVisibility(View.GONE);
+
+        Snackbar snackbar = Snackbar
+            .make(challengeListContainer, "Challenge deleted", Snackbar.LENGTH_LONG)
+            .setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    challengeCardToDelete.setVisibility(View.VISIBLE);
+                    Snackbar.make(challengeListContainer, "Challenge is restored!", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+
+        snackbar.setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                if (event == DISMISS_EVENT_TIMEOUT) {
+                    deleteChallengeInteractor.deleteChallenge(challenge);
+                    challengeListContainer.removeView(challengeCardToDelete);
+                }
+            }
+        });
+
+        snackbar.show();
+    }
 
 
     private void loadChallengeList() {
@@ -76,7 +112,7 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
         System.out.println("View: Challenges received");
         for (Challenge challenge : challenges) {
             System.out.println(challenge.toString());
-            ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge);
+            ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge, this);
             challengeListContainer.addView(card);
             System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }

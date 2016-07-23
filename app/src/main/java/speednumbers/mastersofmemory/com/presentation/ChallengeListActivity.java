@@ -1,6 +1,7 @@
 package speednumbers.mastersofmemory.com.presentation;
 
 import android.os.Bundle;
+
 import butterknife.ButterKnife;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
@@ -9,6 +10,7 @@ import speednumbers.mastersofmemory.com.presentation.injection.modules.Challenge
 
 public class ChallengeListActivity extends BaseActivity implements IChallengeSelectionListener {
     private ChallengeComponent challengeComponent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
