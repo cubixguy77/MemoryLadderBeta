@@ -49,12 +49,11 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public boolean insertChallenge(Challenge challenge) {
+    public boolean insertChallenge(Challenge challenge, AddedChallengeCallback callback) {
         db.insertChallenge(challenge);
+        callback.onChallengeAdded(challenge);
         return true;
     }
-
-
 
 
     @Override

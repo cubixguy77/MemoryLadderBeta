@@ -1,27 +1,33 @@
 package speednumbers.mastersofmemory.com.presentation;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import speednumbers.mastersofmemory.com.domain.interactors.AddChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.interactors.DeleteChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
 
-public class ChallengeListFragment extends BaseFragment implements  IChallengeListView, IDeleteChallengeListener  {
+public class ChallengeListFragment extends BaseFragment implements  IChallengeListView, IDeleteChallengeListener, IAddChallengeListener  {
 
     @Inject ChallengeListPresenter challengeListPresenter;
-    @Inject public DeleteChallengeInteractor deleteChallengeInteractor;
+    @Inject DeleteChallengeInteractor deleteChallengeInteractor;
+    @Inject AddChallengeInteractor addChallengeInteractor;
     @BindView(R.id.ChallengeListContainer) LinearLayout challengeListContainer;
 
     public ChallengeListFragment() {
@@ -35,9 +41,9 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //super.onCreateView(inflater, container, savedInstanceState);
         final View fragmentView = inflater.inflate(R.layout.fragment_challenge_list, container, false);
         ButterKnife.bind(this, fragmentView);
-
         return fragmentView;
     }
 
@@ -67,23 +73,36 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
     }
 
     @Override
-    public void onDeleteChallenge(Challenge challenge) {
+    public void onDeleteChallenge(Challenge challenge, ChallengeCardNumbers card) {
         System.out.println("~~~~~~Deleting the following challenge~~~~~~~");
         System.out.println(challenge.toString());
-        removeChallenge(challenge);
+        removeChallenge(challenge, card);
     }
 
-    public void removeChallenge(final Challenge challenge) {
-        final int viewIndex = 0;
-        final View challengeCardToDelete = challengeListContainer.getChildAt(viewIndex);
-        challengeCardToDelete.setVisibility(View.GONE);
+    @Override
+    public void onChallengeAdd() {
+        System.out.println("Yes, challenge addition time");
+
+        addChallengeInteractor.setCallback(new AddChallengeInteractor.Callback() {
+            @Override
+            public void onChallengeAdded(Challenge challenge) {
+                List<Challenge> challengeList = Collections.singletonList(challenge);
+                renderChallengeList(challengeList);
+            }
+        });
+
+        addChallengeInteractor.execute();
+    }
+
+    private void removeChallenge(final Challenge challenge, final ChallengeCardNumbers card) {
+        card.setVisibility(View.GONE);
 
         Snackbar snackbar = Snackbar
             .make(challengeListContainer, "Challenge deleted", Snackbar.LENGTH_LONG)
             .setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    challengeCardToDelete.setVisibility(View.VISIBLE);
+                    card.setVisibility(View.VISIBLE);
                     Snackbar.make(challengeListContainer, "Challenge is restored!", Snackbar.LENGTH_SHORT).show();
                 }
             });
@@ -91,9 +110,9 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
         snackbar.setCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                if (event == DISMISS_EVENT_TIMEOUT) {
+                if (event != DISMISS_EVENT_ACTION) {
                     deleteChallengeInteractor.deleteChallenge(challenge);
-                    challengeListContainer.removeView(challengeCardToDelete);
+                    System.out.println("Challenge truly deleted");
                 }
             }
         });
@@ -107,14 +126,30 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
     }
 
     @Override
-    public void renderChallengeList(List<Challenge> challenges) {
-        Looper.prepare();
+    public void renderChallengeList(final List<Challenge> challenges) {
+        //Looper.prepare();
+
         System.out.println("View: Challenges received");
-        for (Challenge challenge : challenges) {
+        for (final Challenge challenge : challenges) {
             System.out.println(challenge.toString());
-            ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge, this);
-            challengeListContainer.addView(card);
-            System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge, ChallengeListFragment.this);
+                    challengeListContainer.addView(card, challenges.size() > 1 ? -1 : 0);
+                    System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+            });
         }
+
+        /*
+        final ScrollView scroll = ((ScrollView) getActivity().findViewById(R.id.ChallengeListScroller));
+        scroll.post(new Runnable() {
+            @Override
+            public void run() {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+        */
     }
 }

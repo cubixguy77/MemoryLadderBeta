@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.domain.model.NumberChallenge;
 
 public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCardNumbers.View {
     private Challenge challenge;
+    private IDeleteChallengeListener deleteChallengeListener;
 
     @BindView(R.id.challengeText) TextView challengeText;
     @BindView(R.id.memorizationTimerContainer) MemTimerSettingView memorizationTimerContainer;
@@ -22,25 +24,20 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
 
     public ChallengeCardNumbers(Context context) {
         super(context, null, R.attr.cardStyle);
-        this.challenge = new Challenge(1, 1, "Test Digits", false);
-        initializeViews(context);
     }
 
     public ChallengeCardNumbers(Context context, AttributeSet attrs) {
         super(context, attrs, R.attr.cardStyle);
-        this.challenge = new Challenge(1, 1, "Test Digits", false);
-        initializeViews(context);
     }
 
     public ChallengeCardNumbers(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.challenge = new Challenge(1, 1, "Test Digits", false);
-        initializeViews(context);
     }
 
     public ChallengeCardNumbers(Context context, Challenge challenge, IDeleteChallengeListener deleteChallengeListener) {
-        super(context, challenge, deleteChallengeListener);
+        super(context, challenge);
         this.challenge = challenge;
+        this.deleteChallengeListener = deleteChallengeListener;
         initializeViews(context);
     }
 
@@ -69,6 +66,15 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
         memorizationTimerContainer.setModel(NumberChallenge.getMemTimerSetting(challenge));
         recallTimerContainer.setModel(NumberChallenge.getRecallTimerSetting(challenge));
+    }
+
+    @OnClick(R.id.deleteButton) void onDeleteClicked() {
+        delete();
+    }
+
+    @Override
+    public void delete() {
+        deleteChallengeListener.onDeleteChallenge(this.challenge, this);
     }
 
     @Override

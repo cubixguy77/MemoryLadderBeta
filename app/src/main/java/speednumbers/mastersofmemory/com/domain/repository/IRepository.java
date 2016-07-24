@@ -20,17 +20,19 @@ public interface IRepository {
         void onSettingsLoaded(List<Setting> settings);
     }
 
+    interface AddedChallengeCallback {
+        void onChallengeAdded(Challenge challenge);
+    }
+
+    void getGameList(GetGamesCallback callback);
 
 
-        void getGameList(GetGamesCallback callback);
+    void getChallengeList(long gameKey, GetChallengesCallback callback);
+    boolean deleteChallenge(Challenge challenge);
+    boolean insertChallenge(Challenge challenge, AddedChallengeCallback callback);
 
 
-        void getChallengeList(long gameKey, GetChallengesCallback callback);
-        boolean deleteChallenge(Challenge challenge);
-        boolean insertChallenge(Challenge challenge);
-
-
-        void getSettingsList(long challengeKey, GetSettingsCallback callback);
-        boolean updateSetting(Setting setting);
+    void getSettingsList(long challengeKey, GetSettingsCallback callback);
+    boolean updateSetting(Setting setting);
 
 }

@@ -8,7 +8,7 @@ import speednumbers.mastersofmemory.com.presentation.injection.HasComponent;
 /**
  * Base {@link Fragment} class for every fragment in this application.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends android.support.v4.app.Fragment {
   /**
    * Shows a {@link Toast} message.
    *
