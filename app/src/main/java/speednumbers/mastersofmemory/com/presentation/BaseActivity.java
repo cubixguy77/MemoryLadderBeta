@@ -34,9 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity implements HasCompo
    * @param containerViewId The container view to where add the fragment.
    * @param fragment The fragment to be added.
    */
-  protected void addFragment(int containerViewId, Fragment fragment) {
-    FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
-    fragmentTransaction.add(containerViewId, fragment);
+  protected void addFragment(int containerViewId, android.support.v4.app.Fragment fragment) {
+    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+    fragmentTransaction.add(containerViewId, fragment, "ChallengeListFragment");
     fragmentTransaction.commit();
   }
 

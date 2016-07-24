@@ -1,6 +1,7 @@
 package speednumbers.mastersofmemory.com.presentation;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -18,7 +19,7 @@ import speednumbers.mastersofmemory.com.domain.interactors.DeleteChallengeIntera
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
 
-public class ChallengeListFragment extends BaseFragment implements  IChallengeListView, IDeleteChallengeListener  {
+public class ChallengeListFragment extends BaseFragment implements  IChallengeListView, IDeleteChallengeListener, IAddChallengeListener  {
 
     @Inject ChallengeListPresenter challengeListPresenter;
     @Inject public DeleteChallengeInteractor deleteChallengeInteractor;
@@ -35,9 +36,9 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //super.onCreateView(inflater, container, savedInstanceState);
         final View fragmentView = inflater.inflate(R.layout.fragment_challenge_list, container, false);
         ButterKnife.bind(this, fragmentView);
-
         return fragmentView;
     }
 
@@ -71,6 +72,11 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
         System.out.println("~~~~~~Deleting the following challenge~~~~~~~");
         System.out.println(challenge.toString());
         removeChallenge(challenge);
+    }
+
+    @Override
+    public void onChallengeAdded(Challenge challenge) {
+        System.out.println("Yes, challenge received");
     }
 
     public void removeChallenge(final Challenge challenge) {
@@ -108,13 +114,20 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
 
     @Override
     public void renderChallengeList(List<Challenge> challenges) {
-        Looper.prepare();
+        //Looper.prepare();
+
         System.out.println("View: Challenges received");
-        for (Challenge challenge : challenges) {
+        for (final Challenge challenge : challenges) {
             System.out.println(challenge.toString());
-            ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge, this);
-            challengeListContainer.addView(card);
-            System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge, ChallengeListFragment.this);
+                    challengeListContainer.addView(card);
+                    System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
+            });
+
         }
     }
 }
