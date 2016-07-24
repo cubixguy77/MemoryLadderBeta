@@ -40,48 +40,51 @@
                 android:src="@drawable/ic_arrow_down"/>
         </LinearLayout>
 
-        <speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView
+        <speednumbers.mastersofmemory.challenges.presentation.views.DigitsPerGroupView
             android:id="@+id/digitGroupingContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible">
-        </speednumbers.mastersofmemory.com.presentation.DigitsPerGroupView>
+        </speednumbers.mastersofmemory.challenges.presentation.views.DigitsPerGroupView>
 
-        <speednumbers.mastersofmemory.com.presentation.MemTimerSettingView
+        <speednumbers.mastersofmemory.challenges.presentation.views.MemTimerSettingView
             android:id="@+id/memorizationTimerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
             tools:visibility="visible">
-        </speednumbers.mastersofmemory.com.presentation.MemTimerSettingView>
+        </speednumbers.mastersofmemory.challenges.presentation.views.MemTimerSettingView>
 
-        <speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView
+        <speednumbers.mastersofmemory.challenges.presentation.views.RecallTimerSettingView
             android:id="@+id/recallTimerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:visibility="gone"
             tools:visibility="visible">
-        </speednumbers.mastersofmemory.com.presentation.RecallTimerSettingView>
+        </speednumbers.mastersofmemory.challenges.presentation.views.RecallTimerSettingView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp">
 
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@mipmap/ic_launcher"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/ic_delete"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                tools:visibility="visible"
                 android:id="@+id/deleteButton" />
 
             <Button
                 android:id="@+id/playButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="16dp"
                 android:textSize="20sp"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:theme="@style/PlayButton"
