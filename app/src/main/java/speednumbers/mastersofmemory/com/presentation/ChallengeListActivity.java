@@ -2,8 +2,11 @@ package speednumbers.mastersofmemory.com.presentation;
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import speednumbers.mastersofmemory.com.domain.interactors.AddChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
 import speednumbers.mastersofmemory.com.presentation.injection.components.DaggerChallengeComponent;
@@ -44,8 +47,8 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     }
 
     @OnClick(R.id.AddChallengeFAB) void onAddChallenge() {
-        System.out.println("Challenge added");
+        System.out.println("Challenge add clicked");
         IAddChallengeListener challengeListFragment = (ChallengeListFragment) getSupportFragmentManager().findFragmentByTag("ChallengeListFragment");
-        challengeListFragment.onChallengeAdded(null);
+        challengeListFragment.onChallengeAdd();
     }
 }

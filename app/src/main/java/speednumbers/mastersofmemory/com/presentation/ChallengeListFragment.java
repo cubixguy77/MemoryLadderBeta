@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import speednumbers.mastersofmemory.com.domain.interactors.AddChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.interactors.DeleteChallengeInteractor;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.injection.components.ChallengeComponent;
@@ -22,7 +26,8 @@ import speednumbers.mastersofmemory.com.presentation.injection.components.Challe
 public class ChallengeListFragment extends BaseFragment implements  IChallengeListView, IDeleteChallengeListener, IAddChallengeListener  {
 
     @Inject ChallengeListPresenter challengeListPresenter;
-    @Inject public DeleteChallengeInteractor deleteChallengeInteractor;
+    @Inject DeleteChallengeInteractor deleteChallengeInteractor;
+    @Inject AddChallengeInteractor addChallengeInteractor;
     @BindView(R.id.ChallengeListContainer) LinearLayout challengeListContainer;
 
     public ChallengeListFragment() {
@@ -68,28 +73,36 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
     }
 
     @Override
-    public void onDeleteChallenge(Challenge challenge) {
+    public void onDeleteChallenge(Challenge challenge, ChallengeCardNumbers card) {
         System.out.println("~~~~~~Deleting the following challenge~~~~~~~");
         System.out.println(challenge.toString());
-        removeChallenge(challenge);
+        removeChallenge(challenge, card);
     }
 
     @Override
-    public void onChallengeAdded(Challenge challenge) {
-        System.out.println("Yes, challenge received");
+    public void onChallengeAdd() {
+        System.out.println("Yes, challenge addition time");
+
+        addChallengeInteractor.setCallback(new AddChallengeInteractor.Callback() {
+            @Override
+            public void onChallengeAdded(Challenge challenge) {
+                List<Challenge> challengeList = Collections.singletonList(challenge);
+                renderChallengeList(challengeList);
+            }
+        });
+
+        addChallengeInteractor.execute();
     }
 
-    public void removeChallenge(final Challenge challenge) {
-        final int viewIndex = 0;
-        final View challengeCardToDelete = challengeListContainer.getChildAt(viewIndex);
-        challengeCardToDelete.setVisibility(View.GONE);
+    private void removeChallenge(final Challenge challenge, final ChallengeCardNumbers card) {
+        card.setVisibility(View.GONE);
 
         Snackbar snackbar = Snackbar
             .make(challengeListContainer, "Challenge deleted", Snackbar.LENGTH_LONG)
             .setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    challengeCardToDelete.setVisibility(View.VISIBLE);
+                    card.setVisibility(View.VISIBLE);
                     Snackbar.make(challengeListContainer, "Challenge is restored!", Snackbar.LENGTH_SHORT).show();
                 }
             });
@@ -97,9 +110,9 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
         snackbar.setCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                if (event == DISMISS_EVENT_TIMEOUT) {
+                if (event != DISMISS_EVENT_ACTION) {
                     deleteChallengeInteractor.deleteChallenge(challenge);
-                    challengeListContainer.removeView(challengeCardToDelete);
+                    System.out.println("Challenge truly deleted");
                 }
             }
         });
@@ -127,7 +140,16 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
                     System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
             });
-
         }
+
+        /*
+        final ScrollView scroll = ((ScrollView) getActivity().findViewById(R.id.ChallengeListScroller));
+        scroll.post(new Runnable() {
+            @Override
+            public void run() {
+                scroll.fullScroll(View.FOCUS_DOWN);
+            }
+        });
+        */
     }
 }

@@ -11,11 +11,12 @@ public class Challenge {
 
     private List<Setting> settings;
 
-    public Challenge(long challengeKey, long gameKey, String title, boolean locked) {
-        this.challengeKey = challengeKey;
+    public Challenge(long gameKey, String title, boolean locked) {
         this.gameKey = gameKey;
         this.title = title;
         this.locked = locked;
+        this.challengeKey = -1;
+        settings = new ArrayList<>();
     }
 
     public Challenge(long gameKey, long challengeKey, String title, boolean locked, List<Setting> settings) {

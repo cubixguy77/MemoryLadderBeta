@@ -3,5 +3,5 @@ package speednumbers.mastersofmemory.com.presentation;
 import speednumbers.mastersofmemory.com.domain.model.Challenge;
 
 public interface IAddChallengeListener {
-    public void onChallengeAdded(Challenge challenge);
+    public void onChallengeAdd();
 }
