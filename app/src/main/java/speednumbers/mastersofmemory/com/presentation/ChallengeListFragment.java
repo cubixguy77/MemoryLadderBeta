@@ -126,7 +126,7 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
     }
 
     @Override
-    public void renderChallengeList(List<Challenge> challenges) {
+    public void renderChallengeList(final List<Challenge> challenges) {
         //Looper.prepare();
 
         System.out.println("View: Challenges received");
@@ -136,7 +136,7 @@ public class ChallengeListFragment extends BaseFragment implements  IChallengeLi
                 @Override
                 public void run() {
                     ChallengeCardNumbers card = new ChallengeCardNumbers(getActivity(), challenge, ChallengeListFragment.this);
-                    challengeListContainer.addView(card);
+                    challengeListContainer.addView(card, challenges.size() > 1 ? -1 : 0);
                     System.out.println("Challenge added!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
             });
