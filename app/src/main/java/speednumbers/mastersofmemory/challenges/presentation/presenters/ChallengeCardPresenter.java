@@ -1,6 +1,6 @@
 package speednumbers.mastersofmemory.challenges.presentation.presenters;
 
-import speednumbers.mastersofmemory.challenges.domain.model.TimeModel;
+import timer.TimeModel;
 import speednumbers.mastersofmemory.challenges.presentation.IChallengeCard;
 
 public class ChallengeCardPresenter implements IChallengeCard.Presenter {

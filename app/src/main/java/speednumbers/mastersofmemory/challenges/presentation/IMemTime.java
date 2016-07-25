@@ -1,6 +1,6 @@
 package speednumbers.mastersofmemory.challenges.presentation;
 
-import speednumbers.mastersofmemory.challenges.domain.model.TimeModel;
+import timer.TimeModel;
 
 public interface IMemTime {
     interface View {
