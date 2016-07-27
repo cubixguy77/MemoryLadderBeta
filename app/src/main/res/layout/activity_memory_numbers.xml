@@ -22,7 +22,7 @@
         android:layout_margin="8dp"
         android:numColumns="6"
         android:layout_weight="1"
-        tools:listitem="@layout/view_timer"
+        tools:listitem="@android:layout/simple_list_item_2"
     />
 
     <ImageButton
