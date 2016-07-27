@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <timer.TimerView
+        android:id="@+id/timerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textSize="30sp"
+        tools:text="05:31"
+    />
+
+
+    <GridView
+        android:id="@+id/numberGrid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:numColumns="6"
+        android:layout_weight="1"
+        tools:listitem="@layout/view_timer"
+    />
+
+    <ImageButton
+        android:id="@+id/nextGroupButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:background="@drawable/shape_rounded_corners"
+        android:src="@drawable/ic_arrow_right"
+        android:elevation="4dp"
+    />
+
+
+</LinearLayout>
