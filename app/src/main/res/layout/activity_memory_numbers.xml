@@ -15,14 +15,18 @@
     />
 
 
-    <GridView
+    <memorization.NumberGridView
         android:id="@+id/numberGrid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:numColumns="6"
         android:layout_weight="1"
-        tools:listitem="@android:layout/simple_list_item_2"
+        android:stretchMode="columnWidth"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="50dp"
+        android:gravity="center"
+        tools:listitem="Cell"
     />
 
     <ImageButton
