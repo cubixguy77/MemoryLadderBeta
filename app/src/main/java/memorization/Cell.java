@@ -2,6 +2,7 @@ package memorization;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.AbsListView;
@@ -15,11 +16,8 @@ public class Cell extends TextView {
 
     public Cell(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setText("12");
         setTextSize(30);
         //setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.MATCH_PARENT));
-
-
         //AbsListView.LayoutParams params = (AbsListView.LayoutParams) getLayoutParams();
         //params.height = getWidth();
         //setLayoutParams(params);
@@ -33,6 +31,11 @@ public class Cell extends TextView {
 
     public void setAsDataCell() {
         setTextColor(Color.BLACK);
+    }
+
+    public void setAsHiddenDataCell() {
+        setAsDataCell();
+        setText("_ _");
     }
 
     public void setSelected(boolean isSelected) {

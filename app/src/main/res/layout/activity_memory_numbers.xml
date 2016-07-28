@@ -37,6 +37,7 @@
         android:layout_margin="20dp"
         android:background="@drawable/shape_rounded_corners"
         android:src="@drawable/ic_arrow_right"
+        android:text="go"
         android:elevation="4dp"
     />
 

@@ -11,6 +11,7 @@ public class NumberGridAdapter extends BaseAdapter {
     private Context context;
     private GridData data;
     private int highlightPosition = 1;
+    private boolean dataVisible = false;
 
     public NumberGridAdapter(Context context, GridData data)
     {
@@ -42,6 +43,11 @@ public class NumberGridAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void showData() {
+        dataVisible = true;
+        notifyDataSetChanged();
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Cell view;
@@ -60,11 +66,14 @@ public class NumberGridAdapter extends BaseAdapter {
         }
         else
         {
+            if (!dataVisible) {
+                view.setAsHiddenDataCell();
+                return view;
+            }
+
             view.setAsDataCell();
             view.setText(data.getText(position));
-        }
 
-        if (isViewRowMarker == false) {
             if (position == highlightPosition) {
                 view.setSelected(true);
             }
