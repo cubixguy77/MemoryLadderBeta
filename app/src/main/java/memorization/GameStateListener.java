@@ -1,6 +1,6 @@
 package memorization;
 
-public interface GameStateLifeCycle {
+public interface GameStateListener {
 
     void onLoad();
     void onMemorizationStart();

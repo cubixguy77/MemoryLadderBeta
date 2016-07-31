@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ public class RecallCell extends EditText {
     private final int maxDigits = 2;
     private RecallTextWatcher watcher;
 
+
     public RecallCell(Context context, AttributeSet attrs) {
         super(context, attrs);
         setup();
@@ -35,8 +37,9 @@ public class RecallCell extends EditText {
     private void setup() {
         setLayoutParams(new AbsListView.LayoutParams(130, 190));
         setInputType(InputType.TYPE_CLASS_NUMBER);
-        setFilters(new InputFilter[] {new InputFilter.LengthFilter(2)});
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, 50);
+        setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+        setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxDigits)});
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, 60);
         setGravity(Gravity.CENTER);
         setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
     }

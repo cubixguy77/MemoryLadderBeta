@@ -4,23 +4,22 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 
 import recall.RecallCell;
 
-public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle {
+public class NumberGridAdapter extends BaseAdapter implements GameStateListener {
 
     private Context context;
     private GridData data;
     private int highlightPosition = 1;
-    private GameState gameState;
     private GridData recallData;
 
     public NumberGridAdapter(Context context, GridData data)
     {
         this.context = context;
         this.data = data;
-        this.gameState = GameState.MEMORIZATION;
     }
 
     @Override
@@ -38,7 +37,8 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle
         return 0;
     }
 
-    public void onNextClick() {
+    public void onHighlightNext() {
+        System.out.println("Move highlight to " + (highlightPosition + 1));
         highlightPosition++;
         if (data.isRowMarker(highlightPosition)) {
             highlightPosition++;
@@ -99,6 +99,15 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle
         view.setText(recallData.getText(position));
         view.addRecallTextWatcher(recallData);
 
+        if (position == highlightPosition) {
+            view.requestFocus();
+
+            //imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+        else {
+            view.clearFocus();
+        }
+
         System.out.println("set view pos: " + position + "  to value " + recallData.getText(position));
 
         return view;
@@ -113,15 +122,15 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle
             return getRowMarkerView(position, convertView);
         }
 
-        if (gameState == GameState.PRE_MEMORIZATION) {
+        if (GameStateDispatch.gameSate == GameState.PRE_MEMORIZATION) {
             return getViewPreMemorization(convertView);
         }
 
-        if (gameState == GameState.MEMORIZATION) {
+        if (GameStateDispatch.gameSate == GameState.MEMORIZATION) {
             return getViewMemorization(position, convertView);
         }
 
-        if (gameState == GameState.RECALL) {
+        if (GameStateDispatch.gameSate == GameState.RECALL) {
             return getViewRecall(position, convertView);
         }
 
@@ -145,13 +154,12 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle
 
     @Override
     public void onLoad() {
-        gameState = GameState.PRE_MEMORIZATION;
         notifyDataSetChanged();
     }
 
     @Override
     public void onMemorizationStart() {
-        gameState = GameState.MEMORIZATION;
+        highlightPosition = 1;
         notifyDataSetChanged();
     }
 
@@ -163,8 +171,11 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle
     @Override
     public void onTransitionToRecall() {
         System.out.println("Adapter: Transition to RECALL");
-        gameState = GameState.RECALL;
+        highlightPosition = 1;
         recallData = new GridData(500, 2);
+        recallData.setAdapter(this);
         notifyDataSetChanged();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
     }
 }

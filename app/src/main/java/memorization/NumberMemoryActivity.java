@@ -2,22 +2,22 @@ package memorization;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import speednumbers.mastersofmemory.com.presentation.R;
-import timer.CountDirection;
-import timer.TimerModel;
 import timer.TimerView;
 
-public class NumberMemoryActivity extends Activity implements GameEventListener {
+public class NumberMemoryActivity extends Activity implements GameStateListener {
 
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView)  TimerView timer;
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
 
+    private GameStateDispatch gameStateDispatch;
     private boolean started = false;
 
     @Override
@@ -26,9 +26,13 @@ public class NumberMemoryActivity extends Activity implements GameEventListener 
         setContentView(R.layout.activity_memory_numbers);
         ButterKnife.bind(this);
 
-        grid.onLoad();
-        timer.onLoad();
-        timer.setGameStateLifeCycleListener(grid);
+        gameStateDispatch = new GameStateDispatch();
+
+        grid.setGameStateLifeCycleListener(gameStateDispatch);
+        timer.setGameStateLifeCycleListener(gameStateDispatch);
+        gameStateDispatch.subscribe(this);
+
+        gameStateDispatch.onLoad();
     }
 
 
@@ -37,8 +41,7 @@ public class NumberMemoryActivity extends Activity implements GameEventListener 
             started = true;
             nextGroupButton.setImageResource(R.drawable.ic_arrow_right);
 
-            grid.onMemorizationStart();
-            timer.onMemorizationStart();
+            gameStateDispatch.onMemorizationStart();
 
             return;
         }
@@ -46,8 +49,22 @@ public class NumberMemoryActivity extends Activity implements GameEventListener 
         grid.onNextClick();
     }
 
+
+    @Override
+    public void onLoad() {
+    }
+
+    @Override
+    public void onMemorizationStart() {
+    }
+
     @Override
     public void onTimeExpired() {
-        grid.onTimeExpired();
+        gameStateDispatch.onTransitionToRecall();
+    }
+
+    @Override
+    public void onTransitionToRecall() {
+        nextGroupButton.setVisibility(View.GONE);
     }
 }

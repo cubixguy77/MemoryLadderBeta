@@ -11,6 +11,7 @@ public class GridData implements RecallTextWatcher {
     public int numDigits;
     public int numDigitsPerRow;
     private final String ROW_MARKER = "ROW_MARKER";
+    private NumberGridAdapter adapter;
 
     public GridData(int numDigits, int numDigitsPerColumn)  {
         this.numDigits = numDigits;
@@ -19,6 +20,10 @@ public class GridData implements RecallTextWatcher {
         this.numDigitsPerRow = (numCols - 1) * numDigitsPerColumn;
         this.numRows = numDigits / numDigitsPerRow;
         data = new String[numRows][numCols];
+    }
+
+    public void setAdapter(NumberGridAdapter adapter) {
+        this.adapter = adapter;
     }
 
     public void loadData() {
@@ -74,6 +79,15 @@ public class GridData implements RecallTextWatcher {
     @Override
     public void onTextChanged(int position, String newText) {
         System.out.println("Update position: " + position + " - New Text: " + newText);
-        data[getRow(position)][getCol(position)] = newText;
+
+        boolean actualChange = (data[getRow(position)][getCol(position)] == null && (newText != null || newText != "")) ||
+                !(data[getRow(position)][getCol(position)].equals(newText));
+
+        if (actualChange) {
+            data[getRow(position)][getCol(position)] = newText;
+            if (newText.length() == numDigitsPerColumn) {
+                adapter.onHighlightNext();
+            }
+        }
     }
 }

@@ -4,41 +4,51 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-public class NumberGridView extends GridView implements GameStateLifeCycle {
+public class NumberGridView extends GridView implements GameStateListener {
 
     private GridData data;
     private NumberGridAdapter adapter;
+    private GameStateListener gameEventListener; // send events triggered by grid to this
+    private GameStateDispatch dispatcher;
 
     public NumberGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     public void onNextClick() {
-        adapter.onNextClick();
+        adapter.onHighlightNext();
     }
 
-    @Override
-    public void onLoad() {
+    public void setGameStateLifeCycleListener(GameStateDispatch dispatcher) {
+        this.gameEventListener = dispatcher;
+        this.dispatcher = dispatcher;
+        dispatcher.subscribe(this);
+
         data = new GridData(500, 2);
         data.loadData();
         adapter = new NumberGridAdapter(getContext(), data);
         setAdapter(adapter);
-        adapter.onLoad();
+        data.setAdapter(adapter);
+        dispatcher.subscribe(adapter);
+    }
+
+    @Override
+    public void onLoad() {
+
     }
 
     @Override
     public void onMemorizationStart() {
-        adapter.onMemorizationStart();
+
     }
 
     @Override
     public void onTimeExpired() {
-        adapter.onTimeExpired();
-        this.onTransitionToRecall();
+
     }
 
     @Override
     public void onTransitionToRecall() {
-        adapter.onTransitionToRecall();
+
     }
 }
