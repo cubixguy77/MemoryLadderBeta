@@ -61,4 +61,22 @@ public class GameStateDispatch implements  GameStateListener {
             }
         }
     }
+
+    @Override
+    public void onNextRow() {
+        for (GameStateListener observer : observers) {
+            if (observer != null) {
+                observer.onNextRow();
+            }
+        }
+    }
+
+    @Override
+    public void onSubmitRow() {
+        for (GameStateListener observer : observers) {
+            if (observer != null) {
+                observer.onSubmitRow();
+            }
+        }
+    }
 }

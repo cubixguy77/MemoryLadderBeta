@@ -6,5 +6,6 @@ public interface GameStateListener {
     void onMemorizationStart();
     void onTimeExpired();
     void onTransitionToRecall();
-
+    void onNextRow();
+    void onSubmitRow();
 }

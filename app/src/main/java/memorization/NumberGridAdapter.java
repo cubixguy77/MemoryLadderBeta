@@ -37,6 +37,24 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         return 0;
     }
 
+    public void onRowFilled() {
+        System.out.println("Row filled");
+    }
+
+    public void onHighlightPrev() {
+        System.out.println("Move highlight to " + (highlightPosition - 1));
+        highlightPosition--;
+
+        if (highlightPosition < 1) {
+            highlightPosition = 1;
+        }
+        else if (data.isRowMarker(highlightPosition)) {
+            highlightPosition--;
+        }
+
+        notifyDataSetChanged();
+    }
+
     public void onHighlightNext() {
         System.out.println("Move highlight to " + (highlightPosition + 1));
         highlightPosition++;
@@ -45,6 +63,14 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         }
 
         notifyDataSetChanged();
+    }
+
+    public void onHighlightPosition(int position, boolean forward) {
+        this.highlightPosition = position;
+        if (forward)
+            onHighlightNext();
+        else
+            onHighlightPrev();
     }
 
     private View getRowMarkerView(int position, View convertView) {
@@ -101,8 +127,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
 
         if (position == highlightPosition) {
             view.requestFocus();
-
-            //imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            view.setSelection(view.getText().length());
         }
         else {
             view.clearFocus();
@@ -177,5 +202,15 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         notifyDataSetChanged();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+    }
+
+    @Override
+    public void onNextRow() {
+
+    }
+
+    @Override
+    public void onSubmitRow() {
+
     }
 }

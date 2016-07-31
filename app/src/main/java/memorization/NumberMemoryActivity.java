@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +17,7 @@ public class NumberMemoryActivity extends Activity implements GameStateListener 
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView)  TimerView timer;
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
+    @BindView(R.id.floatingRecallMenu) LinearLayout floatingRecallMenu;
 
     private GameStateDispatch gameStateDispatch;
     private boolean started = false;
@@ -49,6 +51,15 @@ public class NumberMemoryActivity extends Activity implements GameStateListener 
         grid.onNextClick();
     }
 
+    @OnClick(R.id.nextRowButton) void onNextRowClick() {
+        gameStateDispatch.onNextRow();
+    }
+
+    @OnClick(R.id.submitRowButton) void onSubmitRowClick() {
+        gameStateDispatch.onSubmitRow();
+    }
+
+
 
     @Override
     public void onLoad() {
@@ -66,5 +77,16 @@ public class NumberMemoryActivity extends Activity implements GameStateListener 
     @Override
     public void onTransitionToRecall() {
         nextGroupButton.setVisibility(View.GONE);
+        floatingRecallMenu.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNextRow() {
+
+    }
+
+    @Override
+    public void onSubmitRow() {
+
     }
 }

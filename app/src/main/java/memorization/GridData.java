@@ -76,17 +76,33 @@ public class GridData implements RecallTextWatcher {
         return pos / (numCols);
     }
 
+    private boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
+
     @Override
     public void onTextChanged(int position, String newText) {
         System.out.println("Update position: " + position + " - New Text: " + newText);
+        String currentText = data[getRow(position)][getCol(position)];
 
-        boolean actualChange = (data[getRow(position)][getCol(position)] == null && (newText != null || newText != "")) ||
-                !(data[getRow(position)][getCol(position)].equals(newText));
+        boolean actualChange =
+                   (isNullOrEmpty(currentText) && !isNullOrEmpty(newText)) // first character entered
+                || (!isNullOrEmpty(currentText) && !isNullOrEmpty(newText) && !currentText.equals(newText)) // second character entered or erased
+                || (!isNullOrEmpty(currentText) && isNullOrEmpty(newText)); // first character erased
 
         if (actualChange) {
             data[getRow(position)][getCol(position)] = newText;
             if (newText.length() == numDigitsPerColumn) {
-                adapter.onHighlightNext();
+                if (getCol(position) == numCols-1) {
+                    adapter.onRowFilled();
+                }
+                else {
+                    adapter.onHighlightPosition(position, true);
+                }
+
+            }
+            else if (newText.length() == 0 && getCol(position) > 1) {
+                adapter.onHighlightPosition(position, false);
             }
         }
     }

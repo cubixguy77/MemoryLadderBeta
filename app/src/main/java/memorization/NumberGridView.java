@@ -51,4 +51,14 @@ public class NumberGridView extends GridView implements GameStateListener {
     public void onTransitionToRecall() {
 
     }
+
+    @Override
+    public void onNextRow() {
+
+    }
+
+    @Override
+    public void onSubmitRow() {
+
+    }
 }
