@@ -14,28 +14,31 @@ public class NumberGridView extends GridView implements GameStateLifeCycle {
     }
 
     public void onNextClick() {
-        ((NumberGridAdapter) getAdapter()).onNextClick();
+        adapter.onNextClick();
     }
 
     @Override
     public void onLoad() {
         data = new GridData(500, 2);
+        data.loadData();
         adapter = new NumberGridAdapter(getContext(), data);
         setAdapter(adapter);
+        adapter.onLoad();
     }
 
     @Override
     public void onMemorizationStart() {
-        adapter.showData();
+        adapter.onMemorizationStart();
     }
 
     @Override
     public void onTimeExpired() {
-
+        adapter.onTimeExpired();
+        this.onTransitionToRecall();
     }
 
     @Override
     public void onTransitionToRecall() {
-
+        adapter.onTransitionToRecall();
     }
 }

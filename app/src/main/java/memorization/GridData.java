@@ -2,7 +2,7 @@ package memorization;
 
 import java.util.Random;
 
-public class GridData {
+public class GridData implements RecallTextWatcher {
 
     private String[][] data;
     public int numRows;
@@ -12,17 +12,16 @@ public class GridData {
     public int numDigitsPerRow;
     private final String ROW_MARKER = "ROW_MARKER";
 
-    public GridData(int numDigits, int numDigitsPerColumn) {
+    public GridData(int numDigits, int numDigitsPerColumn)  {
         this.numDigits = numDigits;
         this.numDigitsPerColumn = numDigitsPerColumn;
         this.numCols = calculateNumColumns(numDigits, numDigitsPerColumn);
         this.numDigitsPerRow = (numCols - 1) * numDigitsPerColumn;
         this.numRows = numDigits / numDigitsPerRow;
-        this.loadData();
+        data = new String[numRows][numCols];
     }
 
     public void loadData() {
-        data = new String[numRows][numCols];
         Random rand = new Random();
 
         int randMax = (int) Math.pow(10, numDigitsPerColumn);
@@ -39,7 +38,7 @@ public class GridData {
     }
 
     public String getText(int position) {
-        return getValue(position);
+        return getValue(position) == null ? "" : getValue(position);
     }
 
     public int getNumCells() {
@@ -70,5 +69,11 @@ public class GridData {
 
     private int getRow(int pos) {
         return pos / (numCols);
+    }
+
+    @Override
+    public void onTextChanged(int position, String newText) {
+        System.out.println("Update position: " + position + " - New Text: " + newText);
+        data[getRow(position)][getCol(position)] = newText;
     }
 }

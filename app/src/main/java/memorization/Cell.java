@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class Cell extends TextView {
     public Cell(Context context, AttributeSet attrs) {
         super(context, attrs);
         setTextSize(30);
+        setGravity(Gravity.CENTER);
         //setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.MATCH_PARENT));
         //AbsListView.LayoutParams params = (AbsListView.LayoutParams) getLayoutParams();
         //params.height = getWidth();
@@ -35,7 +37,7 @@ public class Cell extends TextView {
 
     public void setAsHiddenDataCell() {
         setAsDataCell();
-        setText("_ _");
+        setText("__");
     }
 
     public void setSelected(boolean isSelected) {

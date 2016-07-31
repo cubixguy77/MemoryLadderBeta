@@ -5,12 +5,14 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import memorization.GameEventListener;
 import memorization.GameStateLifeCycle;
 
 public class TimerView extends TextView implements TimerUpdateListener, GameStateLifeCycle {
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
+    private GameStateLifeCycle gameEventListener;
 
     public TimerView(Context context) {
         super(context);
@@ -38,11 +40,13 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
         setText(TimeModel.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? seconds : model.timeLimitInSeconds - seconds));
     }
 
-
+    public void setGameStateLifeCycleListener(GameStateLifeCycle listener) {
+        this.gameEventListener = listener;
+    }
 
     @Override
     public void onLoad() {
-        setModel(new TimerModel(CountDirection.DOWN, true, 10, true));
+        setModel(new TimerModel(CountDirection.DOWN, true, 4, true));
         onTimeUpdate(model.timeLimitInSeconds);
     }
 
@@ -54,6 +58,7 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     @Override
     public void onTimeExpired() {
         System.out.println("Time Expired!");
+        gameEventListener.onTimeExpired();
     }
 
     @Override

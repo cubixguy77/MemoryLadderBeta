@@ -28,6 +28,7 @@ public class NumberMemoryActivity extends Activity implements GameEventListener 
 
         grid.onLoad();
         timer.onLoad();
+        timer.setGameStateLifeCycleListener(grid);
     }
 
 

@@ -6,17 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class NumberGridAdapter extends BaseAdapter {
+import recall.RecallCell;
+
+public class NumberGridAdapter extends BaseAdapter implements GameStateLifeCycle {
 
     private Context context;
     private GridData data;
     private int highlightPosition = 1;
-    private boolean dataVisible = false;
+    private GameState gameState;
+    private GridData recallData;
 
     public NumberGridAdapter(Context context, GridData data)
     {
         this.context = context;
         this.data = data;
+        this.gameState = GameState.MEMORIZATION;
     }
 
     @Override
@@ -43,13 +47,23 @@ public class NumberGridAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void showData() {
-        dataVisible = true;
-        notifyDataSetChanged();
+    private View getRowMarkerView(int position, View convertView) {
+        Cell view;
+        if (convertView == null) {
+            view = new Cell(context, null);
+        }
+        else if (convertView instanceof RecallCell)
+            view = new Cell(context, null);
+        else
+            view = (Cell) convertView;
+
+        view.setAsRowMarker();
+        view.setText(Integer.toString(data.getRowNumber(position)));
+
+        return view;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-
+    public View getViewMemorization(int position, View convertView) {
         Cell view;
         if (convertView == null) {
             view = new Cell(context, null);
@@ -58,30 +72,99 @@ public class NumberGridAdapter extends BaseAdapter {
         else
             view = (Cell) convertView;
 
-        boolean isViewRowMarker = data.isRowMarker(position);
-        if (isViewRowMarker)
-        {
-            view.setAsRowMarker();
-            view.setText(Integer.toString(data.getRowNumber(position)));
+        view.setAsDataCell();
+        view.setText(data.getText(position));
+
+        if (position == highlightPosition) {
+            view.setSelected(true);
         }
-        else
-        {
-            if (!dataVisible) {
-                view.setAsHiddenDataCell();
-                return view;
-            }
-
-            view.setAsDataCell();
-            view.setText(data.getText(position));
-
-            if (position == highlightPosition) {
-                view.setSelected(true);
-            }
-            else {
-                view.setSelected(false);
-            }
+        else {
+            view.setSelected(false);
         }
 
         return view;
+    }
+
+    public View getViewRecall(int position, View convertView) {
+        RecallCell view;
+        if (convertView == null) {
+            view = new RecallCell(context, null);
+        }
+        else if (convertView instanceof Cell)
+            view = new RecallCell(context, null);
+        else
+            view = (RecallCell) convertView;
+
+        view.setPosition(position);
+        view.setText(recallData.getText(position));
+        view.addRecallTextWatcher(recallData);
+
+        System.out.println("set view pos: " + position + "  to value " + recallData.getText(position));
+
+        return view;
+    }
+
+
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+        boolean isViewRowMarker = data.isRowMarker(position);
+        if (isViewRowMarker)
+        {
+            return getRowMarkerView(position, convertView);
+        }
+
+        if (gameState == GameState.PRE_MEMORIZATION) {
+            return getViewPreMemorization(convertView);
+        }
+
+        if (gameState == GameState.MEMORIZATION) {
+            return getViewMemorization(position, convertView);
+        }
+
+        if (gameState == GameState.RECALL) {
+            return getViewRecall(position, convertView);
+        }
+
+        return null;
+    }
+
+    private View getViewPreMemorization(View convertView) {
+        Cell view;
+        if (convertView == null) {
+            view = new Cell(context, null);
+        }
+        else
+            view = (Cell) convertView;
+
+        view.setAsHiddenDataCell();
+        return view;
+    }
+
+
+
+
+    @Override
+    public void onLoad() {
+        gameState = GameState.PRE_MEMORIZATION;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onMemorizationStart() {
+        gameState = GameState.MEMORIZATION;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onTimeExpired() {
+
+    }
+
+    @Override
+    public void onTransitionToRecall() {
+        System.out.println("Adapter: Transition to RECALL");
+        gameState = GameState.RECALL;
+        recallData = new GridData(500, 2);
+        notifyDataSetChanged();
     }
 }
