@@ -9,6 +9,7 @@ import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ public class RecallCell extends EditText {
 
     private int position;
     private final int maxDigits = 2;
-    private RecallTextWatcher watcher;
+    private int highlightedPosition;
 
 
     public RecallCell(Context context, AttributeSet attrs) {
@@ -45,6 +46,10 @@ public class RecallCell extends EditText {
         this.position = position;
     }
 
+    public void setHighlightedPosition(int highlightedPosition) {
+        this.highlightedPosition = highlightedPosition;
+    }
+
     public void addRecallTextWatcher(final RecallTextWatcher watcher) {
         addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -53,14 +58,25 @@ public class RecallCell extends EditText {
             }
             @Override public void afterTextChanged(Editable s) {
                 if (watcher != null) {
+                    System.out.println("Change focus to position " + position);
                     watcher.onTextChanged(position, s.toString());
                 }
             }});
     }
 
-    public void removeRecallTextWatcher() {
-        watcher = null;
+    @Override
+    public void setOnFocusChangeListener(OnFocusChangeListener l) {
+        super.setOnFocusChangeListener(l);
     }
 
-
+    public void setRecallFocusChangeListener(final PositionChangeListener listener) {
+        setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus && position != highlightedPosition) {
+                    listener.onPositionChange(position);
+                }
+            }
+        });
+    }
 }

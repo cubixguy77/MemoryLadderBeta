@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 
+import recall.PositionChangeListener;
 import recall.RecallCell;
 import review.Result;
 import review.ReviewCell;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall {
+public class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall, PositionChangeListener {
 
     private Context context;
     private GridData memoryData;
@@ -65,6 +66,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
     public void onHighlightNext() {
         highlightPosition++;
         if (highlightPosition >= memoryData.getNumCells() - 1) {
+            highlightPosition = memoryData.getNumCells() - 1;
             Bus.getBus().onDisableNext();
         }
         else if (memoryData.isRowMarker(highlightPosition)) {
@@ -134,8 +136,10 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
             view = (RecallCell) convertView;
 
         view.setPosition(position);
+        view.setHighlightedPosition(highlightPosition);
         view.setText(recallData.getText(position));
         view.addRecallTextWatcher(recallData);
+        view.setRecallFocusChangeListener(this);
 
         if (position == highlightPosition) {
             view.requestFocus();
@@ -275,5 +279,11 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         }
 
         notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onPositionChange(int newPosition) {
+        highlightPosition = newPosition;
     }
 }
