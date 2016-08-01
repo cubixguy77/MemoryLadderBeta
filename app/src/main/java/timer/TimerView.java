@@ -1,12 +1,17 @@
 package timer;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
 import memorization.GameStateDispatch;
 import memorization.GameStateListener;
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
+import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 
 public class TimerView extends TextView implements TimerUpdateListener, GameStateListener {
 
@@ -52,9 +57,16 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     }
 
     @Override
-    public void onLoad() {
-        setModel(new TimerModel(CountDirection.DOWN, true, 4, true));
-        onTimeUpdate(model.timeLimitInSeconds);
+    public void onLoad(Challenge challenge) {
+        final Setting timerSetting = NumberChallenge.getMemTimerSetting(challenge);
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                setModel(new TimerModel(timerSetting));
+                onTimeUpdate(model.timeLimitInSeconds);
+            }
+        });
     }
 
     @Override

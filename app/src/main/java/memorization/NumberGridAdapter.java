@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 
 import recall.RecallCell;
 import review.ReviewCell;
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
 public class NumberGridAdapter extends BaseAdapter implements GameStateListener {
 
@@ -197,7 +198,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
 
 
     @Override
-    public void onLoad() {
+    public void onLoad(Challenge challenge) {
         notifyDataSetChanged();
     }
 

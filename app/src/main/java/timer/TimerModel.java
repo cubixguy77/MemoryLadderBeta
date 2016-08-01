@@ -1,5 +1,7 @@
 package timer;
 
+import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+
 public class TimerModel {
 
     CountDirection countDirection;
@@ -14,4 +16,7 @@ public class TimerModel {
         this.timerEnabled = timerEnabled;
     }
 
+    public TimerModel(Setting timerSetting) {
+        this(CountDirection.UP, true, 4, true);
+    }
 }

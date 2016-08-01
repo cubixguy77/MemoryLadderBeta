@@ -19,16 +19,13 @@ public class MemoryCell extends TextView {
         super(context, attrs);
         setTextSize(30);
         setGravity(Gravity.CENTER);
-        //setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.MATCH_PARENT));
-        //AbsListView.LayoutParams params = (AbsListView.LayoutParams) getLayoutParams();
-        //params.height = getWidth();
-        //setLayoutParams(params);
         setLayoutParams(new AbsListView.LayoutParams(190, 190));
         isSelected = false;
     }
 
     public void setAsRowMarker() {
-        setTextColor(Color.MAGENTA);
+        setTextColor(Color.RED);
+        setBackgroundResource(0);
     }
 
     public void setAsDataCell() {

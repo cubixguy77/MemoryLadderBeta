@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+
 public class NumberGridView extends GridView implements GameStateListener {
 
     private GridData data;
@@ -33,7 +35,7 @@ public class NumberGridView extends GridView implements GameStateListener {
     }
 
     @Override
-    public void onLoad() {
+    public void onLoad(Challenge challenge) {
 
     }
 

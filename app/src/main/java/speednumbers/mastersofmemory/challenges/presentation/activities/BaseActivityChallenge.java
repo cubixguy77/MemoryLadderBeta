@@ -7,17 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import injection.components.ChallengeListComponent;
-import repository.IRepository;
-import speednumbers.mastersofmemory.challenges.MyApplication;
 import injection.HasComponent;
 import injection.components.ApplicationComponent;
+import injection.components.ChallengeComponent;
+import injection.components.ChallengeListComponent;
 import injection.modules.ActivityModule;
+import repository.IRepository;
+import speednumbers.mastersofmemory.challenges.MyApplication;
 
 /**
  * Base {@link Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends AppCompatActivity implements HasComponent<ChallengeListComponent> {
+public abstract class BaseActivityChallenge extends AppCompatActivity implements HasComponent<ChallengeComponent> {
 
   @Inject IRepository repo;
 

@@ -12,10 +12,6 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 import repository.IRepository;
 
-/**
- * This is an interactor boilerplate with a reference to a model repository.
- * <p/>
- */
 public class GetChallengeListInteractorImpl extends AbstractInteractor implements GetChallengeListInteractor {
 
     @Inject

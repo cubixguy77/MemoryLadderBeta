@@ -12,6 +12,7 @@ import executor.Executor;
 import executor.MainThread;
 import repository.IRepository;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivity;
+import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
 
 /**
  * A component whose lifetime is the life of the application.
@@ -20,6 +21,7 @@ import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActiv
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
   void inject(BaseActivity baseActivity);
+  void inject(BaseActivityChallenge baseActivity);
 
   //Exposed to sub-graphs.
   Context context();

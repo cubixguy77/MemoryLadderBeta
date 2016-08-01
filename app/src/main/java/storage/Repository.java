@@ -29,7 +29,10 @@ public class Repository implements IRepository {
         });
     }
 
-
+    @Override
+    public void getChallenge(long challengeKey, GetChallengeCallback callback) {
+        db.getChallenge(challengeKey, callback);
+    }
 
 
     @Override

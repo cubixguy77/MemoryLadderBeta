@@ -1,7 +1,8 @@
 package memorization;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
 public class GameStateDispatch implements  GameStateListener {
 
@@ -19,12 +20,12 @@ public class GameStateDispatch implements  GameStateListener {
     }
 
     @Override
-    public void onLoad() {
+    public void onLoad(Challenge challenge) {
         gameSate = GameState.PRE_MEMORIZATION;
 
         for (GameStateListener observer : observers) {
             if (observer != null) {
-                observer.onLoad();
+                observer.onLoad(challenge);
             }
         }
     }

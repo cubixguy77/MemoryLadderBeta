@@ -24,9 +24,13 @@ public interface IRepository {
         void onChallengeAdded(Challenge challenge);
     }
 
+    interface GetChallengeCallback {
+        void onChallengeLoaded(Challenge challenge);
+    }
+
     void getGameList(GetGamesCallback callback);
 
-
+    void getChallenge(long challengeKey, GetChallengeCallback callback);
     void getChallengeList(long gameKey, GetChallengesCallback callback);
     boolean deleteChallenge(Challenge challenge);
     boolean insertChallenge(Challenge challenge, AddedChallengeCallback callback);
