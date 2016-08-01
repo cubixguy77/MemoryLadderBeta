@@ -17,6 +17,6 @@ public class TimerModel {
     }
 
     public TimerModel(Setting timerSetting) {
-        this(CountDirection.UP, true, 4, true);
+        this(CountDirection.DOWN, true, 4, true);
     }
 }

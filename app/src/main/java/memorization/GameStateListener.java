@@ -1,5 +1,6 @@
 package memorization;
 
+import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
 public interface GameStateListener {
@@ -8,6 +9,6 @@ public interface GameStateListener {
     void onMemorizationStart();
     void onTimeExpired();
     void onTransitionToRecall();
-    void onNextRow();
-    void onSubmitRow();
+    void onRecallComplete(Result result);
+
 }

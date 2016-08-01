@@ -7,8 +7,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import memorization.GameStateDispatch;
+import memorization.Bus;
 import memorization.GameStateListener;
+import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
@@ -17,7 +18,6 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
-    private GameStateListener gameEventListener;
 
     public TimerView(Context context) {
         super(context);
@@ -48,12 +48,11 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     @Override
     public void onTimeCountdownComplete() {
         System.out.println("Time Expired!");
-        gameEventListener.onTimeExpired();
+        Bus.getBus().onTimeExpired();
     }
 
-    public void setGameStateLifeCycleListener(GameStateDispatch dispatcher) {
-        this.gameEventListener = dispatcher;
-        dispatcher.subscribe(this);
+    public void setGameStateLifeCycleListener() {
+        Bus.getBus().subscribe(this);
     }
 
     @Override
@@ -81,23 +80,14 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     public void onTransitionToRecall() {    }
 
     @Override
-    public void onNextRow() {
-
-    }
-
-    @Override
-    public void onSubmitRow() {
-
-    }
+    public void onRecallComplete(Result result) {   }
 
     public void start() {
         timerActionListener.startTimer();
     }
-
     public void pause() {
         timerActionListener.pauseTimer();
     }
-
     public void cancel() {
         timerActionListener.cancelTimer();
     }

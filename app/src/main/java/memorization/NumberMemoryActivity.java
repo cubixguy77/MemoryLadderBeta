@@ -1,7 +1,6 @@
 package memorization;
 
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -14,13 +13,14 @@ import butterknife.OnClick;
 import injection.components.ChallengeComponent;
 import injection.components.DaggerChallengeComponent;
 import injection.modules.ChallengeModule;
+import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 import timer.TimerView;
 
-public class NumberMemoryActivity extends BaseActivityChallenge implements GameStateListener, GetChallengeInteractor.Callback {
+public class NumberMemoryActivity extends BaseActivityChallenge implements GameStateListener, GridEvent.Memory.ViewEvents, GetChallengeInteractor.Callback {
 
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView)  TimerView timer;
@@ -29,7 +29,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     private long challengeKey = 2;
     private ChallengeComponent challengeComponent;
-    private GameStateDispatch gameStateDispatch;
     private boolean started = false;
     @Inject public GetChallengeInteractor getChallengeInteractor;
 
@@ -41,11 +40,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         initializeInjector();
         challengeComponent.inject(this);
 
-        gameStateDispatch = new GameStateDispatch();
-        grid.setGameStateLifeCycleListener(gameStateDispatch);
-        timer.setGameStateLifeCycleListener(gameStateDispatch);
-        gameStateDispatch.subscribe(this);
-
+        grid.setGameStateLifeCycleListener();
+        timer.setGameStateLifeCycleListener();
+        Bus.getBus().subscribe(this);
     }
 
     @Override
@@ -73,20 +70,20 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             started = true;
             nextGroupButton.setImageResource(R.drawable.ic_arrow_right);
 
-            gameStateDispatch.onMemorizationStart();
+            Bus.getBus().onMemorizationStart();
 
             return;
         }
 
-        grid.onNextClick();
+        Bus.getBus().onNext();
     }
 
     @OnClick(R.id.nextRowButton) void onNextRowClick() {
-        gameStateDispatch.onNextRow();
+        Bus.getBus().onNextRow();
     }
 
     @OnClick(R.id.submitRowButton) void onSubmitRowClick() {
-        gameStateDispatch.onSubmitRow();
+        Bus.getBus().onSubmitRow();
     }
 
 
@@ -101,7 +98,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onTimeExpired() {
-        gameStateDispatch.onTransitionToRecall();
+        Bus.getBus().onTransitionToRecall();
     }
 
     @Override
@@ -111,32 +108,55 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         floatingRecallMenu.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onNextRow() {
-        //grid.onNextRow();
-    }
+
 
     @Override
-    public void onSubmitRow() {
-        //grid.onSubmitRow();
+    public void onRecallComplete(Result result) {
+        System.out.println("Recall complete!");
+        floatingRecallMenu.setVisibility(View.GONE);
     }
 
     @Override
     public void onChallengeLoaded(Challenge challenge) {
-        gameStateDispatch.onLoad(challenge);
+        Bus.getBus().onLoad(challenge);
     }
 
 
     private void initializeInjector() {
         this.challengeComponent = DaggerChallengeComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .challengeModule(new ChallengeModule(challengeKey))
-                .build();
+            .applicationComponent(getApplicationComponent())
+            .activityModule(getActivityModule())
+            .challengeModule(new ChallengeModule(challengeKey))
+            .build();
     }
 
     @Override
     public ChallengeComponent getComponent() {
         return challengeComponent;
+    }
+
+
+
+
+
+
+    @Override
+    public void onDisablePrev() {
+
+    }
+
+    @Override
+    public void onDisableNext() {
+        nextGroupButton.setEnabled(false);
+    }
+
+    @Override
+    public void onEnablePrev() {
+
+    }
+
+    @Override
+    public void onEnableNext() {
+        nextGroupButton.setEnabled(true);
     }
 }

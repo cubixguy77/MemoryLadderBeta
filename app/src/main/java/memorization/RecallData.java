@@ -1,10 +1,17 @@
 package memorization;
 
 import recall.RecallTextWatcher;
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
 public class RecallData extends GridData implements RecallTextWatcher {
 
     private boolean[][] reviewCell;
+    private int rowsRecalled = 0;
+
+    public RecallData(Challenge challenge) {
+        super(challenge);
+        reviewCell = new boolean[numRows][numCols];
+    }
 
     public RecallData(int numDigits, int numDigitsPerColumn) {
         super(numDigits, numDigitsPerColumn);
@@ -15,6 +22,12 @@ public class RecallData extends GridData implements RecallTextWatcher {
         for (int col=0; col<numCols; col++) {
             reviewCell[row][col] = true;
         }
+
+        rowsRecalled++;
+    }
+
+    public boolean allRowsSubmitted() {
+        return rowsRecalled >= numRows;
     }
 
     public boolean isReviewCell(int position) {

@@ -8,25 +8,27 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 
 import recall.RecallCell;
+import review.Result;
 import review.ReviewCell;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class NumberGridAdapter extends BaseAdapter implements GameStateListener {
+public class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall {
 
     private Context context;
-    private GridData data;
-    private int highlightPosition = 1;
+    private GridData memoryData;
     private RecallData recallData;
+    private int highlightPosition = 1;
+    private Challenge challenge;
 
-    public NumberGridAdapter(Context context, GridData data)
+    public NumberGridAdapter(Context context)
     {
         this.context = context;
-        this.data = data;
+        Bus.getBus().subscribe(this);
     }
 
     @Override
     public int getCount() {
-        return data.getNumCells();
+        return memoryData == null ? 0 : memoryData.getNumCells();
     }
 
     @Override
@@ -44,24 +46,32 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
     }
 
     public void onHighlightPrev() {
-        System.out.println("Move highlight to " + (highlightPosition - 1));
         highlightPosition--;
 
         if (highlightPosition < 1) {
             highlightPosition = 1;
+            Bus.getBus().onDisablePrev();
         }
-        else if (data.isRowMarker(highlightPosition)) {
+        else if (memoryData.isRowMarker(highlightPosition)) {
             highlightPosition--;
+        }
+        else if (highlightPosition == memoryData.getNumCells() - 2) {
+            Bus.getBus().onEnableNext();
         }
 
         notifyDataSetChanged();
     }
 
     public void onHighlightNext() {
-        System.out.println("Move highlight to " + (highlightPosition + 1));
         highlightPosition++;
-        if (data.isRowMarker(highlightPosition)) {
+        if (highlightPosition >= memoryData.getNumCells() - 1) {
+            Bus.getBus().onDisableNext();
+        }
+        else if (memoryData.isRowMarker(highlightPosition)) {
             highlightPosition++;
+        }
+        else if (highlightPosition == 2) {
+            Bus.getBus().onEnablePrev();
         }
 
         notifyDataSetChanged();
@@ -86,7 +96,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
             view = (MemoryCell) convertView;
 
         view.setAsRowMarker();
-        view.setText(Integer.toString(data.getRowNumber(position)));
+        view.setText(Integer.toString(memoryData.getRowNumber(position)));
 
         return view;
     }
@@ -101,7 +111,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
             view = (MemoryCell) convertView;
 
         view.setAsDataCell();
-        view.setText(data.getText(position));
+        view.setText(memoryData.getText(position));
 
         if (position == highlightPosition) {
             view.setSelected(true);
@@ -135,8 +145,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
             view.clearFocus();
         }
 
-        System.out.println("set view pos: " + position + "  to value " + recallData.getText(position));
-
         return view;
     }
 
@@ -150,7 +158,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         else
             view = (ReviewCell) convertView;
 
-        view.setModel(data.getText(position), recallData.getText(position));
+        view.setModel(memoryData.getText(position), recallData.getText(position));
 
         return view;
     }
@@ -158,21 +166,21 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
 
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        boolean isViewRowMarker = data.isRowMarker(position);
+        boolean isViewRowMarker = memoryData.isRowMarker(position);
         if (isViewRowMarker)
         {
             return getRowMarkerView(position, convertView);
         }
 
-        if (GameStateDispatch.gameSate == GameState.PRE_MEMORIZATION) {
+        if (Bus.gameSate == GameState.PRE_MEMORIZATION) {
             return getViewPreMemorization(convertView);
         }
 
-        if (GameStateDispatch.gameSate == GameState.MEMORIZATION) {
+        if (Bus.gameSate == GameState.MEMORIZATION) {
             return getViewMemorization(position, convertView);
         }
 
-        if (GameStateDispatch.gameSate == GameState.RECALL) {
+        if (Bus.gameSate == GameState.RECALL) {
             if (recallData.isReviewCell(position))
                 return getViewReview(position, convertView);
             else
@@ -199,6 +207,10 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
 
     @Override
     public void onLoad(Challenge challenge) {
+        this.challenge = challenge;
+        memoryData = new GridData(challenge);
+        memoryData.loadData();
+        memoryData.setAdapter(this);
         notifyDataSetChanged();
     }
 
@@ -215,9 +227,8 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
 
     @Override
     public void onTransitionToRecall() {
-        System.out.println("Adapter: Transition to RECALL");
         highlightPosition = 1;
-        recallData = new RecallData(500, 2);
+        recallData = new RecallData(challenge);
         recallData.setAdapter(this);
         notifyDataSetChanged();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -225,15 +236,44 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
     }
 
     @Override
-    public void onNextRow() {
+    public void onRecallComplete(Result result) {
 
+    }
+
+
+
+
+
+
+
+    @Override
+    public void onPrev() {
+        onHighlightPrev();
+    }
+
+    @Override
+    public void onNext() {
+        onHighlightNext();
+    }
+
+
+
+
+    @Override
+    public void onNextRow() {
+        onHighlightNext();
     }
 
     @Override
     public void onSubmitRow() {
         recallData.onSubmitRow(recallData.getRow(highlightPosition));
-        onHighlightNext();
-        notifyDataSetChanged();
+        if (recallData.allRowsSubmitted()) {
+            Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
+        }
+        else {
+            onHighlightNext();
+        }
 
+        notifyDataSetChanged();
     }
 }

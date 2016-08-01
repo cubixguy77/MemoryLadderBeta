@@ -2,6 +2,8 @@ package memorization;
 
 import java.util.Random;
 
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+
 public class GridData {
 
     private String[][] data;
@@ -12,6 +14,10 @@ public class GridData {
     public int numDigitsPerRow;
     private final String ROW_MARKER = "ROW_MARKER";
     private NumberGridAdapter adapter;
+
+    public GridData(Challenge challenge) {
+        this(20, 2);
+    }
 
     public GridData(int numDigits, int numDigitsPerColumn)  {
         this.numDigits = numDigits;

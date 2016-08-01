@@ -6,61 +6,17 @@ import android.widget.GridView;
 
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class NumberGridView extends GridView implements GameStateListener {
+public class NumberGridView extends GridView {
 
-    private GridData data;
     private NumberGridAdapter adapter;
-    private GameStateListener gameEventListener; // send events triggered by grid to this
-    private GameStateDispatch dispatcher;
 
     public NumberGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void onNextClick() {
-        adapter.onHighlightNext();
-    }
-
-    public void setGameStateLifeCycleListener(GameStateDispatch dispatcher) {
-        this.gameEventListener = dispatcher;
-        this.dispatcher = dispatcher;
-        dispatcher.subscribe(this);
-
-        data = new GridData(500, 2);
-        data.loadData();
-        adapter = new NumberGridAdapter(getContext(), data);
+    public void setGameStateLifeCycleListener() {
+        Bus.getBus().subscribe(this);
+        adapter = new NumberGridAdapter(getContext());
         setAdapter(adapter);
-        data.setAdapter(adapter);
-        dispatcher.subscribe(adapter);
-    }
-
-    @Override
-    public void onLoad(Challenge challenge) {
-
-    }
-
-    @Override
-    public void onMemorizationStart() {
-
-    }
-
-    @Override
-    public void onTimeExpired() {
-
-    }
-
-    @Override
-    public void onTransitionToRecall() {
-
-    }
-
-    @Override
-    public void onNextRow() {
-
-    }
-
-    @Override
-    public void onSubmitRow() {
-
     }
 }
