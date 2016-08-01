@@ -8,13 +8,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 
 import recall.RecallCell;
+import review.ReviewCell;
 
 public class NumberGridAdapter extends BaseAdapter implements GameStateListener {
 
     private Context context;
     private GridData data;
     private int highlightPosition = 1;
-    private GridData recallData;
+    private RecallData recallData;
 
     public NumberGridAdapter(Context context, GridData data)
     {
@@ -74,14 +75,14 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
     }
 
     private View getRowMarkerView(int position, View convertView) {
-        Cell view;
+        MemoryCell view;
         if (convertView == null) {
-            view = new Cell(context, null);
+            view = new MemoryCell(context, null);
         }
-        else if (convertView instanceof RecallCell)
-            view = new Cell(context, null);
+        else if (convertView instanceof RecallCell || convertView instanceof ReviewCell)
+            view = new MemoryCell(context, null);
         else
-            view = (Cell) convertView;
+            view = (MemoryCell) convertView;
 
         view.setAsRowMarker();
         view.setText(Integer.toString(data.getRowNumber(position)));
@@ -90,13 +91,13 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
     }
 
     public View getViewMemorization(int position, View convertView) {
-        Cell view;
+        MemoryCell view;
         if (convertView == null) {
-            view = new Cell(context, null);
+            view = new MemoryCell(context, null);
             view.setGravity(Gravity.CENTER);
         }
         else
-            view = (Cell) convertView;
+            view = (MemoryCell) convertView;
 
         view.setAsDataCell();
         view.setText(data.getText(position));
@@ -116,7 +117,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         if (convertView == null) {
             view = new RecallCell(context, null);
         }
-        else if (convertView instanceof Cell)
+        else if (convertView instanceof MemoryCell || convertView instanceof ReviewCell)
             view = new RecallCell(context, null);
         else
             view = (RecallCell) convertView;
@@ -134,6 +135,21 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         }
 
         System.out.println("set view pos: " + position + "  to value " + recallData.getText(position));
+
+        return view;
+    }
+
+    public View getViewReview(int position, View convertView) {
+        ReviewCell view;
+        if (convertView == null) {
+            view = new ReviewCell(context, null);
+        }
+        else if (convertView instanceof MemoryCell || convertView instanceof  RecallCell)
+            view = new ReviewCell(context, null);
+        else
+            view = (ReviewCell) convertView;
+
+        view.setModel(data.getText(position), recallData.getText(position));
 
         return view;
     }
@@ -156,19 +172,22 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
         }
 
         if (GameStateDispatch.gameSate == GameState.RECALL) {
-            return getViewRecall(position, convertView);
+            if (recallData.isReviewCell(position))
+                return getViewReview(position, convertView);
+            else
+                return getViewRecall(position, convertView);
         }
 
         return null;
     }
 
     private View getViewPreMemorization(View convertView) {
-        Cell view;
+        MemoryCell view;
         if (convertView == null) {
-            view = new Cell(context, null);
+            view = new MemoryCell(context, null);
         }
         else
-            view = (Cell) convertView;
+            view = (MemoryCell) convertView;
 
         view.setAsHiddenDataCell();
         return view;
@@ -197,7 +216,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
     public void onTransitionToRecall() {
         System.out.println("Adapter: Transition to RECALL");
         highlightPosition = 1;
-        recallData = new GridData(500, 2);
+        recallData = new RecallData(500, 2);
         recallData.setAdapter(this);
         notifyDataSetChanged();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -211,6 +230,9 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener 
 
     @Override
     public void onSubmitRow() {
+        recallData.onSubmitRow(recallData.getRow(highlightPosition));
+        onHighlightNext();
+        notifyDataSetChanged();
 
     }
 }

@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class Cell extends TextView {
+public class MemoryCell extends TextView {
 
     private boolean isSelected;
 
-    public Cell(Context context, AttributeSet attrs) {
+    public MemoryCell(Context context, AttributeSet attrs) {
         super(context, attrs);
         setTextSize(30);
         setGravity(Gravity.CENTER);
@@ -45,12 +45,10 @@ public class Cell extends TextView {
         this.isSelected = isSelected;
 
         if (this.isSelected) {
-            setTypeface(null, Typeface.BOLD);
             setTextColor(Color.WHITE);
             setBackgroundResource(R.drawable.shape_rounded_corners);
         }
         else {
-            setTypeface(null, Typeface.NORMAL);
             setTextColor(Color.BLACK);
             setBackgroundResource(0);
         }

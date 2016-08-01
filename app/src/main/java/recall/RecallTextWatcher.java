@@ -1,4 +1,4 @@
-package memorization;
+package recall;
 
 public interface RecallTextWatcher {
 

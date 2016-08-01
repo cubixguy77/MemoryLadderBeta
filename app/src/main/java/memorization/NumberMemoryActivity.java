@@ -76,17 +76,18 @@ public class NumberMemoryActivity extends Activity implements GameStateListener 
 
     @Override
     public void onTransitionToRecall() {
+        timer.setVisibility(View.GONE);
         nextGroupButton.setVisibility(View.GONE);
         floatingRecallMenu.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onNextRow() {
-
+        //grid.onNextRow();
     }
 
     @Override
     public void onSubmitRow() {
-
+        //grid.onSubmitRow();
     }
 }

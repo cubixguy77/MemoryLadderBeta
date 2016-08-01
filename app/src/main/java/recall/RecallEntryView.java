@@ -1,4 +1,4 @@
-package memorization;
+package recall;
 
 import android.content.Context;
 import android.content.res.Resources;
