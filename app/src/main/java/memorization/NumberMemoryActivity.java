@@ -1,6 +1,8 @@
 package memorization;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -13,6 +15,7 @@ import butterknife.OnClick;
 import injection.components.ChallengeComponent;
 import injection.components.DaggerChallengeComponent;
 import injection.modules.ChallengeModule;
+import review.FinalScoreCardFragment;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
@@ -114,6 +117,11 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public void onRecallComplete(Result result) {
         System.out.println("Recall complete!");
         floatingRecallMenu.setVisibility(View.GONE);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = new FinalScoreCardFragment();
+        ft.add(R.id.parentMemoryContainer, fragment);
+        ft.commit();
     }
 
     @Override
