@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 
 import recall.PositionChangeListener;
 import recall.RecallCell;
+import recall.RecallData;
 import review.Result;
 import review.ReviewCell;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;

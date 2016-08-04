@@ -30,7 +30,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
     @BindView(R.id.floatingRecallMenu) LinearLayout floatingRecallMenu;
 
-    private long challengeKey = 2;
+    private long challengeKey = 3;
     private ChallengeComponent challengeComponent;
     private boolean started = false;
     @Inject public GetChallengeInteractor getChallengeInteractor;

@@ -1,5 +1,7 @@
-package memorization;
+package recall;
 
+import memorization.GridData;
+import memorization.NumberGridAdapter;
 import recall.RecallTextWatcher;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 

@@ -1,7 +1,7 @@
 package review;
 
 import memorization.GridData;
-import memorization.RecallData;
+import recall.RecallData;
 
 public class Result {
 
@@ -20,9 +20,9 @@ public class Result {
     }
 
     private void runCalculations() {
-        numDigitsAttempted = memory.getNumCells() - memory.numRows;
+        numDigitsAttempted = memory.getNumDigitsAttempted();
         calcNumDigitsRecalledCorrectly();
-        accuracy = numDigitsRecalledCorrectly / numDigitsAttempted;
+        accuracy = (int) ((double) 100*numDigitsRecalledCorrectly / numDigitsAttempted);
         memTime = 4;
         digitsPerMinute = (int) (numDigitsRecalledCorrectly / ((double) memTime / 60));
     }
@@ -30,11 +30,13 @@ public class Result {
     private void calcNumDigitsRecalledCorrectly() {
         String[][] memArray = memory.getData();
         String[][] recArray = recall.getData();
+        int digitsPerCell = memory.getNumDigitsPerColumn();
 
         for (int row=0; row<memory.numRows; row++) {
             for (int col=1; col<memory.numCols; col++) {
-                if (memArray[row][col].equals(recArray[row][col])) {
-                    numDigitsRecalledCorrectly++;
+                for (int c=0; c<digitsPerCell; c++) {
+                    if (memArray[row][col].charAt(c) == recArray[row][col].charAt(c))
+                        numDigitsRecalledCorrectly++;
                 }
             }
         }
@@ -53,7 +55,7 @@ public class Result {
     }
 
     public int getMemTime() {
-        return this.getMemTime();
+        return this.memTime;
     }
 
     public int getDigitsPerMinute() {

@@ -56,6 +56,14 @@ public class GridData {
         return numRows * numCols;
     }
 
+    public int getNumDigitsAttempted() {
+        return this.numDigits;
+    }
+
+    public int getNumDigitsPerColumn() {
+        return this.numDigitsPerColumn;
+    }
+
     public int getRowNumber(int position) {
         return this.getRow(position) + 1;
     }
