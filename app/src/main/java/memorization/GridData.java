@@ -82,7 +82,7 @@ public class GridData {
         return pos / (numCols);
     }
 
-    protected String[][] getData() {
+    public String[][] getData() {
         return data;
     }
 

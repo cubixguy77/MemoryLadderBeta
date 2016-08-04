@@ -119,8 +119,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         floatingRecallMenu.setVisibility(View.GONE);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = new FinalScoreCardFragment();
-        ft.add(R.id.parentMemoryContainer, fragment);
+        FinalScoreCardFragment finalScoreCardFragment = new FinalScoreCardFragment();
+        finalScoreCardFragment.setModel(result);
+        ft.add(R.id.parentMemoryContainer, finalScoreCardFragment);
         ft.commit();
     }
 

@@ -41,11 +41,11 @@ public class FinalScoreCardFragment extends android.support.v4.app.Fragment {
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recallNumberCorrect.setText("18");
-        digitsAttempted.setText("/ 20 Digits");
-        percentRecalled.setText("90%");
-        memTime.setText("23 sec");
-        digitSpeed.setText("22 dig");
+        recallNumberCorrect.setText(Integer.toString(result.getNumDigitsRecalledCorrectly()));
+        digitsAttempted.setText("/ " + result.getNumDigitsAttempted() + " Digits");
+        percentRecalled.setText(result.getAccuracy() + "%");
+        memTime.setText(result.getMemTime() + " Sec");
+        digitSpeed.setText(result.getDigitsPerMinute() + " Digits");
     }
 
     @Override public void onResume() {
