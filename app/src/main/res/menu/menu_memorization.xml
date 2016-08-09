@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_submit_memorization"
+        android:icon="@drawable/icon_submit"
+        android:title="Recall Button"
+        app:showAsAction="always"
+    />
+
+    <item
+        android:id="@+id/action_submit_recall"
+        android:icon="@drawable/icon_submit"
+        android:title="Submit Recall Button"
+        android:visible="false"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/action_replay"
+        android:icon="@drawable/icon_replay"
+        android:visible="false"
+        android:title="Replay Button"
+        app:showAsAction="always"
+        />
+
+</menu>

@@ -1,11 +1,13 @@
 package memorization;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.support.v7.widget.Toolbar;
 
 import javax.inject.Inject;
 
@@ -29,6 +31,11 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @BindView(R.id.timerView)  TimerView timer;
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
     @BindView(R.id.floatingRecallMenu) LinearLayout floatingRecallMenu;
+    @BindView(R.id.tool_bar) Toolbar toolbar;
+    private MenuItem submitMemButton;
+    private MenuItem submitRecallButton;
+    private MenuItem submitReplayButton;
+
 
     private long challengeKey = 3;
     private ChallengeComponent challengeComponent;
@@ -42,6 +49,11 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         ButterKnife.bind(this);
         initializeInjector();
         challengeComponent.inject(this);
+
+        setSupportActionBar(toolbar);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
+        this.getSupportActionBar().setTitle("Memorization");
 
         grid.setGameStateLifeCycleListener();
         timer.setGameStateLifeCycleListener();
@@ -67,6 +79,44 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     protected void onDestroy() { super.onDestroy();  }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_memorization, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        submitMemButton = menu.findItem(R.id.action_submit_memorization);
+        submitRecallButton = menu.findItem(R.id.action_submit_recall);
+        submitReplayButton = menu.findItem(R.id.action_replay);
+        setRecallIcon(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_submit_memorization) {
+            Bus.getBus().onTransitionToRecall();
+        }
+        else if (id == R.id.action_submit_recall) {
+            System.out.println("Submit recall clicked");
+            /// TODO: implement ability to complete recall
+        }
+        else if (id == R.id.action_replay) {
+            System.out.println("Submit replay clicked");
+            /// TODO: implement replay
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @OnClick(R.id.nextGroupButton) void onNextClick() {
         if (!started) {
@@ -89,7 +139,16 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         Bus.getBus().onSubmitRow();
     }
 
-
+    private void setRecallIcon(boolean enabled) {
+        if (enabled) {
+            submitMemButton.setEnabled(true);
+            submitMemButton.getIcon().setAlpha(255);
+        }
+        else {
+            submitMemButton.setEnabled(false);
+            submitMemButton.getIcon().setAlpha(130);
+        }
+    }
 
     @Override
     public void onLoad(Challenge challenge) {
@@ -97,6 +156,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onMemorizationStart() {
+        setRecallIcon(true);
+        System.out.println("start mem");
     }
 
     @Override
@@ -109,6 +170,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         timer.setVisibility(View.GONE);
         nextGroupButton.setVisibility(View.GONE);
         floatingRecallMenu.setVisibility(View.VISIBLE);
+        submitMemButton.setVisible(false);
+        submitRecallButton.setVisible(true);
+        toolbar.setTitle("Recall");
     }
 
 
@@ -117,6 +181,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public void onRecallComplete(Result result) {
         System.out.println("Recall complete!");
         floatingRecallMenu.setVisibility(View.GONE);
+        submitRecallButton.setVisible(false);
+        submitReplayButton.setVisible(true);
+        toolbar.setTitle("Results - " + result.getNumDigitsAttempted() + " Digits");
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         FinalScoreCardFragment finalScoreCardFragment = new FinalScoreCardFragment();
