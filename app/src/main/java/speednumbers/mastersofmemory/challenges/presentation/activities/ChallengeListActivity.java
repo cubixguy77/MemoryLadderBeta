@@ -4,18 +4,18 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import injection.components.ChallengeListComponent;
+import injection.components.DaggerChallengeListComponent;
+import injection.modules.ChallengeListModule;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import injection.components.ChallengeComponent;
-import injection.modules.ChallengeModule;
 import speednumbers.mastersofmemory.challenges.presentation.IAddChallengeListener;
 import speednumbers.mastersofmemory.challenges.presentation.IChallengeSelectionListener;
-import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivity;
 import speednumbers.mastersofmemory.challenges.presentation.fragments.ChallengeListFragment;
 import speednumbers.mastersofmemory.com.presentation.R;
-import injection.components.DaggerChallengeComponent;
 
 public class ChallengeListActivity extends BaseActivity implements IChallengeSelectionListener {
-    private ChallengeComponent challengeComponent;
+    private ChallengeListComponent challengeListComponent;
+    private long gameKey = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +30,16 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     }
 
     private void initializeInjector() {
-        this.challengeComponent = DaggerChallengeComponent.builder()
+        this.challengeListComponent = DaggerChallengeListComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
-                .challengeModule(new ChallengeModule(1))
+                .challengeListModule(new ChallengeListModule(gameKey))
                 .build();
     }
 
     @Override
-    public ChallengeComponent getComponent() {
-        return challengeComponent;
+    public ChallengeListComponent getComponent() {
+        return challengeListComponent;
     }
 
     @Override

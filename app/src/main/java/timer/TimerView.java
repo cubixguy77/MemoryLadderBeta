@@ -1,11 +1,20 @@
 package timer;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-public class TimerView extends TextView implements TimerUpdateListener {
+import memorization.Bus;
+import memorization.GameStateListener;
+import review.Result;
+import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
+import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+
+public class TimerView extends TextView implements TimerUpdateListener, GameStateListener {
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
@@ -26,7 +35,6 @@ public class TimerView extends TextView implements TimerUpdateListener {
         this.model = model;
         if (model.timerEnabled) {
             timerActionListener = new Timer(model, this);
-            onTimeUpdate(0);
         }
         else
             setVisibility(View.GONE);
@@ -38,18 +46,48 @@ public class TimerView extends TextView implements TimerUpdateListener {
     }
 
     @Override
-    public void onTimeExpired() {
+    public void onTimeCountdownComplete() {
         System.out.println("Time Expired!");
+        Bus.getBus().onTimeExpired();
     }
+
+    public void setGameStateLifeCycleListener() {
+        Bus.getBus().subscribe(this);
+    }
+
+    @Override
+    public void onLoad(Challenge challenge) {
+        final Setting timerSetting = NumberChallenge.getMemTimerSetting(challenge);
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                setModel(new TimerModel(timerSetting));
+                onTimeUpdate(model.timeLimitInSeconds);
+            }
+        });
+    }
+
+    @Override
+    public void onMemorizationStart() {
+        start();
+    }
+
+    @Override
+    public void onTimeExpired() {  }
+
+    @Override
+    public void onTransitionToRecall() {    }
+
+    @Override
+    public void onRecallComplete(Result result) {   }
 
     public void start() {
         timerActionListener.startTimer();
     }
-
     public void pause() {
         timerActionListener.pauseTimer();
     }
-
     public void cancel() {
         timerActionListener.cancelTimer();
     }

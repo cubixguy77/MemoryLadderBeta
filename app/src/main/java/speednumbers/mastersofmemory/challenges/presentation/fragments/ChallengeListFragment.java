@@ -15,10 +15,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import injection.components.ChallengeListComponent;
 import speednumbers.mastersofmemory.challenges.domain.interactors.AddChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.interactors.DeleteChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import injection.components.ChallengeComponent;
 import speednumbers.mastersofmemory.challenges.presentation.views.ChallengeCardNumbers;
 import speednumbers.mastersofmemory.challenges.presentation.presenters.ChallengeListPresenter;
 import speednumbers.mastersofmemory.challenges.presentation.IAddChallengeListener;
@@ -54,7 +54,7 @@ public class ChallengeListFragment extends BaseFragment implements IChallengeLis
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.getComponent(ChallengeComponent.class).inject(this);
+        this.getComponent(ChallengeListComponent.class).inject(this);
 
         this.challengeListPresenter.setView(this);
         if (savedInstanceState == null) {

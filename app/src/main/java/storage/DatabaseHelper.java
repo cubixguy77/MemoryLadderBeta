@@ -136,7 +136,58 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     }
 
 
+    @Override
+    public void getChallenge(long challengeKey, final IRepository.GetChallengeCallback callback) {
+        SQLiteDatabase db = getReadableDatabase();
+        Challenge challenge = null;
 
+        String SELECT_QUERY = String.format
+                (
+                        "SELECT " +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
+                                "FROM %s " +
+                                "WHERE %s.%s = %s",
+                        ChallengeTableContract.ChallengeTable.TABLE_NAME,
+                        ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY, challengeKey
+                );
+
+        Cursor cursor = db.rawQuery(SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    challenge = new Challenge
+                        (
+                            cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY)),
+                            cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY)),
+                            cursor.getString(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE)),
+                            cursor.getInt(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED)) == 1,
+                            null
+                        );
+                } while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("ERROR", "Error while trying to get challenges from database!");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+
+        if (challenge == null)
+            return;
+
+        final Challenge finalChallenge = challenge;
+        getSettingsList(challengeKey, new IRepository.GetSettingsCallback() {
+            @Override
+            public void onSettingsLoaded(List<Setting> settings) {
+                finalChallenge.setSettings(settings);
+                callback.onChallengeLoaded(finalChallenge);
+            }
+        });
+    }
 
 
     @Override

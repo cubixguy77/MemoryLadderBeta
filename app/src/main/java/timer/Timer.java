@@ -42,6 +42,6 @@ public class Timer extends CountDownTimer implements TimerActionListener {
 
     @Override
     public void onFinish() {
-        listener.onTimeExpired();
+        listener.onTimeCountdownComplete();
     }
 }
