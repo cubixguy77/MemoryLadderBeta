@@ -167,7 +167,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onTransitionToRecall() {
-        timer.setVisibility(View.GONE);
+        timer.setVisibility(View.INVISIBLE);
         nextGroupButton.setVisibility(View.GONE);
         floatingRecallMenu.setVisibility(View.VISIBLE);
         submitMemButton.setVisible(false);
