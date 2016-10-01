@@ -104,6 +104,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit_memorization) {
+            timer.cancel();
             Bus.getBus().onTransitionToRecall();
         }
         else if (id == R.id.action_submit_recall) {
