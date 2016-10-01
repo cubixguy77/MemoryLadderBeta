@@ -20,6 +20,7 @@ public interface GridEvent {
     interface Recall {
         void onNextRow();
         void onSubmitRow();
+        void onSubmitAllRows();
     }
 
 }

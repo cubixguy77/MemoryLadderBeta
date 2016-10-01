@@ -115,12 +115,14 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
-
-
-
-
-
-
+    @Override
+    public void onSubmitAllRows() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GridEvent.Recall) {
+                ((GridEvent.Recall) observer).onSubmitAllRows();
+            }
+        }
+    }
 
 
     @Override

@@ -12,7 +12,7 @@ public class GridData {
     public int numDigitsPerColumn;
     public int numDigits;
     public int numDigitsPerRow;
-    private final String ROW_MARKER = "ROW_MARKER";
+    private final String ROW_MARKER = "X";
     private NumberGridAdapter adapter;
 
     public GridData(Challenge challenge) {
@@ -69,7 +69,7 @@ public class GridData {
     }
 
     public boolean isRowMarker(int position) {
-        return getValue(position).equals(ROW_MARKER);
+        return getCol(position) == 0;
     }
 
     private String getValue(int position) {

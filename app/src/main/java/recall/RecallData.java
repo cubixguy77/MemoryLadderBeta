@@ -1,5 +1,6 @@
 package recall;
 
+import memorization.Bus;
 import memorization.GridData;
 import memorization.NumberGridAdapter;
 import recall.RecallTextWatcher;
@@ -26,6 +27,14 @@ public class RecallData extends GridData implements RecallTextWatcher {
         }
 
         rowsRecalled++;
+    }
+
+    public void submitAll() {
+        for (int row=0; row<numRows; row++) {
+            for (int col=0; col<numCols; col++) {
+                reviewCell[row][col] = true;
+            }
+        }
     }
 
     public boolean allRowsSubmitted() {

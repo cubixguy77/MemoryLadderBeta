@@ -64,6 +64,14 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         notifyDataSetChanged();
     }
 
+    private void moveHighlightPositionToNextRow(int position) {
+        if (recallData.getRow(position) >= recallData.numRows-1) // final row - don't advance position
+            return;
+
+        this.highlightPosition += (recallData.numCols - recallData.getCol(position)) + 1;
+        notifyDataSetChanged();
+    }
+
     public void onHighlightNext() {
         highlightPosition++;
         if (highlightPosition >= memoryData.getNumCells() - 1) {
@@ -252,6 +260,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
     }
 
 
+
     @Override
     public void onPrev() {
         onHighlightPrev();
@@ -267,20 +276,27 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
     @Override
     public void onNextRow() {
-        onHighlightNext();
+        moveHighlightPositionToNextRow(this.highlightPosition);
     }
 
     @Override
     public void onSubmitRow() {
         recallData.onSubmitRow(recallData.getRow(highlightPosition));
+        notifyDataSetChanged();
+        
         if (recallData.allRowsSubmitted()) {
             Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
         }
         else {
-            onHighlightNext();
+            moveHighlightPositionToNextRow(this.highlightPosition);
         }
+    }
 
+    @Override
+    public void onSubmitAllRows() {
+        recallData.submitAll();
         notifyDataSetChanged();
+        Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
     }
 
 

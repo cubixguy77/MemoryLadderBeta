@@ -110,11 +110,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             Bus.getBus().onTransitionToRecall();
         }
         else if (id == R.id.action_submit_recall) {
-            System.out.println("Submit recall clicked");
-            /// TODO: implement ability to complete recall
+            Bus.getBus().onSubmitAllRows();
         }
         else if (id == R.id.action_replay) {
-            System.out.println("Submit replay clicked");
             onPlayAgain();
         }
 
