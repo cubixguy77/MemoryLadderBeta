@@ -30,6 +30,12 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
+    public void unsubscribeAll() {
+        observers = null;
+        instance = null;
+    }
+
+
     @Override
     public void onLoad(Challenge challenge) {
         gameSate = GameState.PRE_MEMORIZATION;
@@ -81,10 +87,14 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
-
-
-
-
+    @Override
+    public void onPlayAgain() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GameStateListener) {
+                ((GameStateListener) observer).onPlayAgain();
+            }
+        }
+    }
 
 
     @Override

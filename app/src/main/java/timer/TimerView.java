@@ -82,6 +82,11 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     @Override
     public void onRecallComplete(Result result) {   }
 
+    @Override
+    public void onPlayAgain() {
+
+    }
+
     public void start() {
         timerActionListener.startTimer();
     }

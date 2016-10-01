@@ -10,5 +10,6 @@ public interface GameStateListener {
     void onTimeExpired();
     void onTransitionToRecall();
     void onRecallComplete(Result result);
+    void onPlayAgain();
 
 }

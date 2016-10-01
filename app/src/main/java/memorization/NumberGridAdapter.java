@@ -246,10 +246,10 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
     }
 
+    @Override
+    public void onPlayAgain() {
 
-
-
-
+    }
 
 
     @Override

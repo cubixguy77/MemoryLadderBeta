@@ -1,5 +1,6 @@
 package memorization;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
@@ -36,10 +37,10 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private MenuItem submitRecallButton;
     private MenuItem submitReplayButton;
 
-
     private long challengeKey = 3;
     private ChallengeComponent challengeComponent;
     private boolean started = false;
+    private Intent starterIntent;
     @Inject public GetChallengeInteractor getChallengeInteractor;
 
     @Override
@@ -49,6 +50,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         ButterKnife.bind(this);
         initializeInjector();
         challengeComponent.inject(this);
+        starterIntent = getIntent();
 
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,7 +115,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         }
         else if (id == R.id.action_replay) {
             System.out.println("Submit replay clicked");
-            /// TODO: implement replay
+            onPlayAgain();
         }
 
         return super.onOptionsItemSelected(item);
@@ -191,6 +193,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         finalScoreCardFragment.setModel(result);
         ft.add(R.id.parentMemoryContainer, finalScoreCardFragment);
         ft.commit();
+    }
+
+    @Override
+    public void onPlayAgain() {
+        Bus.getBus().unsubscribeAll();
+        finish();
+        startActivity(starterIntent);
     }
 
     @Override
