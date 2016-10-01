@@ -35,7 +35,7 @@ public class Result {
         for (int row=0; row<memory.numRows; row++) {
             for (int col=1; col<memory.numCols; col++) {
                 for (int c=0; c<digitsPerCell; c++) {
-                    if (memArray[row][col].charAt(c) == recArray[row][col].charAt(c))
+                    if (memArray[row][col] != null && recArray[row][col] != null && memArray[row][col].charAt(c) == recArray[row][col].charAt(c))
                         numDigitsRecalledCorrectly++;
                 }
             }
