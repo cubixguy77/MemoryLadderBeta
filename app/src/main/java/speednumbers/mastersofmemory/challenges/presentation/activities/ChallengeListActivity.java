@@ -2,9 +2,12 @@ package speednumbers.mastersofmemory.challenges.presentation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import injection.components.ChallengeListComponent;
 import injection.components.DaggerChallengeListComponent;
 import injection.modules.ChallengeListModule;
@@ -19,12 +22,19 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     private ChallengeListComponent challengeListComponent;
     private long gameKey = 1;
 
+    @BindView(R.id.tool_bar_challenge_list) Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_list);
         ButterKnife.bind(this);
         this.initializeInjector();
+
+        setSupportActionBar(toolbar);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
+        this.getSupportActionBar().setTitle("Select a Challenge");
 
         if (savedInstanceState == null) {
             addFragment(R.id.ChallengeListScroller, new ChallengeListFragment());
@@ -53,9 +63,20 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         startActivity(myIntent);
     }
 
-    @OnClick(R.id.AddChallengeFAB) void onAddChallenge() {
-        System.out.println("Challenge add clicked");
-        IAddChallengeListener challengeListFragment = (ChallengeListFragment) getSupportFragmentManager().findFragmentByTag("ChallengeListFragment");
-        challengeListFragment.onChallengeAdd();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_challenge_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add_challenge) {
+            IAddChallengeListener challengeListFragment = (ChallengeListFragment) getSupportFragmentManager().findFragmentByTag("ChallengeListFragment");
+            challengeListFragment.onChallengeAdd();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
