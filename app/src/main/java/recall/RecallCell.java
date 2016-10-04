@@ -17,25 +17,23 @@ import android.widget.EditText;
 public class RecallCell extends EditText {
 
     private int position;
-    private final int maxDigits = 2;
+    private int numDigitsPerCell;
     private int highlightedPosition;
 
 
     public RecallCell(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setup();
     }
 
     public RecallCell(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setup();
     }
 
-    private void setup() {
+    public void finalizeSetup() {
         setLayoutParams(new AbsListView.LayoutParams(130, 190));
         setInputType(InputType.TYPE_CLASS_NUMBER);
         setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-        setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxDigits)});
+        setFilters(new InputFilter[] {new InputFilter.LengthFilter(numDigitsPerCell)});
         setTextSize(TypedValue.COMPLEX_UNIT_PX, 60);
         setGravity(Gravity.CENTER);
         setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
@@ -50,6 +48,10 @@ public class RecallCell extends EditText {
         this.highlightedPosition = highlightedPosition;
     }
 
+    public void setNumDigitsPerCell(int numDigitsPerCell) {
+        this.numDigitsPerCell = numDigitsPerCell;
+    }
+
     public void addRecallTextWatcher(final RecallTextWatcher watcher) {
         addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,7 +60,7 @@ public class RecallCell extends EditText {
             }
             @Override public void afterTextChanged(Editable s) {
                 if (watcher != null) {
-                    System.out.println("Change focus to position " + position);
+                    //System.out.println("Change focus to position " + position);
                     watcher.onTextChanged(position, s.toString());
                 }
             }});

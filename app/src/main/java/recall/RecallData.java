@@ -50,7 +50,7 @@ public class RecallData extends GridData implements RecallTextWatcher {
         String[][] data = getData();
         NumberGridAdapter adapter = getAdapter();
 
-        System.out.println("Update position: " + position + " - New Text: " + newText);
+        //System.out.println("Update position: " + position + " - New Text: " + newText);
         String currentText = data[getRow(position)][getCol(position)];
 
         boolean actualChange =

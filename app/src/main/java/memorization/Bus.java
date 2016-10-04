@@ -18,10 +18,10 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     }
 
     public static Bus getBus() {
-        if(instance == null) {
-            instance = new Bus();
+        if(Bus.instance == null) {
+            Bus.instance = new Bus();
         }
-        return instance;
+        return Bus.instance;
     }
 
     public void subscribe(Object observer) {
@@ -30,11 +30,12 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
-    public void unsubscribeAll() {
-        observers = null;
-        instance = null;
+    public static void unsubscribeAll() {
+        if (Bus.instance != null) {
+            Bus.instance.observers.clear();
+            Bus.instance = null;
+        }
     }
-
 
     @Override
     public void onLoad(Challenge challenge) {

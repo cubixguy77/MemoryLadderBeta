@@ -146,6 +146,8 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
         view.setPosition(position);
         view.setHighlightedPosition(highlightPosition);
+        view.setNumDigitsPerCell(memoryData.getNumDigitsPerColumn());
+        view.finalizeSetup();
         view.setText(recallData.getText(position));
         view.addRecallTextWatcher(recallData);
         view.setRecallFocusChangeListener(this);
@@ -240,6 +242,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
     @Override
     public void onTransitionToRecall() {
+        System.out.println("Transition to recall");
         highlightPosition = 1;
         recallData = new RecallData(challenge);
         recallData.setAdapter(this);
@@ -283,7 +286,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
     public void onSubmitRow() {
         recallData.onSubmitRow(recallData.getRow(highlightPosition));
         notifyDataSetChanged();
-        
+
         if (recallData.allRowsSubmitted()) {
             Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
         }

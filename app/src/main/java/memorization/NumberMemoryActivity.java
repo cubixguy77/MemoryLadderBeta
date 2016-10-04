@@ -23,6 +23,7 @@ import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
+import speednumbers.mastersofmemory.challenges.presentation.activities.ChallengeListActivity;
 import speednumbers.mastersofmemory.com.presentation.R;
 import timer.TimerView;
 
@@ -37,10 +38,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private MenuItem submitRecallButton;
     private MenuItem submitReplayButton;
 
-    private long challengeKey = 3;
+    private long challengeKey;
     private ChallengeComponent challengeComponent;
     private boolean started = false;
-    private Intent starterIntent;
     @Inject public GetChallengeInteractor getChallengeInteractor;
 
     @Override
@@ -48,9 +48,10 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory_numbers);
         ButterKnife.bind(this);
+        this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
+
         initializeInjector();
         challengeComponent.inject(this);
-        starterIntent = getIntent();
 
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,15 +77,24 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     protected void onPause() { super.onPause();  }
 
     @Override
-    protected void onStop() { super.onStop();  }
+    protected void onStop() {
+        super.onStop();
+        getChallengeInteractor.setCallback(null);
+        //Bus.getBus().unsubscribeAll();
+    }
 
     @Override
     protected void onDestroy() { super.onDestroy();  }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public void onBackPressed() {
+        Bus.unsubscribeAll();
+
+        if (timer != null) {
+            timer.cancel();
+        }
+
         finish();
-        return false;
     }
 
     @Override
@@ -106,7 +116,10 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit_memorization) {
-            timer.cancel();
+            if (timer != null) {
+                timer.cancel();
+            }
+
             Bus.getBus().onTransitionToRecall();
         }
         else if (id == R.id.action_submit_recall) {
@@ -114,6 +127,10 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         }
         else if (id == R.id.action_replay) {
             onPlayAgain();
+        }
+        else if (id == android.R.id.home) {
+            this.onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -189,15 +206,24 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         FinalScoreCardFragment finalScoreCardFragment = new FinalScoreCardFragment();
         finalScoreCardFragment.setModel(result);
-        ft.add(R.id.parentMemoryContainer, finalScoreCardFragment);
+        ft.add(R.id.parentMemoryContainer, finalScoreCardFragment, "FinalScoreCardFragment");
+        //ft.addToBackStack(null);
         ft.commit();
     }
 
     @Override
     public void onPlayAgain() {
-        Bus.getBus().unsubscribeAll();
+        Bus.unsubscribeAll();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.remove(getSupportFragmentManager().findFragmentByTag("FinalScoreCardFragment"));
+        ft.commit();
+
         finish();
-        startActivity(starterIntent);
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        //recreate();
     }
 
     @Override

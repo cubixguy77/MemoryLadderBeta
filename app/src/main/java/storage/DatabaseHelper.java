@@ -40,11 +40,14 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         long gameKey = insertGame(db, new Game("Speed Numbers", "speedNumbersIcon.png"));
 
         ArrayList<Setting> settings = new ArrayList<>();
-        Setting digitsPerGroup = new Setting(-1, -1, 1, "Digits Per Group", 1, true);
-        Setting memTimer = new Setting(-1, -1, 30, "Memorization Timer", 2, true);
-        Setting recallTimer = new Setting(-1, -1, 60, "Recall Timer", 3, true);
+        Setting numDigits = new Setting(-1, -1, 10, "Number of Digits", 10, true);
+        Setting digitsPerGroup = new Setting(-1, -1, 1, "Digits Per Group", 20, true);
+        Setting memTimer = new Setting(-1, -1, 30, "Memorization Timer", 30, true);
+        Setting recallTimer = new Setting(-1, -1, 60, "Recall Timer", 40, true);
 
         // Populate Setting table
+        insertSetting(db, numDigits);
+        settings.add(numDigits);
         insertSetting(db, digitsPerGroup);
         settings.add(digitsPerGroup);
         insertSetting(db, memTimer);
@@ -52,19 +55,21 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         insertSetting(db, recallTimer);
         settings.add(recallTimer);
 
-        insertChallenge(db, new Challenge(gameKey, -1, "11 Digits", false, settings));
+        insertChallenge(db, new Challenge(gameKey, -1, "10 Digits", false, settings));
 
-        settings.get(0).setValue(2);  // Digits Per Group
-        settings.get(1).setValue(45); // Mem Timer
-        settings.get(2).setValue(90); // Recall Timer
+        settings.get(0).setValue(20);  // Digits Per Group
+        settings.get(1).setValue(2);  // Digits Per Group
+        settings.get(2).setValue(45); // Mem Timer
+        settings.get(3).setValue(90); // Recall Timer
 
-        insertChallenge(db, new Challenge(gameKey, -1, "22 Digits", false, settings));
+        insertChallenge(db, new Challenge(gameKey, -1, "20 Digits", false, settings));
 
-        settings.get(0).setValue(3);   // Digits Per Group
-        settings.get(1).setValue(60);  // Mem Timer
-        settings.get(2).setValue(120); // Recall Timer
+        settings.get(0).setValue(30);  // Digits Per Group
+        settings.get(1).setValue(3);   // Digits Per Group
+        settings.get(2).setValue(60);  // Mem Timer
+        settings.get(3).setValue(120); // Recall Timer
 
-        insertChallenge(db, new Challenge(gameKey, -1, "33 Digits", false, settings));
+        insertChallenge(db, new Challenge(gameKey, -1, "30 Digits", false, settings));
     }
 
     @Override

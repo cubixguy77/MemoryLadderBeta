@@ -3,6 +3,7 @@ package memorization;
 import java.util.Random;
 
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 
 public class GridData {
 
@@ -16,7 +17,10 @@ public class GridData {
     private NumberGridAdapter adapter;
 
     public GridData(Challenge challenge) {
-        this(20, 2);
+        this(
+            NumberChallenge.getNumDigitsSetting(challenge).getValue(),
+            NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()
+        );
     }
 
     public GridData(int numDigits, int numDigitsPerColumn)  {
