@@ -1,12 +1,9 @@
 package recall;
 
-import memorization.Bus;
 import memorization.GridData;
-import memorization.NumberGridAdapter;
-import recall.RecallTextWatcher;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class RecallData extends GridData implements RecallTextWatcher {
+public class RecallData extends GridData {
 
     private boolean[][] reviewCell;
     private int rowsRecalled = 0;
@@ -64,33 +61,25 @@ public class RecallData extends GridData implements RecallTextWatcher {
         }
     }
 
-    @Override
-    public void onTextChanged(int position, String newText) {
+    public void onBackSpace(int position) {
+        if (reviewCell[getRow(position)][getCol(position)])
+            return;
+        
         String[][] data = getData();
-        NumberGridAdapter adapter = getAdapter();
-
-        //System.out.println("Update position: " + position + " - New Text: " + newText);
         String currentText = data[getRow(position)][getCol(position)];
+        int curLength = currentText == null ? 0 : currentText.length();
 
-        boolean actualChange =
-                (isNullOrEmpty(currentText) && !isNullOrEmpty(newText)) // first character entered
-                        || (!isNullOrEmpty(currentText) && !isNullOrEmpty(newText) && !currentText.equals(newText)) // second character entered or erased
-                        || (!isNullOrEmpty(currentText) && isNullOrEmpty(newText)); // first character erased
+        if (curLength == 0 && getCol(position) > 1) {
+            getAdapter().onHighlightPosition(position, false);
+            return;
+        }
+        else if (curLength == 0)
+            return;
 
-        if (actualChange) {
-            data[getRow(position)][getCol(position)] = newText;
-            if (newText.length() == numDigitsPerColumn) {
-                if (getCol(position) == numCols-1) {
-                    adapter.onRowFilled();
-                }
-                else {
-                    adapter.onHighlightPosition(position, true);
-                }
+        data[getRow(position)][getCol(position)] = currentText.substring(0, curLength-1);
 
-            }
-            else if (newText.length() == 0 && getCol(position) > 1) {
-                adapter.onHighlightPosition(position, false);
-            }
+        if (curLength == 1 && getCol(position) > 1) {
+            getAdapter().onHighlightPosition(position, false);
         }
     }
 

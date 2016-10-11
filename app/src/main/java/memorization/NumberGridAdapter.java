@@ -169,7 +169,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         view.setNumDigitsPerCell(memoryData.getNumDigitsPerColumn());
         view.finalizeSetup();
         view.setText(recallData.getText(position));
-        view.addRecallTextWatcher(recallData);
         view.setRecallFocusChangeListener(this);
 
         if (position == highlightPosition) {
@@ -341,6 +340,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
     @Override
     public void onBackSpace() {
-        Toast.makeText(context, "Key press: " + "BACKSPACE (not implemented yet)", Toast.LENGTH_SHORT).show();
+        recallData.onBackSpace(highlightPosition);
+        notifyDataSetChanged();
     }
 }

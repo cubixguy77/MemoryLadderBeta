@@ -52,23 +52,6 @@ public class RecallCell extends EditText {
         this.numDigitsPerCell = numDigitsPerCell;
     }
 
-    public void addRecallTextWatcher(final RecallTextWatcher watcher) {
-        if (true)
-            return;
-
-        addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override public void afterTextChanged(Editable s) {
-                if (watcher != null) {
-                    //System.out.println("Change focus to position " + position);
-                    watcher.onTextChanged(position, s.toString());
-                }
-            }});
-    }
-
     @Override
     public void setOnFocusChangeListener(OnFocusChangeListener l) {
         super.setOnFocusChangeListener(l);
