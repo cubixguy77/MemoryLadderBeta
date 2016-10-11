@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import recall.PositionChangeListener;
 import recall.RecallCell;
@@ -21,11 +22,16 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
     private RecallData recallData;
     private int highlightPosition = 1;
     private Challenge challenge;
+    private NumberGridView gridView;
 
     public NumberGridAdapter(Context context)
     {
         this.context = context;
         Bus.getBus().subscribe(this);
+    }
+
+    public void setGridView(NumberGridView gridView) {
+        this.gridView = gridView;
     }
 
     @Override
@@ -64,11 +70,24 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         notifyDataSetChanged();
     }
 
+    private void scrollMemorization() {
+        if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition()) - 1) {
+            gridView.scrollGrid();
+        }
+    }
+
+    private void scrollRecall() {
+        if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition())) {
+            gridView.scrollGrid();
+        }
+    }
+
     private void moveHighlightPositionToNextRow(int position) {
         if (recallData.getRow(position) >= recallData.numRows-1) // final row - don't advance position
             return;
 
         this.highlightPosition += (recallData.numCols - recallData.getCol(position)) + 1;
+        scrollRecall();
         notifyDataSetChanged();
     }
 
@@ -80,6 +99,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         }
         else if (memoryData.isRowMarker(highlightPosition)) {
             highlightPosition++;
+            scrollMemorization();
         }
         else if (highlightPosition == 2) {
             Bus.getBus().onEnablePrev();
@@ -246,9 +266,13 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         highlightPosition = 1;
         recallData = new RecallData(challenge);
         recallData.setAdapter(this);
+
         notifyDataSetChanged();
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
+
+        gridView.scrollToTop();
+
+        //InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
     }
 
     @Override

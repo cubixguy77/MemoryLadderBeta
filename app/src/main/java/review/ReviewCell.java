@@ -10,7 +10,7 @@ public class ReviewCell extends TextView {
 
     public ReviewCell(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setTextSize(30);
+        setTextSize(20);
         setLines(2);
         setGravity(Gravity.CENTER);
         setLayoutParams(new AbsListView.LayoutParams(190, 190));
