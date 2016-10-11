@@ -42,16 +42,25 @@ public class RecallData extends GridData {
         return reviewCell[getRow(position)][getCol(position)];
     }
 
-    public void onKeyPress(int digit, int position) {
+    public void onKeyPress(int digit, int position, int cursorStart, int cursorEnd) {
+
         String[][] data = getData();
         String currentText = data[getRow(position)][getCol(position)];
         int curLength = currentText == null ? 0 : currentText.length();
+        String newChar = Integer.toString(digit);
 
-        if (curLength < numDigitsPerColumn) {
-            data[getRow(position)][getCol(position)] = currentText == null ? Integer.toString(digit) : currentText + Integer.toString(digit);
+        boolean isHighlighted = cursorEnd > cursorStart;
+
+        if (isHighlighted) {
+            data[getRow(position)][getCol(position)] = currentText.substring(0, cursorStart) + newChar + currentText.substring(cursorEnd);
+            return;
         }
 
-        if (curLength + 1 == numDigitsPerColumn) {
+        if (curLength < numDigitsPerColumn) {
+            data[getRow(position)][getCol(position)] = currentText == null ? newChar : currentText.substring(0, cursorStart) + newChar + currentText.substring(cursorEnd);
+        }
+
+        if (curLength + 1 == numDigitsPerColumn) { // Just entered last character of the group
             if (getCol(position) == numCols-1) {
                 getAdapter().onRowFilled();
             }
@@ -62,9 +71,6 @@ public class RecallData extends GridData {
     }
 
     public void onBackSpace(int position) {
-        if (reviewCell[getRow(position)][getCol(position)])
-            return;
-        
         String[][] data = getData();
         String currentText = data[getRow(position)][getCol(position)];
         int curLength = currentText == null ? 0 : currentText.length();

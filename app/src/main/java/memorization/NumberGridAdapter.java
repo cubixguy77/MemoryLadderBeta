@@ -334,12 +334,18 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
     @Override
     public void onKeyPress(int digit) {
-        recallData.onKeyPress(digit, highlightPosition);
+        if (recallData.isReviewCell(highlightPosition))
+            return;
+
+        recallData.onKeyPress(digit, highlightPosition, gridView.getCursorStart(highlightPosition), gridView.getCursorEnd(highlightPosition));
         notifyDataSetChanged();
     }
 
     @Override
     public void onBackSpace() {
+        if (recallData.isReviewCell(highlightPosition))
+            return;
+
         recallData.onBackSpace(highlightPosition);
         notifyDataSetChanged();
     }
