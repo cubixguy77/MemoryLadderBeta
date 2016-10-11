@@ -261,7 +261,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
     @Override
     public void onTransitionToRecall() {
-        System.out.println("Transition to recall");
         highlightPosition = 1;
         recallData = new RecallData(challenge);
         recallData.setAdapter(this);
@@ -269,15 +268,10 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         notifyDataSetChanged();
 
         gridView.scrollToTop();
-
-        //InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT,0);
     }
 
     @Override
     public void onRecallComplete(Result result) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
     }
 
     @Override

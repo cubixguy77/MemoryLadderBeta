@@ -211,17 +211,20 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     public void onRecallComplete(Result result) {
         System.out.println("Recall complete!");
+        keyboard.setVisibility(View.GONE);
         floatingRecallMenu.setVisibility(View.GONE);
         submitRecallButton.setVisible(false);
         submitReplayButton.setVisible(true);
         toolbar.setTitle("Results - " + result.getNumDigitsAttempted() + " Digits");
 
+        /*
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         FinalScoreCardFragment finalScoreCardFragment = new FinalScoreCardFragment();
         finalScoreCardFragment.setModel(result);
         ft.add(R.id.parentMemoryContainer, finalScoreCardFragment, "FinalScoreCardFragment");
         //ft.addToBackStack(null);
         ft.commit();
+        */
     }
 
     @Override

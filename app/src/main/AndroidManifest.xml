@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name="memorization.NumberMemoryActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="speednumbers.mastersofmemory.challenges.presentation.activities.ChallengeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

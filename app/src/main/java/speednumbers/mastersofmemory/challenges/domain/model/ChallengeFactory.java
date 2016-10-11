@@ -7,7 +7,7 @@ public class ChallengeFactory {
     public static Challenge CreateChallenge(long gameKey) {
 
         ArrayList<Setting> settings = new ArrayList<>();
-        Setting numDigits = new Setting(-1, 1, 25, "Number of Digits", 10, true);
+        Setting numDigits = new Setting(-1, 1, 50, "Number of Digits", 10, true);
         Setting digitsPerGroup = new Setting(-1, 2, 1, "Digits Per Group", 20, true);
         Setting memTimer = new Setting(-1, 3, 30, "Memorization Timer", 30, true);
         Setting recallTimer = new Setting(-1, 4, 60, "Recall Timer", 40, true);
@@ -17,7 +17,7 @@ public class ChallengeFactory {
         settings.add(memTimer);
         settings.add(recallTimer);
 
-        Challenge challenge = new Challenge(gameKey, "25 Digits", false);
+        Challenge challenge = new Challenge(gameKey, "50 Digits", false);
         challenge.setSettings(settings);
 
         return challenge;
