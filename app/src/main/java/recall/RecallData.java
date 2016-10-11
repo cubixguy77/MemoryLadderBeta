@@ -45,6 +45,25 @@ public class RecallData extends GridData implements RecallTextWatcher {
         return reviewCell[getRow(position)][getCol(position)];
     }
 
+    public void onKeyPress(int digit, int position) {
+        String[][] data = getData();
+        String currentText = data[getRow(position)][getCol(position)];
+        int curLength = currentText == null ? 0 : currentText.length();
+
+        if (curLength < numDigitsPerColumn) {
+            data[getRow(position)][getCol(position)] = currentText == null ? Integer.toString(digit) : currentText + Integer.toString(digit);
+        }
+
+        if (curLength + 1 == numDigitsPerColumn) {
+            if (getCol(position) == numCols-1) {
+                getAdapter().onRowFilled();
+            }
+            else {
+                getAdapter().onHighlightPosition(position, true);
+            }
+        }
+    }
+
     @Override
     public void onTextChanged(int position, String newText) {
         String[][] data = getData();

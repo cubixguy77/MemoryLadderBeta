@@ -298,8 +298,15 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         onHighlightNext();
     }
 
+    @Override
+    public void onPositionChange(int newPosition) {
+        highlightPosition = newPosition;
+    }
 
 
+
+
+    ///////////// Recall Methods /////////////
 
     @Override
     public void onNextRow() {
@@ -326,9 +333,14 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
     }
 
+    @Override
+    public void onKeyPress(int digit) {
+        recallData.onKeyPress(digit, highlightPosition);
+        notifyDataSetChanged();
+    }
 
     @Override
-    public void onPositionChange(int newPosition) {
-        highlightPosition = newPosition;
+    public void onBackSpace() {
+        Toast.makeText(context, "Key press: " + "BACKSPACE (not implemented yet)", Toast.LENGTH_SHORT).show();
     }
 }

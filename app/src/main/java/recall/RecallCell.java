@@ -32,11 +32,11 @@ public class RecallCell extends EditText {
     public void finalizeSetup() {
         setLayoutParams(new AbsListView.LayoutParams(130, 190));
         setInputType(InputType.TYPE_CLASS_NUMBER);
-        setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         setFilters(new InputFilter[] {new InputFilter.LengthFilter(numDigitsPerCell)});
         setTextSize(TypedValue.COMPLEX_UNIT_PX, 60);
         setGravity(Gravity.CENTER);
-        setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+        setRawInputType(InputType.TYPE_CLASS_TEXT); // Disables keyboard
+        setTextIsSelectable(true);
         setSelectAllOnFocus(true);
     }
 
@@ -53,6 +53,9 @@ public class RecallCell extends EditText {
     }
 
     public void addRecallTextWatcher(final RecallTextWatcher watcher) {
+        if (true)
+            return;
+
         addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }

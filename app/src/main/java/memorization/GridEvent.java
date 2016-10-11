@@ -21,6 +21,9 @@ public interface GridEvent {
         void onNextRow();
         void onSubmitRow();
         void onSubmitAllRows();
+
+        void onKeyPress(int digit);
+        void onBackSpace();
     }
 
 }

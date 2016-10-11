@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.TableLayout;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,6 @@ import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
-import speednumbers.mastersofmemory.challenges.presentation.activities.ChallengeListActivity;
 import speednumbers.mastersofmemory.com.presentation.R;
 import timer.TimerView;
 
@@ -34,6 +34,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
     @BindView(R.id.floatingRecallMenu) LinearLayout floatingRecallMenu;
     @BindView(R.id.tool_bar) Toolbar toolbar;
+    @BindView(R.id.keyboard_layout) TableLayout keyboard;
+
     private MenuItem submitMemButton;
     private MenuItem submitRecallButton;
     private MenuItem submitReplayButton;
@@ -149,13 +151,21 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         Bus.getBus().onNext();
     }
 
-    @OnClick(R.id.nextRowButton) void onNextRowClick() {
-        Bus.getBus().onNextRow();
-    }
-
+    @OnClick(R.id.backSpaceButton) void onBackSpaceClicked() { Bus.getBus().onBackSpace(); }
+    @OnClick(R.id.nextRowButton) void onNextRowClick() { Bus.getBus().onNextRow(); }
     @OnClick(R.id.submitRowButton) void onSubmitRowClick() {
         Bus.getBus().onSubmitRow();
     }
+    @OnClick(R.id.key_1) void on1Clicked() { Bus.getBus().onKeyPress(1); }
+    @OnClick(R.id.key_2) void on2Clicked() { Bus.getBus().onKeyPress(2); }
+    @OnClick(R.id.key_3) void on3Clicked() { Bus.getBus().onKeyPress(3); }
+    @OnClick(R.id.key_4) void on4Clicked() { Bus.getBus().onKeyPress(4); }
+    @OnClick(R.id.key_5) void on5Clicked() { Bus.getBus().onKeyPress(5); }
+    @OnClick(R.id.key_6) void on6Clicked() { Bus.getBus().onKeyPress(6); }
+    @OnClick(R.id.key_7) void on7Clicked() { Bus.getBus().onKeyPress(7); }
+    @OnClick(R.id.key_8) void on8Clicked() { Bus.getBus().onKeyPress(8); }
+    @OnClick(R.id.key_9) void on9Clicked() { Bus.getBus().onKeyPress(9); }
+    @OnClick(R.id.key_0) void on0Clicked() { Bus.getBus().onKeyPress(0); }
 
     private void setRecallIcon(boolean enabled) {
         if (enabled) {
@@ -180,14 +190,17 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onTimeExpired() {
-        Bus.getBus().onTransitionToRecall();
+        //Bus.getBus().onTransitionToRecall();
     }
 
     @Override
     public void onTransitionToRecall() {
         timer.setVisibility(View.INVISIBLE);
         nextGroupButton.setVisibility(View.GONE);
+
+        keyboard.setVisibility(View.VISIBLE);
         floatingRecallMenu.setVisibility(View.VISIBLE);
+
         submitMemButton.setVisible(false);
         submitRecallButton.setVisible(true);
         toolbar.setTitle("Recall");

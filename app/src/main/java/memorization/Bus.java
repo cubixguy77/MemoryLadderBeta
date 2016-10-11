@@ -125,6 +125,24 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
+    @Override
+    public void onKeyPress(int digit) {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GridEvent.Recall) {
+                ((GridEvent.Recall) observer).onKeyPress(digit);
+            }
+        }
+    }
+
+    @Override
+    public void onBackSpace() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GridEvent.Recall) {
+                ((GridEvent.Recall) observer).onBackSpace();
+            }
+        }
+    }
+
 
     @Override
     public void onPrev() {
