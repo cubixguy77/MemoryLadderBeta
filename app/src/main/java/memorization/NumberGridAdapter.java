@@ -4,9 +4,9 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
-import android.widget.Toast;
+
+import java.util.Locale;
 
 import recall.PositionChangeListener;
 import recall.RecallCell;
@@ -15,7 +15,7 @@ import review.Result;
 import review.ReviewCell;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall, PositionChangeListener {
+class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener {
 
     private Context context;
     private GridData memoryData;
@@ -24,13 +24,13 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
     private Challenge challenge;
     private NumberGridView gridView;
 
-    public NumberGridAdapter(Context context)
+    NumberGridAdapter(Context context)
     {
         this.context = context;
         Bus.getBus().subscribe(this);
     }
 
-    public void setGridView(NumberGridView gridView) {
+    void setGridView(NumberGridView gridView) {
         this.gridView = gridView;
     }
 
@@ -49,11 +49,33 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         return 0;
     }
 
-    public void onRowFilled() {
-        System.out.println("Row filled");
+    public void onRowFilled() { }
+
+    private void scrollMemorization() {
+        if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition()) - 1) {
+            gridView.scrollGrid();
+        }
     }
 
-    public void onHighlightPrev() {
+    private void scrollRecall() {
+        if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition())) {
+            gridView.scrollGrid();
+        }
+    }
+
+
+
+
+    private void moveHighlightPositionToNextRow(int position) {
+        if (recallData.getRow(position) >= recallData.numRows-1) // final row - don't advance position
+            return;
+
+        this.highlightPosition += (recallData.numCols - recallData.getCol(position)) + 1;
+        scrollRecall();
+        notifyDataSetChanged();
+    }
+
+    private void onHighlightPrev() {
         highlightPosition--;
 
         if (highlightPosition < 1) {
@@ -70,28 +92,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         notifyDataSetChanged();
     }
 
-    private void scrollMemorization() {
-        if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition()) - 1) {
-            gridView.scrollGrid();
-        }
-    }
-
-    private void scrollRecall() {
-        if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition())) {
-            gridView.scrollGrid();
-        }
-    }
-
-    private void moveHighlightPositionToNextRow(int position) {
-        if (recallData.getRow(position) >= recallData.numRows-1) // final row - don't advance position
-            return;
-
-        this.highlightPosition += (recallData.numCols - recallData.getCol(position)) + 1;
-        scrollRecall();
-        notifyDataSetChanged();
-    }
-
-    public void onHighlightNext() {
+    private void onHighlightNext() {
         highlightPosition++;
         if (highlightPosition >= memoryData.getNumCells() - 1) {
             highlightPosition = memoryData.getNumCells() - 1;
@@ -108,13 +109,30 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         notifyDataSetChanged();
     }
 
-    public void onHighlightPosition(int position, boolean forward) {
-        this.highlightPosition = position;
-        if (forward)
-            onHighlightNext();
-        else
-            onHighlightPrev();
+
+
+    @Override
+    public void onPrevMemoryCell() {
+        onHighlightPrev();
     }
+
+    @Override
+    public void onNextMemoryCell() {
+        onHighlightNext();
+    }
+
+    @Override
+    public void onPositionChange(int newPosition) {
+        highlightPosition = newPosition;
+    }
+
+
+
+
+
+
+
+    /////////// View Constructors ////////////
 
     private View getRowMarkerView(int position, View convertView) {
         MemoryCell view;
@@ -127,12 +145,12 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
             view = (MemoryCell) convertView;
 
         view.setAsRowMarker();
-        view.setText(Integer.toString(memoryData.getRowNumber(position)));
+        view.setText(String.format(Locale.getDefault(), "%d", memoryData.getRowNumber(position)));
 
         return view;
     }
 
-    public View getViewMemorization(int position, View convertView) {
+    private View getViewMemorization(int position, View convertView) {
         MemoryCell view;
         if (convertView == null) {
             view = new MemoryCell(context, null);
@@ -154,7 +172,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         return view;
     }
 
-    public View getViewRecall(int position, View convertView) {
+    private View getViewRecall(int position, View convertView) {
         RecallCell view;
         if (convertView == null) {
             view = new RecallCell(context, null);
@@ -169,7 +187,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         view.setNumDigitsPerCell(memoryData.getNumDigitsPerColumn());
         view.finalizeSetup();
         view.setText(recallData.getText(position));
-        view.setRecallFocusChangeListener(this);
 
         if (position == highlightPosition) {
             view.requestFocus();
@@ -182,7 +199,7 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         return view;
     }
 
-    public View getViewReview(int position, View convertView) {
+    private View getViewReview(int position, View convertView) {
         ReviewCell view;
         if (convertView == null) {
             view = new ReviewCell(context, null);
@@ -196,8 +213,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
         return view;
     }
-
-
 
     public View getView(int position, View convertView, ViewGroup parent) {
         boolean isViewRowMarker = memoryData.isRowMarker(position);
@@ -244,7 +259,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
         this.challenge = challenge;
         memoryData = new GridData(challenge);
         memoryData.loadData();
-        memoryData.setAdapter(this);
         notifyDataSetChanged();
     }
 
@@ -263,7 +277,6 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
     public void onTransitionToRecall() {
         highlightPosition = 1;
         recallData = new RecallData(challenge);
-        recallData.setAdapter(this);
 
         notifyDataSetChanged();
 
@@ -281,25 +294,20 @@ public class NumberGridAdapter extends BaseAdapter implements GameStateListener,
 
 
 
-    @Override
-    public void onPrev() {
-        onHighlightPrev();
-    }
-
-    @Override
-    public void onNext() {
-        onHighlightNext();
-    }
-
-    @Override
-    public void onPositionChange(int newPosition) {
-        highlightPosition = newPosition;
-    }
-
 
 
 
     ///////////// Recall Methods /////////////
+
+    @Override
+    public void onPrevRecallCell() {
+        onHighlightPrev();
+    }
+
+    @Override
+    public void onNextRecallCell() {
+        onHighlightNext();
+    }
 
     @Override
     public void onNextRow() {

@@ -14,6 +14,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.EditText;
 
+import memorization.Bus;
+
 public class RecallCell extends EditText {
 
     private int position;
@@ -38,6 +40,14 @@ public class RecallCell extends EditText {
         setRawInputType(InputType.TYPE_CLASS_TEXT); // Disables keyboard
         setTextIsSelectable(true);
         setSelectAllOnFocus(true);
+        setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus && position != highlightedPosition) {
+                    Bus.getBus().onPositionChange(position);
+                }
+            }
+        });
     }
 
     public void setPosition(int position) {
@@ -50,21 +60,5 @@ public class RecallCell extends EditText {
 
     public void setNumDigitsPerCell(int numDigitsPerCell) {
         this.numDigitsPerCell = numDigitsPerCell;
-    }
-
-    @Override
-    public void setOnFocusChangeListener(OnFocusChangeListener l) {
-        super.setOnFocusChangeListener(l);
-    }
-
-    public void setRecallFocusChangeListener(final PositionChangeListener listener) {
-        setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && position != highlightedPosition) {
-                    listener.onPositionChange(position);
-                }
-            }
-        });
     }
 }

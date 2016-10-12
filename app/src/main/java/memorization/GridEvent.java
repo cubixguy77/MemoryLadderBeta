@@ -5,8 +5,8 @@ public interface GridEvent {
     interface Memory {
 
         interface UserEvents {
-            void onPrev();
-            void onNext();
+            void onPrevMemoryCell();
+            void onNextMemoryCell();
         }
 
         interface ViewEvents {
@@ -18,12 +18,22 @@ public interface GridEvent {
     }
 
     interface Recall {
-        void onNextRow();
-        void onSubmitRow();
-        void onSubmitAllRows();
 
-        void onKeyPress(int digit);
-        void onBackSpace();
+        interface UserEvents {
+            void onNextRow();
+            void onSubmitRow();
+            void onSubmitAllRows();
+
+            void onKeyPress(int digit);
+            void onBackSpace();
+        }
+
+        interface ViewEvents {
+            void onPrevRecallCell();
+            void onNextRecallCell();
+            void onRowFilled();
+        }
+
     }
 
 }

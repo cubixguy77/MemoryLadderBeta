@@ -10,11 +10,10 @@ public class GridData {
     private String[][] data;
     public int numRows;
     public int numCols;
-    public int numDigitsPerColumn;
-    public int numDigits;
-    public int numDigitsPerRow;
+    protected int numDigitsPerColumn;
+    private int numDigits;
+    private int numDigitsPerRow;
     private final String ROW_MARKER = "X";
-    private NumberGridAdapter adapter;
 
     public GridData(Challenge challenge) {
         this(
@@ -32,11 +31,7 @@ public class GridData {
         data = new String[numRows][numCols];
     }
 
-    public void setAdapter(NumberGridAdapter adapter) {
-        this.adapter = adapter;
-    }
-
-    public void loadData() {
+    void loadData() {
         Random rand = new Random();
 
         int randMax = (int) Math.pow(10, numDigitsPerColumn);
@@ -52,11 +47,11 @@ public class GridData {
         }
     }
 
-    public String getText(int position) {
+    protected String getText(int position) {
         return getValue(position) == null ? "" : getValue(position);
     }
 
-    public int getNumCells() {
+    int getNumCells() {
         return numRows * numCols;
     }
 
@@ -68,11 +63,11 @@ public class GridData {
         return this.numDigitsPerColumn;
     }
 
-    public int getRowNumber(int position) {
+    int getRowNumber(int position) {
         return this.getRow(position) + 1;
     }
 
-    public boolean isRowMarker(int position) {
+    boolean isRowMarker(int position) {
         return getCol(position) == 0;
     }
 
@@ -96,9 +91,5 @@ public class GridData {
 
     public String[][] getData() {
         return data;
-    }
-
-    protected NumberGridAdapter getAdapter() {
-        return adapter;
     }
 }

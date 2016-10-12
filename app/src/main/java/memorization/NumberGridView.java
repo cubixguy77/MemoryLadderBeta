@@ -9,7 +9,6 @@ import recall.RecallCell;
 
 public class NumberGridView extends GridView {
 
-    private NumberGridAdapter adapter;
     private int scrollDistance;
     private final int scrollDuration = 500;
 
@@ -19,7 +18,7 @@ public class NumberGridView extends GridView {
 
     public void setGameStateLifeCycleListener() {
         Bus.getBus().subscribe(this);
-        adapter = new NumberGridAdapter(getContext());
+        NumberGridAdapter adapter = new NumberGridAdapter(getContext());
         adapter.setGridView(this);
         setAdapter(adapter);
     }

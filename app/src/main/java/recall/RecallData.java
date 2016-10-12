@@ -1,5 +1,6 @@
 package recall;
 
+import memorization.Bus;
 import memorization.GridData;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
@@ -42,41 +43,37 @@ public class RecallData extends GridData {
         return reviewCell[getRow(position)][getCol(position)];
     }
 
-    public void onKeyPress(int digit, int position, int cursorStart, int cursorEnd) {
+    private String getStringAt(int position) {
+        return getData()[getRow(position)][getCol(position)];
+    }
 
+    public void onKeyPress(int digit, int position, int cursorStart, int cursorEnd) {
         String[][] data = getData();
-        String currentText = data[getRow(position)][getCol(position)];
-        int curLength = currentText == null ? 0 : currentText.length();
+        String currentText = getStringAt(position);
         String newChar = Integer.toString(digit);
 
-        boolean isHighlighted = cursorEnd > cursorStart;
-
-        if (isHighlighted) {
-            data[getRow(position)][getCol(position)] = currentText.substring(0, cursorStart) + newChar + currentText.substring(cursorEnd);
+        if (cursorStart == cursorEnd && cursorEnd == numDigitsPerColumn)
             return;
-        }
 
-        if (curLength < numDigitsPerColumn) {
-            data[getRow(position)][getCol(position)] = currentText == null ? newChar : currentText.substring(0, cursorStart) + newChar + currentText.substring(cursorEnd);
-        }
+        data[getRow(position)][getCol(position)] = currentText == null ? newChar : currentText.substring(0, cursorStart) + newChar + currentText.substring(cursorEnd);
 
-        if (curLength + 1 == numDigitsPerColumn) { // Just entered last character of the group
+        if (getStringAt(position).length() == numDigitsPerColumn) { // Just entered last character of the group
             if (getCol(position) == numCols-1) {
-                getAdapter().onRowFilled();
+                Bus.getBus().onRowFilled();
             }
             else {
-                getAdapter().onHighlightPosition(position, true);
+                Bus.getBus().onNextRecallCell();
             }
         }
     }
 
     public void onBackSpace(int position) {
         String[][] data = getData();
-        String currentText = data[getRow(position)][getCol(position)];
+        String currentText = getStringAt(position);
         int curLength = currentText == null ? 0 : currentText.length();
 
         if (curLength == 0 && getCol(position) > 1) {
-            getAdapter().onHighlightPosition(position, false);
+            Bus.getBus().onPrevRecallCell();
             return;
         }
         else if (curLength == 0)
@@ -85,7 +82,7 @@ public class RecallData extends GridData {
         data[getRow(position)][getCol(position)] = currentText.substring(0, curLength-1);
 
         if (curLength == 1 && getCol(position) > 1) {
-            getAdapter().onHighlightPosition(position, false);
+            Bus.getBus().onPrevRecallCell();
         }
     }
 

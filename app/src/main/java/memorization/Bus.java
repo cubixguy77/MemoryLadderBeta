@@ -2,10 +2,11 @@ package memorization;
 
 import java.util.ArrayList;
 
+import recall.PositionChangeListener;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall {
+public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
@@ -99,10 +100,37 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
 
 
     @Override
+    public void onPrevRecallCell() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GridEvent.Recall.ViewEvents) {
+                ((GridEvent.Recall.ViewEvents) observer).onPrevRecallCell();
+            }
+        }
+    }
+
+    @Override
+    public void onNextRecallCell() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GridEvent.Recall.ViewEvents) {
+                ((GridEvent.Recall.ViewEvents) observer).onNextRecallCell();
+            }
+        }
+    }
+
+    @Override
+    public void onRowFilled() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GridEvent.Recall.ViewEvents) {
+                ((GridEvent.Recall.ViewEvents) observer).onRowFilled();
+            }
+        }
+    }
+
+    @Override
     public void onNextRow() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall) {
-                ((GridEvent.Recall) observer).onNextRow();
+            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
+                ((GridEvent.Recall.UserEvents) observer).onNextRow();
             }
         }
     }
@@ -110,8 +138,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onSubmitRow() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall) {
-                ((GridEvent.Recall) observer).onSubmitRow();
+            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
+                ((GridEvent.Recall.UserEvents) observer).onSubmitRow();
             }
         }
     }
@@ -119,8 +147,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onSubmitAllRows() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall) {
-                ((GridEvent.Recall) observer).onSubmitAllRows();
+            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
+                ((GridEvent.Recall.UserEvents) observer).onSubmitAllRows();
             }
         }
     }
@@ -128,8 +156,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onKeyPress(int digit) {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall) {
-                ((GridEvent.Recall) observer).onKeyPress(digit);
+            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
+                ((GridEvent.Recall.UserEvents) observer).onKeyPress(digit);
             }
         }
     }
@@ -137,27 +165,27 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onBackSpace() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall) {
-                ((GridEvent.Recall) observer).onBackSpace();
+            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
+                ((GridEvent.Recall.UserEvents) observer).onBackSpace();
             }
         }
     }
 
 
     @Override
-    public void onPrev() {
+    public void onPrevMemoryCell() {
         for (Object observer : observers) {
             if (observer != null && observer instanceof GridEvent.Memory.UserEvents) {
-                ((GridEvent.Memory.UserEvents) observer).onPrev();
+                ((GridEvent.Memory.UserEvents) observer).onPrevMemoryCell();
             }
         }
     }
 
     @Override
-    public void onNext() {
+    public void onNextMemoryCell() {
         for (Object observer : observers) {
             if (observer != null && observer instanceof GridEvent.Memory.UserEvents) {
-                ((GridEvent.Memory.UserEvents) observer).onNext();
+                ((GridEvent.Memory.UserEvents) observer).onNextMemoryCell();
             }
         }
     }
@@ -194,6 +222,15 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         for (Object observer : observers) {
             if (observer != null && observer instanceof GridEvent.Memory.ViewEvents) {
                 ((GridEvent.Memory.ViewEvents) observer).onEnableNext();
+            }
+        }
+    }
+
+    @Override
+    public void onPositionChange(int newPosition) {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof PositionChangeListener) {
+                ((PositionChangeListener) observer).onPositionChange(newPosition);
             }
         }
     }

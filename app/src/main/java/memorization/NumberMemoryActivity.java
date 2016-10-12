@@ -2,7 +2,6 @@ package memorization;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,6 @@ import butterknife.OnClick;
 import injection.components.ChallengeComponent;
 import injection.components.DaggerChallengeComponent;
 import injection.modules.ChallengeModule;
-import review.FinalScoreCardFragment;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
@@ -148,7 +146,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             return;
         }
 
-        Bus.getBus().onNext();
+        Bus.getBus().onNextMemoryCell();
     }
 
     @OnClick(R.id.backSpaceButton) void onBackSpaceClicked() { Bus.getBus().onBackSpace(); }
@@ -185,7 +183,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     public void onMemorizationStart() {
         setRecallIcon(true);
-        System.out.println("start mem");
     }
 
     @Override
@@ -231,9 +228,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public void onPlayAgain() {
         Bus.unsubscribeAll();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.remove(getSupportFragmentManager().findFragmentByTag("FinalScoreCardFragment"));
-        ft.commit();
+        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.remove(getSupportFragmentManager().findFragmentByTag("FinalScoreCardFragment"));
+        //ft.commit();
 
         finish();
         Intent intent = getIntent();
