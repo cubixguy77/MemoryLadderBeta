@@ -2,11 +2,11 @@ package memorization;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.TableLayout;
 
@@ -30,7 +30,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView)  TimerView timer;
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
-    @BindView(R.id.floatingRecallMenu) LinearLayout floatingRecallMenu;
     @BindView(R.id.tool_bar) Toolbar toolbar;
     @BindView(R.id.keyboard_layout) TableLayout keyboard;
 
@@ -54,9 +53,12 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         challengeComponent.inject(this);
 
         setSupportActionBar(toolbar);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
-        this.getSupportActionBar().setTitle("Memorization");
+        ActionBar supportActionBar = this.getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_action_close);
+            supportActionBar.setTitle("Memorization");
+        }
 
         grid.setGameStateLifeCycleListener();
         timer.setGameStateLifeCycleListener();
@@ -196,7 +198,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         nextGroupButton.setVisibility(View.GONE);
 
         keyboard.setVisibility(View.VISIBLE);
-        floatingRecallMenu.setVisibility(View.VISIBLE);
 
         submitMemButton.setVisible(false);
         submitRecallButton.setVisible(true);
@@ -209,7 +210,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public void onRecallComplete(Result result) {
         System.out.println("Recall complete!");
         keyboard.setVisibility(View.GONE);
-        floatingRecallMenu.setVisibility(View.GONE);
         submitRecallButton.setVisible(false);
         submitReplayButton.setVisible(true);
         toolbar.setTitle("Results - " + result.getNumDigitsAttempted() + " Digits");
