@@ -77,7 +77,11 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     public void onTimeExpired() {  }
 
     @Override
-    public void onTransitionToRecall() {    }
+    public void onTransitionToRecall() {
+        if (getVisibility() == View.VISIBLE)  {
+            setVisibility(View.INVISIBLE);
+        }
+    }
 
     @Override
     public void onRecallComplete(Result result) {   }
