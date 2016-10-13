@@ -14,7 +14,6 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ToolbarView extends android.support.v7.widget.Toolbar implements GameStateListener {
-    private AppCompatActivity context;
 
     private MenuItem submitMemButton;
     private MenuItem submitRecallButton;
@@ -33,7 +32,6 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
     }
 
     public void init(AppCompatActivity context) {
-        this.context = context;
         Bus.getBus().subscribe(this);
 
         context.setSupportActionBar(this);
@@ -45,8 +43,8 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
         }
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        context.getMenuInflater().inflate(R.menu.menu_memorization, menu);
+    public boolean onCreateOptionsMenu(Menu menu, Context context) {
+        ((AppCompatActivity) context).getMenuInflater().inflate(R.menu.menu_memorization, menu);
         return true;
     }
 

@@ -90,7 +90,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        toolbar.onCreateOptionsMenu(menu);
+        toolbar.onCreateOptionsMenu(menu, this);
         return true;
     }
 
