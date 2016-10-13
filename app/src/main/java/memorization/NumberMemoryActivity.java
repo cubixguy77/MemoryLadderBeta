@@ -2,12 +2,10 @@ package memorization;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.support.v7.widget.Toolbar;
 import android.widget.TableLayout;
 
 import javax.inject.Inject;
@@ -24,18 +22,15 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 import timer.TimerView;
+import toolbar.ToolbarView;
 
 public class NumberMemoryActivity extends BaseActivityChallenge implements GameStateListener, GridEvent.Memory.ViewEvents, GetChallengeInteractor.Callback {
 
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView)  TimerView timer;
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
-    @BindView(R.id.tool_bar) Toolbar toolbar;
+    @BindView(R.id.tool_bar) ToolbarView toolbar;
     @BindView(R.id.keyboard_layout) TableLayout keyboard;
-
-    private MenuItem submitMemButton;
-    private MenuItem submitRecallButton;
-    private MenuItem submitReplayButton;
 
     private long challengeKey;
     private ChallengeComponent challengeComponent;
@@ -50,20 +45,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
 
         initializeInjector();
-        challengeComponent.inject(this);
 
-        setSupportActionBar(toolbar);
-        ActionBar supportActionBar = this.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_action_close);
-            supportActionBar.setTitle("Memorization");
-        }
-
-        grid.setGameStateLifeCycleListener();
-        timer.setGameStateLifeCycleListener();
+        toolbar.init(this);
+        grid.init();
+        timer.init();
         Bus.getBus().subscribe(this);
     }
+
 
     @Override
     protected void onStart() {
@@ -101,16 +89,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_memorization, menu);
+        toolbar.onCreateOptionsMenu(menu);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        submitMemButton = menu.findItem(R.id.action_submit_memorization);
-        submitRecallButton = menu.findItem(R.id.action_submit_recall);
-        submitReplayButton = menu.findItem(R.id.action_replay);
-        setRecallIcon(false);
+        toolbar.onPrepareOptionsMenu(menu);
         return true;
     }
 
@@ -138,19 +123,11 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.nextGroupButton) void onNextClick() {
-        if (!started) {
-            started = true;
-            nextGroupButton.setImageResource(R.drawable.ic_arrow_right);
 
-            Bus.getBus().onMemorizationStart();
 
-            return;
-        }
 
-        Bus.getBus().onNextMemoryCell();
-    }
 
+    /////////// Recall Keyboard /////////////////
     @OnClick(R.id.backSpaceButton) void onBackSpaceClicked() { Bus.getBus().onBackSpace(); }
     @OnClick(R.id.nextRowButton) void onNextRowClick() { Bus.getBus().onNextRow(); }
     @OnClick(R.id.submitRowButton) void onSubmitRowClick() {
@@ -167,16 +144,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @OnClick(R.id.key_9) void on9Clicked() { Bus.getBus().onKeyPress(9); }
     @OnClick(R.id.key_0) void on0Clicked() { Bus.getBus().onKeyPress(0); }
 
-    private void setRecallIcon(boolean enabled) {
-        if (enabled) {
-            submitMemButton.setEnabled(true);
-            submitMemButton.getIcon().setAlpha(255);
-        }
-        else {
-            submitMemButton.setEnabled(false);
-            submitMemButton.getIcon().setAlpha(130);
-        }
-    }
+
+
+
+
+
+
+    ////////// Game State Life Cycle Listener ////////////
 
     @Override
     public void onLoad(Challenge challenge) {
@@ -184,7 +158,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onMemorizationStart() {
-        setRecallIcon(true);
+
     }
 
     @Override
@@ -196,23 +170,12 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public void onTransitionToRecall() {
         timer.setVisibility(View.INVISIBLE);
         nextGroupButton.setVisibility(View.GONE);
-
         keyboard.setVisibility(View.VISIBLE);
-
-        submitMemButton.setVisible(false);
-        submitRecallButton.setVisible(true);
-        toolbar.setTitle("Recall");
     }
-
-
 
     @Override
     public void onRecallComplete(Result result) {
-        System.out.println("Recall complete!");
         keyboard.setVisibility(View.GONE);
-        submitRecallButton.setVisible(false);
-        submitReplayButton.setVisible(true);
-        toolbar.setTitle("Results - " + result.getNumDigitsAttempted() + " Digits");
 
         /*
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -239,29 +202,41 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         //recreate();
     }
 
+
+
+
+
+
+
     @Override
     public void onChallengeLoaded(Challenge challenge) {
         Bus.getBus().onLoad(challenge);
     }
 
 
-    private void initializeInjector() {
-        this.challengeComponent = DaggerChallengeComponent.builder()
-            .applicationComponent(getApplicationComponent())
-            .activityModule(getActivityModule())
-            .challengeModule(new ChallengeModule(challengeKey))
-            .build();
+
+
+
+
+
+
+
+
+
+    ///////////// Grid Navigation Buttons ///////////////
+
+    @OnClick(R.id.nextGroupButton) void onNextClick() {
+        if (!started) {
+            started = true;
+            nextGroupButton.setImageResource(R.drawable.ic_arrow_right);
+
+            Bus.getBus().onMemorizationStart();
+
+            return;
+        }
+
+        Bus.getBus().onNextMemoryCell();
     }
-
-    @Override
-    public ChallengeComponent getComponent() {
-        return challengeComponent;
-    }
-
-
-
-
-
 
     @Override
     public void onDisablePrev() {
@@ -281,5 +256,25 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     public void onEnableNext() {
         nextGroupButton.setEnabled(true);
+    }
+
+
+
+
+
+    ///////// Dependency Injection  ////////////
+    private void initializeInjector() {
+        this.challengeComponent = DaggerChallengeComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .challengeModule(new ChallengeModule(challengeKey))
+                .build();
+
+        challengeComponent.inject(this);
+    }
+
+    @Override
+    public ChallengeComponent getComponent() {
+        return challengeComponent;
     }
 }

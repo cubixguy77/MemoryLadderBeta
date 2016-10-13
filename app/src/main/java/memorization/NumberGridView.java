@@ -16,7 +16,7 @@ public class NumberGridView extends GridView {
         super(context, attrs);
     }
 
-    public void setGameStateLifeCycleListener() {
+    public void init() {
         Bus.getBus().subscribe(this);
         NumberGridAdapter adapter = new NumberGridAdapter(getContext());
         adapter.setGridView(this);

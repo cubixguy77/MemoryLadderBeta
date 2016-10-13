@@ -51,7 +51,7 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
         Bus.getBus().onTimeExpired();
     }
 
-    public void setGameStateLifeCycleListener() {
+    public void init() {
         Bus.getBus().subscribe(this);
     }
 
