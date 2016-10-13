@@ -7,19 +7,19 @@ import android.text.SpannableStringBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleSpanBuilder {
+class SimpleSpanBuilder {
     private class SpanSection{
         private final String text;
         private final int startIndex;
         private final ParcelableSpan[] spans;
 
-        public SpanSection(String text, int startIndex,ParcelableSpan... spans){
+        SpanSection(String text, int startIndex, ParcelableSpan... spans){
             this.spans = spans;
             this.text = text;
             this.startIndex = startIndex;
         }
 
-        public void apply(SpannableStringBuilder spanStringBuilder){
+        void apply(SpannableStringBuilder spanStringBuilder){
             if (spanStringBuilder == null) return;
             for (ParcelableSpan span : spans){
                 spanStringBuilder.setSpan(span, startIndex, startIndex + text.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -30,12 +30,12 @@ public class SimpleSpanBuilder {
     private List<SpanSection> spanSections;
     private StringBuilder stringBuilder;
 
-    public SimpleSpanBuilder(){
+    SimpleSpanBuilder(){
         stringBuilder = new StringBuilder();
         spanSections = new ArrayList<>();
     }
 
-    public SimpleSpanBuilder append(String text,ParcelableSpan... spans){
+    SimpleSpanBuilder append(String text, ParcelableSpan... spans){
         if (spans != null && spans.length > 0) {
             spanSections.add(new SpanSection(text, stringBuilder.length(),spans));
         }

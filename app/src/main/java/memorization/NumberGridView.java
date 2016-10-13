@@ -24,11 +24,13 @@ public class NumberGridView extends GridView {
     }
 
     public int getCursorStart(int position) {
-        return ((RecallCell) getChildAt(position)).getSelectionStart();
+        RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
+        return recallCell.getSelectionStart();
     }
 
     public int getCursorEnd(int position) {
-        return ((RecallCell) getChildAt(position)).getSelectionEnd();
+        RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
+        return recallCell.getSelectionEnd();
     }
 
     public void scrollGrid() {
@@ -57,5 +59,9 @@ public class NumberGridView extends GridView {
         }
 
         return scrollDistance;
+    }
+
+    private int getAdjustedPosition(int position) {
+        return position - getFirstVisiblePosition();
     }
 }

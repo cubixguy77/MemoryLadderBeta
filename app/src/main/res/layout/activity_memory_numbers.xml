@@ -54,7 +54,7 @@
     <TableLayout
         android:id="@+id/keyboard_layout"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="200dp"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -65,7 +65,7 @@
 
             <ImageButton
                 android:id="@+id/backSpaceButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_backspace"
@@ -74,7 +74,7 @@
 
             <ImageButton
                 android:id="@+id/nextRowButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_next_row"
@@ -84,7 +84,7 @@
 
             <ImageButton
                 android:id="@+id/submitRowButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_check_black"
