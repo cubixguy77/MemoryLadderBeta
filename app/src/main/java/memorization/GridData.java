@@ -1,11 +1,12 @@
 package memorization;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 
-public class GridData {
+public class GridData implements Serializable {
 
     private String[][] data;
     public int numRows;

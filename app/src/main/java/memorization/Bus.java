@@ -1,18 +1,20 @@
 package memorization;
 
+import android.os.Bundle;
+
 import java.util.ArrayList;
 
 import recall.PositionChangeListener;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener {
+public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
 
 
-    public static GameState gameSate;
+    public static GameState gameState;
 
     private Bus() {
         observers = new ArrayList<>();
@@ -26,12 +28,12 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     }
 
     public void subscribe(Object observer) {
-        if (observer != null) {
+        if (observer != null && !observers.contains(observer)) {
             this.observers.add(observer);
         }
     }
 
-    public static void unsubscribeAll() {
+    static void unsubscribeAll() {
         if (Bus.instance != null) {
             Bus.instance.observers.clear();
             Bus.instance = null;
@@ -40,7 +42,7 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
 
     @Override
     public void onLoad(Challenge challenge) {
-        gameSate = GameState.PRE_MEMORIZATION;
+        gameState = GameState.PRE_MEMORIZATION;
 
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
@@ -51,7 +53,7 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
 
     @Override
     public void onMemorizationStart() {
-        gameSate = GameState.MEMORIZATION;
+        gameState = GameState.MEMORIZATION;
 
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
@@ -71,7 +73,7 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
 
     @Override
     public void onTransitionToRecall() {
-        gameSate = GameState.RECALL;
+        gameState = GameState.RECALL;
 
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
@@ -82,6 +84,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
 
     @Override
     public void onRecallComplete(Result result) {
+        gameState = GameState.REVIEW;
+
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
                 ((GameStateListener) observer).onRecallComplete(result);
@@ -231,6 +235,24 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         for (Object observer : observers) {
             if (observer != null && observer instanceof PositionChangeListener) {
                 ((PositionChangeListener) observer).onPositionChange(newPosition);
+            }
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState) {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof SaveInstanceStateListener) {
+                ((SaveInstanceStateListener) observer).onRestoreInstanceState(inState);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof SaveInstanceStateListener) {
+                ((SaveInstanceStateListener) observer).onSaveInstanceState(outState);
             }
         }
     }

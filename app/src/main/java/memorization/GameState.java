@@ -1,9 +1,10 @@
 package memorization;
 
-enum GameState {
+public enum GameState {
 
     PRE_MEMORIZATION,
     MEMORIZATION,
-    RECALL
+    RECALL,
+    REVIEW
 
 }

@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/action_submit_recall"
-        android:icon="@drawable/icon_submit"
+        android:icon="@drawable/icon_speed"
         android:title="Submit Recall Button"
         android:visible="false"
         app:showAsAction="always"

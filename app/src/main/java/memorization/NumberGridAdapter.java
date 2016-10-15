@@ -150,6 +150,18 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
         return view;
     }
 
+    private View getViewPreMemorization(View convertView) {
+        MemoryCell view;
+        if (convertView == null) {
+            view = new MemoryCell(context, null);
+        }
+        else
+            view = (MemoryCell) convertView;
+
+        view.setAsHiddenDataCell();
+        return view;
+    }
+
     private View getViewMemorization(int position, View convertView) {
         MemoryCell view;
         if (convertView == null) {
@@ -221,15 +233,15 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
             return getRowMarkerView(position, convertView);
         }
 
-        if (Bus.gameSate == GameState.PRE_MEMORIZATION) {
+        if (Bus.gameState == GameState.PRE_MEMORIZATION) {
             return getViewPreMemorization(convertView);
         }
 
-        if (Bus.gameSate == GameState.MEMORIZATION) {
+        if (Bus.gameState == GameState.MEMORIZATION) {
             return getViewMemorization(position, convertView);
         }
 
-        if (Bus.gameSate == GameState.RECALL) {
+        if (Bus.gameState == GameState.RECALL || Bus.gameState == GameState.REVIEW) {
             if (recallData.isReviewCell(position))
                 return getViewReview(position, convertView);
             else
@@ -239,17 +251,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
         return null;
     }
 
-    private View getViewPreMemorization(View convertView) {
-        MemoryCell view;
-        if (convertView == null) {
-            view = new MemoryCell(context, null);
-        }
-        else
-            view = (MemoryCell) convertView;
 
-        view.setAsHiddenDataCell();
-        return view;
-    }
 
 
 

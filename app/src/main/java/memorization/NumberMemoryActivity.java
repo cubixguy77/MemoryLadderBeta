@@ -44,7 +44,16 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         ButterKnife.bind(this);
         this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
 
+        assert this.challengeKey > 0;
+
         initializeInjector();
+
+        if (savedInstanceState != null) {
+            Bus.gameState = (GameState) savedInstanceState.getSerializable("GameState");
+        }
+        else {
+            Bus.gameState = GameState.PRE_MEMORIZATION;
+        }
 
         toolbar.init(this);
         grid.init();
@@ -53,12 +62,20 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         Bus.getBus().subscribe(this);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
-        getChallengeInteractor.setCallback(this);
-        getChallengeInteractor.execute();
+
+        if (Bus.gameState == GameState.PRE_MEMORIZATION) {
+            getChallengeInteractor.setCallback(this);
+            getChallengeInteractor.execute();
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle inState) {
+        super.onRestoreInstanceState(inState);
+        Bus.getBus().onRestoreInstanceState(inState);
     }
 
     @Override
@@ -71,7 +88,14 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     protected void onStop() {
         super.onStop();
         getChallengeInteractor.setCallback(null);
-        //Bus.getBus().unsubscribeAll();
+        Bus.unsubscribeAll();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("GameState", Bus.gameState);
+        Bus.getBus().onSaveInstanceState(outState);
     }
 
     @Override

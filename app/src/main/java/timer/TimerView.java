@@ -1,6 +1,7 @@
 package timer;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
@@ -9,12 +10,13 @@ import android.widget.TextView;
 
 import memorization.Bus;
 import memorization.GameStateListener;
+import memorization.SaveInstanceStateListener;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 
-public class TimerView extends TextView implements TimerUpdateListener, GameStateListener {
+public class TimerView extends TextView implements TimerUpdateListener, GameStateListener, SaveInstanceStateListener {
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
@@ -99,5 +101,15 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     }
     public void cancel() {
         timerActionListener.cancelTimer();
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState) {
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
     }
 }

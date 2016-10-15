@@ -1,6 +1,7 @@
 package toolbar;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
@@ -9,15 +10,20 @@ import android.view.MenuItem;
 
 import memorization.Bus;
 import memorization.GameStateListener;
+import memorization.SaveInstanceStateListener;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class ToolbarView extends android.support.v7.widget.Toolbar implements GameStateListener {
+public class ToolbarView extends android.support.v7.widget.Toolbar implements GameStateListener, SaveInstanceStateListener {
+
+    private ActionBar supportActionBar;
 
     private MenuItem submitMemButton;
     private MenuItem submitRecallButton;
     private MenuItem submitReplayButton;
+
+    private boolean restoreTitle = true;
 
     public ToolbarView(Context context) {
         super(context);
@@ -35,11 +41,10 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
         Bus.getBus().subscribe(this);
 
         context.setSupportActionBar(this);
-        ActionBar supportActionBar = context.getSupportActionBar();
+        this.supportActionBar = context.getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_action_close);
-            supportActionBar.setTitle("Memorization");
         }
     }
 
@@ -52,18 +57,58 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
         submitMemButton = menu.findItem(R.id.action_submit_memorization);
         submitRecallButton = menu.findItem(R.id.action_submit_recall);
         submitReplayButton = menu.findItem(R.id.action_replay);
-        setRecallIcon(false);
+
+        /* This will be set to false when the device is rotated
+         * onRestoreInstanceState will restore the saved title for us instead in that case
+         */
+        if (restoreTitle) {
+            refreshToolbarTitleText();
+        }
+        refreshToolbarIcon();
         return true;
     }
 
-    private void setRecallIcon(boolean enabled) {
-        if (enabled) {
-            submitMemButton.setEnabled(true);
-            submitMemButton.getIcon().setAlpha(255);
+    private void refreshToolbarTitleText() {
+        switch (Bus.gameState) {
+            case PRE_MEMORIZATION: supportActionBar.setTitle("Memorization"); break;
+            case MEMORIZATION: supportActionBar.setTitle("Memorization"); break;
+            case RECALL: supportActionBar.setTitle("Recall"); break;
+            case REVIEW: supportActionBar.setTitle("Results - idk how to restore digits yet"); break;
+            default: supportActionBar.setTitle("Error Restoring Toolbar");
         }
-        else {
-            submitMemButton.setEnabled(false);
-            submitMemButton.getIcon().setAlpha(130);
+    }
+
+    private void refreshToolbarIcon() {
+        switch (Bus.gameState) {
+            case PRE_MEMORIZATION:
+                submitMemButton.setVisible(true);
+                submitMemButton.setEnabled(false);
+                submitMemButton.getIcon().setAlpha(130);
+                submitRecallButton.setVisible(false);
+                submitReplayButton.setVisible(false);
+                break;
+            case MEMORIZATION:
+                submitMemButton.setVisible(true);
+                submitMemButton.setEnabled(true);
+                submitMemButton.getIcon().setAlpha(255);
+                submitRecallButton.setVisible(false);
+                submitReplayButton.setVisible(false);
+                break;
+            case RECALL:
+                submitRecallButton.setVisible(true);
+                submitRecallButton.setEnabled(true);
+                submitRecallButton.getIcon().setAlpha(255);
+                submitMemButton.setVisible(false);
+                submitReplayButton.setVisible(false);
+                break;
+            case REVIEW:
+                submitReplayButton.setVisible(true);
+                submitReplayButton.setEnabled(true);
+                submitReplayButton.getIcon().setAlpha(255);
+                submitMemButton.setVisible(false);
+                submitRecallButton.setVisible(false);
+                break;
+            default: break;
         }
     }
 
@@ -76,7 +121,7 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
     @Override
     public void onMemorizationStart() {
         setTitle("Memorization");
-        setRecallIcon(true);
+        refreshToolbarIcon();
     }
 
     @Override
@@ -86,20 +131,30 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
     @Override
     public void onTransitionToRecall() {
-        submitMemButton.setVisible(false);
-        submitRecallButton.setVisible(true);
         setTitle("Recall");
+        refreshToolbarIcon();
     }
 
     @Override
     public void onRecallComplete(Result result) {
         setTitle("Results - " + result.getNumDigitsAttempted() + " Digits");
-        submitRecallButton.setVisible(false);
-        submitReplayButton.setVisible(true);
+        refreshToolbarIcon();
     }
 
     @Override
     public void onPlayAgain() {
 
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState) {
+        supportActionBar.setTitle(inState.getString("Toolbar.Title"));
+        restoreTitle = false;
+        supportActionBar.invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("Toolbar.Title", getTitle().toString());
     }
 }
