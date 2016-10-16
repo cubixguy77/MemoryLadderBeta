@@ -76,7 +76,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         }
 
         /* Ths condition occurs when the user has selected to Play Again
-         * We'll retain the existing Challenge rather than fetch it again
+         * We'll retain the existing Challenge rather than fetch it again for performance's sake
          */
         else if (Bus.gameState == GameState.PRE_MEMORIZATION && Bus.challenge != null) {
             this.onChallengeLoaded(Bus.challenge);

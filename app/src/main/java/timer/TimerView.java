@@ -107,6 +107,7 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     }
 
     public void start()  {
+        /* This can not be called immediately because, on restoring from orientation change, the timer may not have been initialized yet */
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
