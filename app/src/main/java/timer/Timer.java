@@ -1,8 +1,6 @@
 package timer;
 
-import android.os.CountDownTimer;
-
-public class Timer extends CountDownTimer implements TimerActionListener {
+class Timer extends CountDownTimerPausable implements TimerActionListener {
 
     private TimerUpdateListener listener;
     private long secondsRemaining;
@@ -23,7 +21,7 @@ public class Timer extends CountDownTimer implements TimerActionListener {
 
     @Override
     public void pauseTimer() {
-
+        pause();
     }
 
     @Override

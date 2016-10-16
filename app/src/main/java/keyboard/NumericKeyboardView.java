@@ -25,8 +25,11 @@ public class NumericKeyboardView extends TableLayout implements GameStateListene
     }
 
     public void init() {
-        Bus.getBus().subscribe(this);
         ButterKnife.bind(this);
+    }
+
+    public void subscribe() {
+        Bus.getBus().subscribe(this);
     }
 
     private void showKeyboard() {

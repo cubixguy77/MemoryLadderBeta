@@ -36,6 +36,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private ChallengeComponent challengeComponent;
     @Inject public GetChallengeInteractor getChallengeInteractor;
 
+    private static int activityInstanceCount = 0;
     private boolean destroyActivity = true;
 
     @Override
@@ -61,13 +62,26 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         timer.init();
         navigationPanel.init();
         keyboard.init();
-        Bus.getBus().subscribe(this);
+
+        activityInstanceCount++;
+    }
+
+    private void setupSubscriptions() {
+        if (!Bus.getBus().hasObservers()) {
+            toolbar.subscribe();
+            grid.subscribe();
+            timer.subscribe();
+            navigationPanel.subscribe();
+            keyboard.subscribe();
+            Bus.getBus().subscribe(this);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         System.out.println("onStart()");
+        setupSubscriptions();
 
         if (Bus.gameState == GameState.PRE_MEMORIZATION && Bus.challenge == null) {
             getChallengeInteractor.setCallback(this);
@@ -90,10 +104,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         super.onRestoreInstanceState(inState);
         System.out.println("onRestoreInstanceState()");
         Bus.getBus().onLoad(Bus.challenge, inState);
-
-        if (Bus.gameState == GameState.MEMORIZATION) {
-            timer.start();
-        }
     }
 
     @Override
@@ -110,15 +120,27 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+
+        if (Bus.gameState == GameState.MEMORIZATION) {
+            timer.start();
+        }
     }
 
     @Override
-    protected void onPause() { super.onPause(); System.out.println("onPause()"); timer.pause();   }
+    protected void onPause() {
+        super.onPause();
+        System.out.println("onPause()");
+
+        if (Bus.gameState == GameState.MEMORIZATION) {
+            timer.pause();
+        }
+    }
 
 
     /*
      * If called, this method will occur before onStop().
      * There are no guarantees about whether it will occur before or after onPause().
+     * Note that this does get called when the app moves to the background, as it may get destroyed while there
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -127,7 +149,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         outState.putSerializable("GameState", Bus.gameState);
         destroyActivity = false;
         Bus.getBus().onSaveInstanceState(outState);
-        Bus.unsubscribeAll();
     }
 
     @Override
@@ -141,10 +162,23 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     protected void onDestroy() {
         super.onDestroy();
         System.out.println("onDestroy()");
+
+        /* If the user decides to play again, then a new activity will be placed on top of the current one
+         * This means that the current activity's onStop() and onDestroy() aren't called until
+         * the new activity has already loaded all the way to onResume().
+         * This check will prevent us from removing the new activity's subscribers
+         */
+        if (activityInstanceCount <= 1) {
+            System.out.println("onDestroy(unsubscribe all)");
+            Bus.unsubscribeAll();
+        }
+
         if (destroyActivity) {
             System.out.println("onDestroy(destroy bus!)");
             Bus.destroy();
         }
+
+        activityInstanceCount--;
     }
 
     @Override
@@ -200,6 +234,10 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
 
 
+
+
+
+
     ////////// Game State Life Cycle Listener ////////////
 
     @Override
@@ -231,6 +269,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onPlayAgain() {
+        System.out.println("onPlayAgain()");
         Bus.unsubscribeAll();
 
         /* When the activity is started anew, the old running activity has not yet been destroyed.

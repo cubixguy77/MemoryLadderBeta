@@ -38,14 +38,16 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
     }
 
     public void init(AppCompatActivity context) {
-        Bus.getBus().subscribe(this);
-
         context.setSupportActionBar(this);
         this.supportActionBar = context.getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_action_close);
         }
+    }
+
+    public void subscribe() {
+        Bus.getBus().subscribe(this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu, Context context) {

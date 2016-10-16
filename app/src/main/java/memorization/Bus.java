@@ -37,6 +37,10 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
+    public boolean hasObservers() {
+        return !observers.isEmpty();
+    }
+
     static void unsubscribeAll() {
         System.out.println("Bus.unSubscribeAll()");
         if (Bus.instance != null) {

@@ -28,7 +28,6 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
     NumberGridAdapter(Context context)
     {
         this.context = context;
-        Bus.getBus().subscribe(this);
     }
 
     void setGridView(NumberGridView gridView) {

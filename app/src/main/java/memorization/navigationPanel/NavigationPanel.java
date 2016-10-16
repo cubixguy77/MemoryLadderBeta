@@ -32,8 +32,11 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
     }
 
     public void init() {
-        Bus.getBus().subscribe(this);
         ButterKnife.bind(this);
+    }
+
+    public void subscribe() {
+        Bus.getBus().subscribe(this);
     }
 
     @Override
