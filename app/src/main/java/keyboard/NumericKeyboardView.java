@@ -9,6 +9,7 @@ import android.widget.TableLayout;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import memorization.Bus;
+import memorization.GameState;
 import memorization.GameStateListener;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
@@ -55,18 +56,20 @@ public class NumericKeyboardView extends TableLayout implements GameStateListene
 
     @Override
     public void onLoad(Challenge challenge, Bundle savedInstanceState) {
-
+        if (savedInstanceState != null) {
+            if (Bus.gameState == GameState.RECALL) {
+                showKeyboard();
+            } else {
+                hideKeyboard();
+            }
+        }
     }
 
     @Override
-    public void onMemorizationStart() {
-        hideKeyboard();
-    }
+    public void onMemorizationStart() {}
 
     @Override
-    public void onTimeExpired() {
-
-    }
+    public void onTimeExpired() {}
 
     @Override
     public void onTransitionToRecall() {
@@ -79,7 +82,5 @@ public class NumericKeyboardView extends TableLayout implements GameStateListene
     }
 
     @Override
-    public void onPlayAgain() {
-
-    }
+    public void onPlayAgain() {}
 }

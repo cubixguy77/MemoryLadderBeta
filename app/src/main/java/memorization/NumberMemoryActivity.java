@@ -90,13 +90,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         System.out.println("onRestoreInstanceState()");
         Bus.getBus().onLoad(Bus.challenge, inState);
 
-        if (Bus.gameState == GameState.RECALL) {
-            keyboard.setVisibility(View.VISIBLE);
-        }
-        else {
-            keyboard.setVisibility(View.GONE);
-        }
-
         if (Bus.gameState == GameState.MEMORIZATION) {
             timer.start();
         }
