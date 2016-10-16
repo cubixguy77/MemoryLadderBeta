@@ -9,21 +9,20 @@ import android.os.CountDownTimer;
  * provide implementation for onTick() and onFinish()
  * then use it in your projects.
  */
-public abstract class CountDownTimerPausable {
-    long millisInFuture = 0;
-    long countDownInterval = 0;
-    long millisRemaining =  0;
+abstract class CountDownTimerPausable {
+    private long countDownInterval = 0;
+    private long millisRemaining =  0;
 
-    CountDownTimer countDownTimer = null;
+    private CountDownTimer countDownTimer = null;
 
-    boolean isPaused = true;
+    private boolean isPaused = true;
 
-    public CountDownTimerPausable(long millisInFuture, long countDownInterval) {
+    CountDownTimerPausable(long millisInFuture, long countDownInterval) {
         super();
-        this.millisInFuture = millisInFuture;
         this.countDownInterval = countDownInterval;
-        this.millisRemaining = this.millisInFuture;
+        this.millisRemaining = millisInFuture;
     }
+
     private void createCountDownTimer(){
         countDownTimer = new CountDownTimer(millisRemaining,countDownInterval) {
 
@@ -41,30 +40,34 @@ public abstract class CountDownTimerPausable {
             }
         };
     }
+
     /**
      * Callback fired on regular interval.
      *
      * @param millisUntilFinished The amount of time until finished.
      */
     public abstract void onTick(long millisUntilFinished);
+
     /**
      * Callback fired when the time is up.
      */
     public abstract void onFinish();
+
     /**
      * Cancel the countdown.
      */
-    public final void cancel(){
+    final void cancel(){
         if(countDownTimer!=null){
             countDownTimer.cancel();
         }
         this.millisRemaining = 0;
     }
+
     /**
      * Start or Resume the countdown.
      * @return CountDownTimerPausable current instance
      */
-    public synchronized final CountDownTimerPausable start(){
+    synchronized final CountDownTimerPausable start(){
         if(isPaused){
             createCountDownTimer();
             countDownTimer.start();
@@ -72,19 +75,17 @@ public abstract class CountDownTimerPausable {
         }
         return this;
     }
+
     /**
      * Pauses the CountDownTimerPausable, so it could be resumed(start)
      * later from the same point where it was paused.
      */
-    public void pause()throws IllegalStateException{
-        if(isPaused==false){
+    void pause() throws IllegalStateException{
+        if(!isPaused){
             countDownTimer.cancel();
         } else{
             throw new IllegalStateException("CountDownTimerPausable is already in pause state, start counter before pausing it.");
         }
         isPaused = true;
-    }
-    public boolean isPaused() {
-        return isPaused;
     }
 }
