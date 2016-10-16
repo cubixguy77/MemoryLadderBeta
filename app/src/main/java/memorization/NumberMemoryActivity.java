@@ -5,17 +5,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import injection.components.ChallengeComponent;
 import injection.components.DaggerChallengeComponent;
 import injection.modules.ChallengeModule;
 import keyboard.NumericKeyboardView;
+import memorization.navigationPanel.NavigationPanel;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
@@ -24,11 +23,11 @@ import speednumbers.mastersofmemory.com.presentation.R;
 import timer.TimerView;
 import toolbar.ToolbarView;
 
-public class NumberMemoryActivity extends BaseActivityChallenge implements GameStateListener, GridEvent.Memory.ViewEvents, GetChallengeInteractor.Callback {
+public class NumberMemoryActivity extends BaseActivityChallenge implements GameStateListener, GetChallengeInteractor.Callback {
 
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView)  TimerView timer;
-    @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
+    @BindView(R.id.navigationPanel) NavigationPanel navigationPanel;
     @BindView(R.id.tool_bar) ToolbarView toolbar;
     @BindView(R.id.keyboard_layout) NumericKeyboardView keyboard;
 
@@ -45,8 +44,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         ButterKnife.bind(this);
         this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
 
-        assert this.challengeKey > 0;
-
         initializeInjector();
 
         if (savedInstanceState != null) {
@@ -61,6 +58,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         toolbar.init(this);
         grid.init();
         timer.init();
+        navigationPanel.init();
         keyboard.init();
         Bus.getBus().subscribe(this);
     }
@@ -91,13 +89,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         super.onRestoreInstanceState(inState);
         System.out.println("onRestoreInstanceState()");
         Bus.getBus().onLoad(Bus.challenge, inState);
-
-        if (Bus.gameState == GameState.PRE_MEMORIZATION || Bus.gameState == GameState.MEMORIZATION) {
-            nextGroupButton.setVisibility(View.VISIBLE);
-        }
-        else {
-            nextGroupButton.setVisibility(View.GONE);
-        }
 
         if (Bus.gameState == GameState.RECALL) {
             keyboard.setVisibility(View.VISIBLE);
@@ -205,14 +196,10 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     ////////// Game State Life Cycle Listener ////////////
 
     @Override
-    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
-
-    }
+    public void onLoad(Challenge challenge, Bundle savedInstanceState) {}
 
     @Override
-    public void onMemorizationStart() {
-
-    }
+    public void onMemorizationStart() {}
 
     @Override
     public void onTimeExpired() {
@@ -220,11 +207,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     }
 
     @Override
-    public void onTransitionToRecall() {
-
-        nextGroupButton.setVisibility(View.GONE);
-
-    }
+    public void onTransitionToRecall() {}
 
     @Override
     public void onRecallComplete(Result result) {
@@ -281,39 +264,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
 
 
-
-
-    ///////////// Grid Navigation Buttons ///////////////
-
-    @OnClick(R.id.nextGroupButton) void onNextClick() {
-        if (Bus.gameState == GameState.PRE_MEMORIZATION) {
-            nextGroupButton.setImageResource(R.drawable.ic_arrow_right);
-            Bus.getBus().onMemorizationStart();
-        }
-        else {
-            Bus.getBus().onNextMemoryCell();
-        }
-    }
-
-    @Override
-    public void onDisablePrev() {
-
-    }
-
-    @Override
-    public void onDisableNext() {
-        nextGroupButton.setEnabled(false);
-    }
-
-    @Override
-    public void onEnablePrev() {
-
-    }
-
-    @Override
-    public void onEnableNext() {
-        nextGroupButton.setEnabled(true);
-    }
 
 
 

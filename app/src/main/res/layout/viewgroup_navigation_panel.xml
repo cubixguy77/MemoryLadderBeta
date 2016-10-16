@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<memorization.navigationPanel.NavigationPanel
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:gravity="center"
+    tools:context="memorization.NumberMemoryActivity">
+
+<ImageButton
+    android:id="@+id/nextGroupButton"
+    android:layout_width="@dimen/next_group_button.layout_width"
+    android:layout_height="@dimen/next_group_button.layout_height"
+    android:layout_marginBottom="@dimen/next_group_button.layout_margin"
+    android:layout_marginTop="@dimen/next_group_button.layout_margin"
+    android:background="@drawable/shape_rounded_corners"
+    app:srcCompat="@drawable/ic_arrow_right"
+    android:stateListAnimator="@animator/button_elevation"
+    android:text="go"
+    android:elevation="2dp"
+    />
+
+</memorization.navigationPanel.NavigationPanel>
