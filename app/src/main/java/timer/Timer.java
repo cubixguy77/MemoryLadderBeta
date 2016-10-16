@@ -6,10 +6,12 @@ public class Timer extends CountDownTimer implements TimerActionListener {
 
     private TimerUpdateListener listener;
     private long secondsRemaining;
+    private TimerModel model;
 
     Timer(TimerModel model, TimerUpdateListener timerListener)
     {
         super(model.timeLimited ? model.timeLimitInSeconds * 1000 : 100000000L, 1);
+        this.model = model;
         this.listener = timerListener;
     }
 

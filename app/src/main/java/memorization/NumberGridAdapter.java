@@ -1,6 +1,7 @@
 package memorization;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import review.Result;
 import review.ReviewCell;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener {
+class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener {
 
     private Context context;
     private GridData memoryData;
@@ -257,16 +258,26 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
 
     @Override
-    public void onLoad(Challenge challenge) {
+    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
         this.challenge = challenge;
-        memoryData = new GridData(challenge);
-        memoryData.loadData();
+
+        if (savedInstanceState != null) {
+            memoryData = Bus.memoryData;
+            recallData = Bus.recallData;
+            highlightPosition = savedInstanceState.getInt("NumberGridAdapter.highlightPosition");
+        }
+        else {
+            memoryData = new GridData(challenge);
+            memoryData.loadData();
+            highlightPosition = 1;
+        }
+
         notifyDataSetChanged();
     }
 
     @Override
     public void onMemorizationStart() {
-        highlightPosition = 1;
+
         notifyDataSetChanged();
     }
 
@@ -352,5 +363,17 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
         recallData.onBackSpace(highlightPosition);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState) {
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("NumberGridAdapter.highlightPosition", highlightPosition);
+        Bus.memoryData = memoryData;
+        Bus.recallData = recallData;
     }
 }

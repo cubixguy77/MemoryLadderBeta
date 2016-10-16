@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import memorization.Bus;
+import memorization.GameState;
 import memorization.GameStateListener;
 import memorization.SaveInstanceStateListener;
 import review.Result;
@@ -58,14 +59,26 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     }
 
     @Override
-    public void onLoad(Challenge challenge) {
+    public void onLoad(Challenge challenge, final Bundle savedInstanceState) {
         final Setting timerSetting = NumberChallenge.getMemTimerSetting(challenge);
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                setModel(new TimerModel(timerSetting));
+                TimerModel model = new TimerModel(timerSetting);
+
+                if (savedInstanceState != null) {
+                    if (Bus.gameState == GameState.PRE_MEMORIZATION || Bus.gameState == GameState.MEMORIZATION) {
+                        model.timeLimitInSeconds = savedInstanceState.getLong("TimerView.SecondsRemaining");
+                    }
+                    else {
+                        setVisibility(View.INVISIBLE);
+                    }
+                }
+
+                setModel(model);
                 onTimeUpdate(model.timeLimitInSeconds);
+
             }
         });
     }
@@ -93,14 +106,20 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
 
     }
 
-    public void start() {
-        timerActionListener.startTimer();
+    public void start()  {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                timerActionListener.startTimer();
+            }
+        });
     }
-    public void pause() {
-        timerActionListener.pauseTimer();
-    }
+
+    public void pause()  { timerActionListener.pauseTimer(); }
     public void cancel() {
-        timerActionListener.cancelTimer();
+        if (timerActionListener != null) {
+            timerActionListener.cancelTimer();
+        }
     }
 
     @Override
@@ -110,6 +129,6 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
+        outState.putLong("TimerView.SecondsRemaining", timerActionListener.getSecondsRemaining());
     }
 }

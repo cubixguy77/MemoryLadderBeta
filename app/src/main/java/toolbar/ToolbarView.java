@@ -49,11 +49,13 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
     }
 
     public boolean onCreateOptionsMenu(Menu menu, Context context) {
+        System.out.println("onCreateOptionsMenu");
         ((AppCompatActivity) context).getMenuInflater().inflate(R.menu.menu_memorization, menu);
         return true;
     }
 
     public boolean onPrepareOptionsMenu(Menu menu) {
+        System.out.println("onPrepareOptionsMenu");
         submitMemButton = menu.findItem(R.id.action_submit_memorization);
         submitRecallButton = menu.findItem(R.id.action_submit_recall);
         submitReplayButton = menu.findItem(R.id.action_replay);
@@ -114,8 +116,13 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
 
     @Override
-    public void onLoad(Challenge challenge) {
-
+    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            System.out.println("onLoad(Toolbar): with restore");
+            supportActionBar.setTitle(savedInstanceState.getString("Toolbar.Title"));
+            restoreTitle = false;
+            //supportActionBar.invalidateOptionsMenu();
+        }
     }
 
     @Override
@@ -148,9 +155,7 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
     @Override
     public void onRestoreInstanceState(Bundle inState) {
-        supportActionBar.setTitle(inState.getString("Toolbar.Title"));
-        restoreTitle = false;
-        supportActionBar.invalidateOptionsMenu();
+
     }
 
     @Override

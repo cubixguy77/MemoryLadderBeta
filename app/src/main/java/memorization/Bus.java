@@ -5,6 +5,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 import recall.PositionChangeListener;
+import recall.RecallData;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
@@ -13,6 +14,9 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     private static Bus instance = null;
     private ArrayList<Object> observers;
 
+    public static Challenge challenge;
+    static GridData memoryData;
+    static RecallData recallData;
 
     public static GameState gameState;
 
@@ -34,19 +38,26 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     }
 
     static void unsubscribeAll() {
+        System.out.println("Bus.unSubscribeAll()");
         if (Bus.instance != null) {
             Bus.instance.observers.clear();
-            Bus.instance = null;
+            Bus.instance = null;            
         }
     }
 
+    static void destroy() {
+        Bus.challenge = null;
+        Bus.memoryData = null;
+        Bus.recallData = null;
+    }
+    
     @Override
-    public void onLoad(Challenge challenge) {
-        gameState = GameState.PRE_MEMORIZATION;
+    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
+        Bus.challenge = challenge;
 
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
-                ((GameStateListener) observer).onLoad(challenge);
+                ((GameStateListener) observer).onLoad(challenge, savedInstanceState);
             }
         }
     }

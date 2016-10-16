@@ -1,6 +1,7 @@
 package keyboard;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TableLayout;
@@ -53,7 +54,7 @@ public class NumericKeyboardView extends TableLayout implements GameStateListene
     @OnClick(R.id.key_0) void on0Clicked() { Bus.getBus().onKeyPress(0); }
 
     @Override
-    public void onLoad(Challenge challenge) {
+    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
 
     }
 

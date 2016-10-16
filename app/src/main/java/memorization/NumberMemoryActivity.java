@@ -34,8 +34,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     private long challengeKey;
     private ChallengeComponent challengeComponent;
-    private boolean started = false;
     @Inject public GetChallengeInteractor getChallengeInteractor;
+
+    private boolean destroyActivity = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,11 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         initializeInjector();
 
         if (savedInstanceState != null) {
+            System.out.println("onCreate(): with restore");
             Bus.gameState = (GameState) savedInstanceState.getSerializable("GameState");
         }
         else {
+            System.out.println("onCreate()");
             Bus.gameState = GameState.PRE_MEMORIZATION;
         }
 
@@ -65,45 +68,90 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     protected void onStart() {
         super.onStart();
+        System.out.println("onStart()");
 
-        if (Bus.gameState == GameState.PRE_MEMORIZATION) {
+        if (Bus.gameState == GameState.PRE_MEMORIZATION && Bus.challenge == null) {
             getChallengeInteractor.setCallback(this);
             getChallengeInteractor.execute();
+        }
+
+        /* Ths condition occurs when the user has selected to Play Again
+         * We'll retain the existing Challenge rather than fetch it again
+         */
+        else if (Bus.gameState == GameState.PRE_MEMORIZATION && Bus.challenge != null) {
+            this.onChallengeLoaded(Bus.challenge);
+        }
+    }
+
+    /*
+     * This method is called between onStart() and onPostCreate(Bundle).
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle inState) {
+        super.onRestoreInstanceState(inState);
+        System.out.println("onRestoreInstanceState()");
+        Bus.getBus().onLoad(Bus.challenge, inState);
+
+        if (Bus.gameState == GameState.PRE_MEMORIZATION || Bus.gameState == GameState.MEMORIZATION) {
+            nextGroupButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            nextGroupButton.setVisibility(View.GONE);
+        }
+
+        if (Bus.gameState == GameState.RECALL) {
+            keyboard.setVisibility(View.VISIBLE);
+        }
+        else {
+            keyboard.setVisibility(View.GONE);
+        }
+
+        if (Bus.gameState == GameState.MEMORIZATION) {
+            timer.start();
         }
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle inState) {
-        super.onRestoreInstanceState(inState);
-        Bus.getBus().onRestoreInstanceState(inState);
+    protected void onResume() { super.onResume(); System.out.println("onResume()");  }
+
+    @Override
+    protected void onPause() { super.onPause(); System.out.println("onPause()"); timer.pause();   }
+
+
+    /*
+     * If called, this method will occur before onStop().
+     * There are no guarantees about whether it will occur before or after onPause().
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("onSaveInstanceState()");
+        outState.putSerializable("GameState", Bus.gameState);
+        destroyActivity = false;
+        Bus.getBus().onSaveInstanceState(outState);
+        Bus.unsubscribeAll();
     }
-
-    @Override
-    protected void onResume() { super.onResume();  }
-
-    @Override
-    protected void onPause() { super.onPause();  }
 
     @Override
     protected void onStop() {
         super.onStop();
+        System.out.println("onStop()");
         getChallengeInteractor.setCallback(null);
-        Bus.unsubscribeAll();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("GameState", Bus.gameState);
-        Bus.getBus().onSaveInstanceState(outState);
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("onDestroy()");
+        if (destroyActivity) {
+            System.out.println("onDestroy(destroy bus!)");
+            Bus.destroy();
+        }
     }
-
-    @Override
-    protected void onDestroy() { super.onDestroy();  }
 
     @Override
     public void onBackPressed() {
-        Bus.unsubscribeAll();
+        destroyActivity = true;
 
         if (timer != null) {
             timer.cancel();
@@ -157,7 +205,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     ////////// Game State Life Cycle Listener ////////////
 
     @Override
-    public void onLoad(Challenge challenge) {
+    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -194,6 +243,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public void onPlayAgain() {
         Bus.unsubscribeAll();
 
+        /* When the activity is started anew, the old running activity has not yet been destroyed.
+         * When the old activity was calling unsubscribeAll on the bus in onDestroy()
+         * the new activity had already called onCreate() and generated subscribers
+         * onDestroy() then revoked those subscribers
+         */
+        destroyActivity = false;
+
         //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //ft.remove(getSupportFragmentManager().findFragmentByTag("FinalScoreCardFragment"));
         //ft.commit();
@@ -213,7 +269,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onChallengeLoaded(Challenge challenge) {
-        Bus.getBus().onLoad(challenge);
+        Bus.getBus().onLoad(challenge, null);
+        System.out.println("onChallengeLoaded()");
     }
 
 
@@ -229,16 +286,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     ///////////// Grid Navigation Buttons ///////////////
 
     @OnClick(R.id.nextGroupButton) void onNextClick() {
-        if (!started) {
-            started = true;
+        if (Bus.gameState == GameState.PRE_MEMORIZATION) {
             nextGroupButton.setImageResource(R.drawable.ic_arrow_right);
-
             Bus.getBus().onMemorizationStart();
-
-            return;
         }
-
-        Bus.getBus().onNextMemoryCell();
+        else {
+            Bus.getBus().onNextMemoryCell();
+        }
     }
 
     @Override
