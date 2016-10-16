@@ -1,9 +1,11 @@
 package memorization;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -41,8 +43,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_memory_numbers);
         ButterKnife.bind(this);
         this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
@@ -99,7 +99,20 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     }
 
     @Override
-    protected void onResume() { super.onResume(); System.out.println("onResume()");  }
+    protected void onResume() {
+        super.onResume();
+        System.out.println("onResume()");
+
+        /* full screen mode */
+        if(Build.VERSION.SDK_INT < 19){
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        }
+        else {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
 
     @Override
     protected void onPause() { super.onPause(); System.out.println("onPause()"); timer.pause();   }
