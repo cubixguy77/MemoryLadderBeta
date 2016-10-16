@@ -37,7 +37,7 @@ public class ChallengeListFragment extends BaseFragment implements IChallengeLis
     @BindView(R.id.ChallengeListContainer) LinearLayout challengeListContainer;
 
     public ChallengeListFragment() {
-        setRetainInstance(true);
+        setRetainInstance(false);
     }
 
     @Override
@@ -55,11 +55,10 @@ public class ChallengeListFragment extends BaseFragment implements IChallengeLis
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.getComponent(ChallengeListComponent.class).inject(this);
-
         this.challengeListPresenter.setView(this);
-        if (savedInstanceState == null) {
-            this.loadChallengeList();
-        }
+
+        /* TODO: Store the challenges on rotation so they don't have to be looked up a second time */
+        this.loadChallengeList();
     }
 
     @Override public void onResume() {
@@ -127,6 +126,7 @@ public class ChallengeListFragment extends BaseFragment implements IChallengeLis
 
 
     private void loadChallengeList() {
+        System.out.println("loadChallengeList()");
         this.challengeListPresenter.loadChallengeList();
     }
 
