@@ -100,15 +100,11 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
                 break;
             case RECALL:
                 submitRecallButton.setVisible(true);
-                submitRecallButton.setEnabled(true);
-                submitRecallButton.getIcon().setAlpha(255);
                 submitMemButton.setVisible(false);
-                submitReplayButton.setVisible(false);
+                submitReplayButton.setVisible(true);
                 break;
             case REVIEW:
                 submitReplayButton.setVisible(true);
-                submitReplayButton.setEnabled(true);
-                submitReplayButton.getIcon().setAlpha(255);
                 submitMemButton.setVisible(false);
                 submitRecallButton.setVisible(false);
                 break;
