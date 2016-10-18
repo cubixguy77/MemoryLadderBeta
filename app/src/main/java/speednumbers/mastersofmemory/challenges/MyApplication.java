@@ -2,6 +2,7 @@ package speednumbers.mastersofmemory.challenges;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.facebook.stetho.Stetho;
 
@@ -19,6 +20,9 @@ public class MyApplication extends Application {
         Stetho.initializeWithDefaults(this);
         MyApplication.context = getApplicationContext();
         initializeInjector();
+
+        /* Adding this line to prevent vector asset errors on pre SDK 21 devices */
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     private void initializeInjector() {
