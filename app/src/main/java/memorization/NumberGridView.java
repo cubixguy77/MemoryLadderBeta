@@ -55,12 +55,18 @@ public class NumberGridView extends GridView {
                 setSelection(1);
             }
         });
-
     }
 
     private int getScrollDistance() {
         if (scrollDistance <= 0) {
-            scrollDistance = getVerticalSpacing() + getChildAt(getFirstVisiblePosition()).getHeight();
+            for (int i = 0; i <= getLastVisiblePosition() - getFirstVisiblePosition(); i++) {
+                if (getChildAt(i) != null) {
+                    scrollDistance = getVerticalSpacing() + getChildAt(i).getHeight(); //scrollDistance = getVerticalSpacing() + getChildAt(getFirstVisiblePosition()).getHeight();
+                    return scrollDistance;
+                }
+            }
+
+            return 0;
         }
 
         return scrollDistance;
