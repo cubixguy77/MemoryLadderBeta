@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.TextView;
@@ -19,7 +20,13 @@ public class MemoryCell extends TextView {
         super(context, attrs);
         setTextSize(30);
         setGravity(Gravity.CENTER);
-        setLayoutParams(new AbsListView.LayoutParams(190, 190));
+
+        int sizeInPixels = (int) getResources().getDimension(R.dimen.number_grid_cellSize);
+        setLayoutParams(new AbsListView.LayoutParams(sizeInPixels, sizeInPixels));
+
+        int textSize = (int) getResources().getDimension(R.dimen.memory_cell_textSize);
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
         isSelected = false;
     }
 

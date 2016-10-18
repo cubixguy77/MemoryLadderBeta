@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.EditText;
 
 import memorization.Bus;
+import speednumbers.mastersofmemory.com.presentation.R;
 
 public class RecallCell extends EditText {
 
@@ -32,10 +33,15 @@ public class RecallCell extends EditText {
     }
 
     public void finalizeSetup() {
-        setLayoutParams(new AbsListView.LayoutParams(130, 190));
+        int sizeInPixels = (int) getResources().getDimension(R.dimen.number_grid_cellSize);
+        setLayoutParams(new AbsListView.LayoutParams(sizeInPixels, sizeInPixels));
+
+        int textSize = (int) getResources().getDimension(R.dimen.recall_cell_textSize);
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+
         setInputType(InputType.TYPE_CLASS_NUMBER);
         setFilters(new InputFilter[] {new InputFilter.LengthFilter(numDigitsPerCell)});
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, 60);
+
         setGravity(Gravity.CENTER);
         setRawInputType(InputType.TYPE_CLASS_TEXT); // Disables keyboard
         setTextIsSelectable(true);

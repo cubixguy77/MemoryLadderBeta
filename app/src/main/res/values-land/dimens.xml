@@ -7,6 +7,11 @@
 
     <dimen name="number_grid.layout_margin">8dp</dimen>
     <dimen name="number_grid.verticalSpacing">30dp</dimen>
+    <dimen name="number_grid.cellSize">56dp</dimen>
+
+    <dimen name="memory_cell.textSize">8sp</dimen>
+    <dimen name="recall_cell.textSize">8sp</dimen>
+    <dimen name="review_cell.textSize">6sp</dimen>
 
     <dimen name="next_group_button.layout_width">60dp</dimen>
     <dimen name="next_group_button.layout_height">60dp</dimen>

@@ -7,18 +7,25 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.AbsListView;
 import android.widget.TextView;
+
+import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ReviewCell extends TextView {
 
     public ReviewCell(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setTextSize(20);
         setLines(2);
         setGravity(Gravity.CENTER);
-        setLayoutParams(new AbsListView.LayoutParams(190, 190));
+
+        int sizeInPixels = (int) getResources().getDimension(R.dimen.number_grid_cellSize);
+        setLayoutParams(new AbsListView.LayoutParams(sizeInPixels, sizeInPixels));
+
+        int textSize = (int) getResources().getDimension(R.dimen.review_cell_textSize);
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
     }
 
     public void setModel(String memoryString, String recallString) {
