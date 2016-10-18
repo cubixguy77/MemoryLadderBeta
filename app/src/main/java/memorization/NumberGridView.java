@@ -30,12 +30,12 @@ public class NumberGridView extends GridView {
 
     public int getCursorStart(int position) {
         RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
-        return recallCell.getSelectionStart();
+        return recallCell == null ? 0 : recallCell.getSelectionStart();
     }
 
     public int getCursorEnd(int position) {
         RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
-        return recallCell.getSelectionEnd();
+        return recallCell == null ? 0 : recallCell.getSelectionEnd();
     }
 
     public void scrollGrid() {
