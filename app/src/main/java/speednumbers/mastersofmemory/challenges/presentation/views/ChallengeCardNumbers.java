@@ -24,7 +24,6 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     @BindView(R.id.challengeText) TextView challengeText;
     @BindView(R.id.deleteButton) ImageView deleteButton;
     @BindView(R.id.memorizationTimerContainer) MemTimerSettingView memorizationTimerContainer;
-    @BindView(R.id.recallTimerContainer) RecallTimerSettingView recallTimerContainer;
     @BindView(R.id.digitGroupingContainer) DigitsPerGroupView digitsPerGroupView;
 
     public ChallengeCardNumbers(Context context) {
@@ -65,12 +64,10 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
 
         digitsPerGroupView.setVisibility(GONE);
         memorizationTimerContainer.setVisibility(GONE);
-        recallTimerContainer.setVisibility(GONE);
         playButton.setVisibility(GONE);
         challengeText.setText(challenge.getTitle());
         digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
         memorizationTimerContainer.setModel(NumberChallenge.getMemTimerSetting(challenge));
-        recallTimerContainer.setModel(NumberChallenge.getRecallTimerSetting(challenge));
     }
 
     @OnClick(R.id.deleteButton) void onDeleteClicked() {
@@ -86,7 +83,6 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     public void onExpand() {
         digitsPerGroupView.setVisibility(VISIBLE);
         memorizationTimerContainer.setVisibility(VISIBLE);
-        recallTimerContainer.setVisibility(VISIBLE);
         playButton.setVisibility(VISIBLE);
         deleteButton.setVisibility(VISIBLE);
     }
@@ -95,7 +91,6 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     public void onContract() {
         digitsPerGroupView.setVisibility(GONE);
         memorizationTimerContainer.setVisibility(GONE);
-        recallTimerContainer.setVisibility(GONE);
         playButton.setVisibility(GONE);
         deleteButton.setVisibility(GONE);
     }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/linearLayout2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="40dp"
+    android:layout_marginLeft="40dp"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/HoursUp"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_arrow_up" />
+
+        <TextView
+            android:id="@+id/Hours"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="50sp"
+            android:text="00"
+            />
+
+        <Button
+            android:id="@+id/HoursDown"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_arrow_down"
+            />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorPrimaryText"
+            android:gravity="center_horizontal"
+            android:text="Hours"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="13dp"
+        android:layout_gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_horizontal"
+        android:text=":"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/MinutesUp"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_arrow_up" />
+
+        <TextView
+            android:id="@+id/Minutes"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="50sp"
+            android:text="00"
+            />
+
+        <Button
+            android:id="@+id/MinutesDown"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_arrow_down"
+            />
+
+        <TextView
+            android:id="@+id/TextView03"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimaryText"
+            android:gravity="center_horizontal"
+            android:text="Minutes"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="13dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_horizontal"
+        android:text=":"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/SecondsUp"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_arrow_up" />
+
+        <TextView
+            android:id="@+id/Seconds"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="50sp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorPrimaryText"
+            android:text="00"
+            />
+
+        <Button
+            android:id="@+id/SecondsDown"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_arrow_down"
+            />
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorPrimaryText"
+            android:text="Seconds"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+

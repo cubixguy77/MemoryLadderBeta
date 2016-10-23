@@ -10,7 +10,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
-import speednumbers.mastersofmemory.challenges.presentation.views.BaseSettingView;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class DigitsPerGroupView extends BaseSettingView {
