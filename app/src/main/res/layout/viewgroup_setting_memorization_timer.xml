@@ -3,22 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <View
-        android:id="@+id/dividerMemorization"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/border_top"
-        />
-
     <TextView
         android:id="@+id/memorizationTimerTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dividerMemorization"
         android:layout_marginBottom="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
         android:textSize="20sp"
         android:text="Memorization Timer"
         android:textStyle="normal|bold" />
@@ -27,7 +18,8 @@
         android:id="@+id/memorizationTimerSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dividerMemorization"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         />
@@ -37,10 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
         tools:text="5:00"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_below="@+id/memorizationTimerTitle"
         />
 </merge>

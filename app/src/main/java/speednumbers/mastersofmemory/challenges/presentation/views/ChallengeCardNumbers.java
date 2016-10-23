@@ -25,6 +25,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     @BindView(R.id.deleteButton) ImageView deleteButton;
     @BindView(R.id.memorizationTimerContainer) MemTimerSettingView memorizationTimerContainer;
     @BindView(R.id.digitGroupingContainer) DigitsPerGroupView digitsPerGroupView;
+    @BindView(R.id.challengeCardBottomActionContainer) LinearLayout actionContainer;
 
     public ChallengeCardNumbers(Context context) {
         super(context, null, R.attr.cardStyle);
@@ -62,9 +63,8 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         params.setMargins(0, 0, 0, margin);
         setLayoutParams(params);
 
-        digitsPerGroupView.setVisibility(GONE);
-        memorizationTimerContainer.setVisibility(GONE);
-        playButton.setVisibility(GONE);
+        onContract();
+
         challengeText.setText(challenge.getTitle());
         digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
         memorizationTimerContainer.setModel(NumberChallenge.getMemTimerSetting(challenge));
@@ -83,15 +83,13 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     public void onExpand() {
         digitsPerGroupView.setVisibility(VISIBLE);
         memorizationTimerContainer.setVisibility(VISIBLE);
-        playButton.setVisibility(VISIBLE);
-        deleteButton.setVisibility(VISIBLE);
+        actionContainer.setVisibility(VISIBLE);
     }
 
     @Override
     public void onContract() {
         digitsPerGroupView.setVisibility(GONE);
         memorizationTimerContainer.setVisibility(GONE);
-        playButton.setVisibility(GONE);
-        deleteButton.setVisibility(GONE);
+        actionContainer.setVisibility(GONE);
     }
 }

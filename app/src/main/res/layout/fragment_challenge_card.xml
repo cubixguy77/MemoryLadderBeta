@@ -23,13 +23,16 @@
                 android:id="@+id/challengeText"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                android:text="10 Digits"
-                android:textSize="40sp"
-                android:gravity="center_vertical"
+                android:layout_weight="5"
                 android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:gravity="center_vertical"
                 android:clickable="true"
                 android:background="?attr/selectableItemBackground"
-                android:layout_weight="5"/>
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:text="10 Digits"
+                />
 
             <ImageView
                 android:id="@+id/expandContractButton"
@@ -59,31 +62,31 @@
         </speednumbers.mastersofmemory.challenges.presentation.views.MemTimerSettingView>
 
         <LinearLayout
+            android:id="@+id/challengeCardBottomActionContainer"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp">
-
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            >
 
             <ImageView
+                android:id="@+id/deleteButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_delete"
-                android:visibility="gone"
                 android:layout_gravity="center_vertical"
-                tools:visibility="visible"
-                android:id="@+id/deleteButton" />
+                app:srcCompat="@drawable/ic_delete"
+                />
 
             <Button
                 android:id="@+id/playButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textSize="20sp"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:theme="@style/PlayButton"
                 android:text="Play"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
+                style="@style/Widget.AppCompat.Button.Borderless"
+                />
 
         </LinearLayout>
     </LinearLayout>
