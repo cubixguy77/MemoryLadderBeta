@@ -113,7 +113,11 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                int value = Integer.parseInt(edittext.getText().toString());
+                String text = edittext.getText().toString();
+                if (text.length() == 0)
+                    return;
+
+                int value = Integer.parseInt(text);
                 if (value > 0) {
                     IAddChallengeListener challengeListFragment = (ChallengeListFragment) getSupportFragmentManager().findFragmentByTag("ChallengeListFragment");
                     challengeListFragment.onChallengeAdd(value);
