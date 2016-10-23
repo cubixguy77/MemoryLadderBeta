@@ -14,45 +14,24 @@
         android:id="@+id/digitsPerGroupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_below="@+id/dividerDigitGrouping"
         android:text="Digit Grouping"
-        android:textSize="20sp"     />
-
-    <TextView
-        android:id="@+id/onePerGroup"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/digitsPerGroupTitle"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="1"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@drawable/border" />
+        android:textStyle="normal|bold" />
 
     <TextView
-        android:id="@+id/twoPerGroup"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/digitsPerGroupValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_below="@+id/digitsPerGroupTitle"
-        android:layout_toRightOf="@+id/onePerGroup"
-        android:gravity="center_vertical|center_horizontal"
         android:text="2"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@drawable/border" />
+        android:textSize="16sp"
+        android:textStyle="normal" />
 
-    <TextView
-        android:id="@+id/threePerGroup"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@+id/digitsPerGroupTitle"
-        android:layout_toRightOf="@+id/twoPerGroup"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="3"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@drawable/border" />
 </merge>

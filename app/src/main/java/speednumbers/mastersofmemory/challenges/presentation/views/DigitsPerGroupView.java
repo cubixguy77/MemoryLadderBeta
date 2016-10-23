@@ -1,6 +1,8 @@
 package speednumbers.mastersofmemory.challenges.presentation.views;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,9 @@ import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class DigitsPerGroupView extends BaseSettingView {
-    @BindView(R.id.onePerGroup) TextView onePerGroup;
-    @BindView(R.id.twoPerGroup) TextView twoPerGroup;
-    @BindView(R.id.threePerGroup) TextView threePerGroup;
+    @BindView(R.id.digitsPerGroupValue) TextView digitsPerGroupValue;
 
+    private Context context;
     private Setting setting;
 
     public DigitsPerGroupView(Context context) {
@@ -38,6 +39,7 @@ public class DigitsPerGroupView extends BaseSettingView {
     }
 
     private void initializeViews(Context context) {
+        this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.viewgroup_setting_digits_per_group, this);
         ButterKnife.bind(this, view);
@@ -46,26 +48,19 @@ public class DigitsPerGroupView extends BaseSettingView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        selectDigitsPerGroup(this.setting.getValue());
+        displayValue(this.setting.getValue());
     }
 
     public void setModel(Setting setting) {
         this.setting = setting;
-        selectDigitsPerGroup(this.setting.getValue());
+        displayValue(this.setting.getValue());
     }
 
-    private void deselectDigits() {
-        onePerGroup.setTextSize(20);
-        twoPerGroup.setTextSize(20);
-        threePerGroup.setTextSize(20);
-    }
-
-    private void selectDigitsPerGroup(int digitsPerGroup) {
-        deselectDigits();
-        switch (digitsPerGroup) {
-            case 1: onePerGroup.setTextSize(40); break;
-            case 2: twoPerGroup.setTextSize(40); break;
-            case 3: threePerGroup.setTextSize(40); break;
+    private void displayValue(int value) {
+        switch (value) {
+            case 1: digitsPerGroupValue.setText("1 digit"); break;
+            case 2: digitsPerGroupValue.setText("2 digits"); break;
+            case 3: digitsPerGroupValue.setText("3 digits"); break;
             default: break;
         }
     }
@@ -73,20 +68,35 @@ public class DigitsPerGroupView extends BaseSettingView {
     private void onSelectValue(int value) {
         if (this.setting.getValue() != value) {
             this.setting.setValue(value);
-            selectDigitsPerGroup(value);
+            displayValue(value);
             updateSettingValue(setting);
         }
     }
 
-    @OnClick(R.id.onePerGroup) void onSelectOne() {
-        onSelectValue(1);
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Select Digits Per Group");
+        final CharSequence[] items = {
+                "1 Digit",
+                "2 Digits",
+                "3 Digits"
+        };
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int selectionIndex) {
+                switch (selectionIndex+1) {
+                    case 1: onSelectValue(1); break;
+                    case 2: onSelectValue(2); break;
+                    case 3: onSelectValue(3); break;
+                    default: break;
+                }
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
-    @OnClick(R.id.twoPerGroup) void onSelectTwo() {
-        onSelectValue(2);
+    @OnClick(R.id.digitsPerGroupValue) void onSelectSettingValue() {
+        showDialog();
     }
-
-    @OnClick(R.id.threePerGroup) void onSelectThree() {
-        onSelectValue(3);
-    }
+    @OnClick(R.id.digitsPerGroupTitle) void onSelectSettingTitle() { showDialog(); }
 }
