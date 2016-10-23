@@ -10,15 +10,12 @@ import repository.IRepository;
 import interactors.base.AbstractInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.ChallengeFactory;
 
-/**
- * This is an interactor boilerplate with a reference to a model repository.
- * <p/>
- */
 public class AddChallengeInteractorImpl extends AbstractInteractor implements AddChallengeInteractor {
 
     @Inject public AddChallengeInteractor.Callback mCallback;
     private IRepository mRepository;
     private long gameKey;
+    private int numDigits;
 
     @Inject
     public AddChallengeInteractorImpl(long gameKey, Executor threadExecutor, MainThread mainThread, IRepository repository) {
@@ -33,9 +30,14 @@ public class AddChallengeInteractorImpl extends AbstractInteractor implements Ad
     }
 
     @Override
+    public void setModel(int numDigits) {
+        this.numDigits = numDigits;
+    }
+
+    @Override
     public void run() {
         System.out.println("Interactor: Requesting challenge addition");
-        mRepository.insertChallenge(ChallengeFactory.CreateChallenge(gameKey), new IRepository.AddedChallengeCallback() {
+        mRepository.insertChallenge(ChallengeFactory.CreateChallenge(gameKey, numDigits), new IRepository.AddedChallengeCallback() {
             @Override
             public void onChallengeAdded(Challenge challenge) {
                 mCallback.onChallengeAdded(challenge);

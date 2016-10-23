@@ -84,9 +84,10 @@ public class ChallengeListFragment extends BaseFragment implements IChallengeLis
     }
 
     @Override
-    public void onChallengeAdd() {
+    public void onChallengeAdd(int numDigits) {
         System.out.println("Yes, challenge addition time");
 
+        addChallengeInteractor.setModel(numDigits);
         addChallengeInteractor.setCallback(new AddChallengeInteractor.Callback() {
             @Override
             public void onChallengeAdded(Challenge challenge) {
