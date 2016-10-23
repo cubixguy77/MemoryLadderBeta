@@ -75,11 +75,11 @@ public class DigitsPerGroupView extends BaseSettingView {
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Select Digits Per Group");
+        builder.setTitle("Digits Grouping");
         final CharSequence[] items = {
-                "1 Digit",
-                "2 Digits",
-                "3 Digits"
+                "1 Digit Per Group",
+                "2 Digits Per Group",
+                "3 Digits Per Group"
         };
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int selectionIndex) {
