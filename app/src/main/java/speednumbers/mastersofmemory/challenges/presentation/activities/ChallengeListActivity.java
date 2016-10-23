@@ -114,8 +114,10 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 int value = Integer.parseInt(edittext.getText().toString());
-                IAddChallengeListener challengeListFragment = (ChallengeListFragment) getSupportFragmentManager().findFragmentByTag("ChallengeListFragment");
-                challengeListFragment.onChallengeAdd(value);
+                if (value > 0) {
+                    IAddChallengeListener challengeListFragment = (ChallengeListFragment) getSupportFragmentManager().findFragmentByTag("ChallengeListFragment");
+                    challengeListFragment.onChallengeAdd(value);
+                }
             }
         });
 
