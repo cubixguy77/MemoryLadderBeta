@@ -4,4 +4,4 @@ Memory Ladder is the ultimate training tool for competitors of the World Memory 
 
 ![Alt text](http://i.imgur.com/0EECh6m.png "Here's a preview")
 
-<a href="https://play.google.com/store/apps/details?id=com.mastersofmemory.memoryladder">Get it on Google Play!</a>
+This app is close to ready for release as a beta. Stay tuned!
