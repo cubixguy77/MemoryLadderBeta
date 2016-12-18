@@ -2,19 +2,16 @@ package review;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Spannable;
-import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.AbsListView;
-import android.widget.TextView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class ReviewCell extends TextView {
+public class ReviewCell extends android.support.v7.widget.AppCompatTextView {
 
     public ReviewCell(Context context, AttributeSet attrs) {
         super(context, attrs);

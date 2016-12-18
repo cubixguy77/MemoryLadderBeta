@@ -248,7 +248,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onTimeExpired() {
-        //Bus.getBus().onTransitionToRecall();
+        Bus.getBus().onTransitionToRecall();
     }
 
     @Override

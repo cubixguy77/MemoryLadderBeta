@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import memorization.Bus;
 import memorization.GameState;
@@ -17,7 +16,7 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 
-public class TimerView extends TextView implements TimerUpdateListener, GameStateListener, SaveInstanceStateListener {
+public class TimerView extends android.support.v7.widget.AppCompatTextView implements TimerUpdateListener, GameStateListener, SaveInstanceStateListener {
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
