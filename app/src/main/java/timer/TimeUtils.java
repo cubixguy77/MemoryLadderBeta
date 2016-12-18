@@ -1,11 +1,11 @@
 package timer;
 
-public class TimeModel {
+public class TimeUtils {
     private int hours;
     private int minutes;
     private int seconds;
 
-    public TimeModel(int hours, int minutes, int seconds) {
+    public TimeUtils(int hours, int minutes, int seconds) {
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
@@ -19,7 +19,7 @@ public class TimeModel {
             return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" : "") + seconds ;
     }
 
-    public static String formatIntoHHMMSStruncated(long secsIn) {
+    static String formatIntoHHMMSStruncated(long secsIn) {
         int hours = (int) (secsIn / 3600),
                 remainder = (int) (secsIn % 3600),
                 minutes = remainder / 60,

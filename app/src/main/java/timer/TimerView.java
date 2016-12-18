@@ -30,9 +30,7 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
         super(context, attrs);
     }
 
-    public TimerView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+    public TimerView(Context context, AttributeSet attrs, int defStyle) { super(context, attrs, defStyle); }
 
     public void setModel(TimerModel model) {
         this.model = model;
@@ -45,7 +43,7 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
 
     @Override
     public void onTimeUpdate(long seconds) {
-        setText(TimeModel.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? seconds : model.timeLimitInSeconds - seconds));
+        setText(TimeUtils.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? seconds : model.timeLimitInSeconds - seconds));
     }
 
     @Override
@@ -69,18 +67,21 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
             public void run() {
                 TimerModel model = new TimerModel(timerSetting);
 
-                if (savedInstanceState != null) {
-                    if (Bus.gameState == GameState.PRE_MEMORIZATION || Bus.gameState == GameState.MEMORIZATION) {
-                        model.timeLimitInSeconds = savedInstanceState.getLong("TimerView.SecondsRemaining");
+                if (model.timerEnabled) {
+                    if (savedInstanceState != null) {
+                        if (Bus.gameState == GameState.PRE_MEMORIZATION || Bus.gameState == GameState.MEMORIZATION) {
+                            model.timeLimitInSeconds = savedInstanceState.getLong("TimerView.SecondsRemaining");
+                        } else {
+                            setVisibility(View.INVISIBLE);
+                        }
                     }
-                    else {
-                        setVisibility(View.INVISIBLE);
-                    }
+
+                    setModel(model);
+                    onTimeUpdate(model.timeLimitInSeconds);
                 }
-
-                setModel(model);
-                onTimeUpdate(model.timeLimitInSeconds);
-
+                else {
+                    setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -101,24 +102,29 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
     }
 
     @Override
-    public void onRecallComplete(Result result) {   }
+    public void onRecallComplete(Result result) {}
 
     @Override
-    public void onPlayAgain() {
-
-    }
+    public void onPlayAgain() {}
 
     public void start()  {
-        /* This can not be called immediately because, on restoring from orientation change, the timer may not have been initialized yet */
+        /* This cannot be called immediately because, on restoring from orientation change, the timer may not have been initialized yet */
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                timerActionListener.startTimer();
+                if (timerActionListener != null) {
+                    timerActionListener.startTimer();
+                }
             }
         });
     }
 
-    public void pause()  { timerActionListener.pauseTimer(); }
+    public void pause()  {
+        if (timerActionListener != null) {
+            timerActionListener.pauseTimer();
+        }
+    }
+
     public void cancel() {
         if (timerActionListener != null) {
             timerActionListener.cancelTimer();
@@ -132,6 +138,8 @@ public class TimerView extends TextView implements TimerUpdateListener, GameStat
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putLong("TimerView.SecondsRemaining", timerActionListener.getSecondsRemaining());
+        if (timerActionListener != null) {
+            outState.putLong("TimerView.SecondsRemaining", timerActionListener.getSecondsRemaining());
+        }
     }
 }

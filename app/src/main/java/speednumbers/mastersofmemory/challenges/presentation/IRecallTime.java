@@ -1,26 +1,26 @@
 package speednumbers.mastersofmemory.challenges.presentation;
 
-import timer.TimeModel;
+import timer.TimeUtils;
 
 public interface IRecallTime {
     interface View {
         void recallTimerEnable();
         void recallTimerDisable();
-        void showRecallTimePicker(TimeModel currentTimeModel);
+        void showRecallTimePicker(TimeUtils currentTimeModel);
         void hideTimePicker();
-        void updateRecallTime(TimeModel newTimeModel);
+        void updateRecallTime(TimeUtils newTimeModel);
     }
 
     interface UserActions {
         void onRecallTimerEnable();
         void onRecallTimerDisable();
         void onRecallTimeClick();
-        void onRecallTimeUpdated(TimeModel newTimeModel);
+        void onRecallTimeUpdated(TimeUtils newTimeModel);
     }
 
     interface Model {
         void enableRecallTimer(boolean isEnabled);
-        void setRecallTime(TimeModel newTimeModel);
-        TimeModel getRecallTime();
+        void setRecallTime(TimeUtils newTimeModel);
+        TimeUtils getRecallTime();
     }
 }

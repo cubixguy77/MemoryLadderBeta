@@ -1,6 +1,6 @@
 package speednumbers.mastersofmemory.challenges.presentation.presenters;
 
-import timer.TimeModel;
+import timer.TimeUtils;
 import speednumbers.mastersofmemory.challenges.presentation.IChallengeCard;
 
 public class ChallengeCardPresenter implements IChallengeCard.Presenter {
@@ -39,7 +39,7 @@ public class ChallengeCardPresenter implements IChallengeCard.Presenter {
     }
 
     @Override
-    public void onMemTimeUpdated(TimeModel newTimeModel) {
+    public void onMemTimeUpdated(TimeUtils newTimeModel) {
 
     }
 
@@ -59,7 +59,7 @@ public class ChallengeCardPresenter implements IChallengeCard.Presenter {
     }
 
     @Override
-    public void onRecallTimeUpdated(TimeModel newTimeModel) {
+    public void onRecallTimeUpdated(TimeUtils newTimeModel) {
 
     }
 }
