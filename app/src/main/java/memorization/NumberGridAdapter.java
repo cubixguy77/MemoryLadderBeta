@@ -94,8 +94,8 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     private void onHighlightNext() {
         highlightPosition++;
-        if (highlightPosition >= memoryData.getNumCells() - 1) {
-            highlightPosition = memoryData.getNumCells() - 1;
+        if (highlightPosition >= memoryData.getMaxValidHighlightPosition()) {
+            highlightPosition = memoryData.getMaxValidHighlightPosition();
             Bus.getBus().onDisableNext();
         }
         else if (memoryData.isRowMarker(highlightPosition)) {
@@ -150,6 +150,18 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
         return view;
     }
 
+    private View getEmptyView(View convertView) {
+        if (convertView == null) {
+            convertView = new View(context);
+            convertView.setVisibility(View.INVISIBLE);
+            return convertView;
+        }
+        else {
+            convertView.setVisibility(View.INVISIBLE);
+            return convertView;
+        }
+    }
+
     private View getViewPreMemorization(View convertView) {
         MemoryCell view;
         if (convertView == null) {
@@ -196,7 +208,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
         view.setPosition(position);
         view.setHighlightedPosition(highlightPosition);
-        view.setNumDigitsPerCell(memoryData.getNumDigitsPerColumn());
+        view.setNumDigitsPerCell(memoryData.numDigitsAtCell(position));
         view.finalizeSetup();
         view.setText(recallData.getText(position));
 
@@ -231,6 +243,10 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
         if (isViewRowMarker)
         {
             return getRowMarkerView(position, convertView);
+        }
+
+        if (position > memoryData.getMaxValidHighlightPosition()) {
+            return getEmptyView(convertView);
         }
 
         if (Bus.gameState == GameState.PRE_MEMORIZATION) {

@@ -28,6 +28,7 @@ public class Result {
     }
 
     private void calcNumDigitsRecalledCorrectly() {
+        /*
         String[][] memArray = memory.getData();
         String[][] recArray = recall.getData();
         int digitsPerCell = memory.getNumDigitsPerColumn();
@@ -45,7 +46,7 @@ public class Result {
                         numDigitsRecalledCorrectly++;
                 }
             }
-        }
+        }*/
     }
 
     public int getNumDigitsRecalledCorrectly() {

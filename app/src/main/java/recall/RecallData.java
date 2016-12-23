@@ -44,21 +44,31 @@ public class RecallData extends GridData {
     }
 
     private String getStringAt(int position) {
-        return getData()[getRow(position)][getCol(position)];
+        return getValue(position);
     }
 
     public void onKeyPress(int digit, int position, int cursorStart, int cursorEnd) {
-        String[][] data = getData();
-        String currentText = getStringAt(position);
-        String newChar = Integer.toString(digit);
+        char[] data = getData();
+        char newChar = Character.forDigit(digit, 10);
+        int startIndex = getStartIndexFromPosition(position) + cursorStart;
 
-        if (cursorStart == cursorEnd && cursorEnd == numDigitsPerColumn)
+        int maxDigits = numDigitsAtCell(position);
+
+        /* cursor is at the end of a filled cell */
+        if (cursorStart == cursorEnd && cursorEnd == maxDigits)
             return;
 
-        data[getRow(position)][getCol(position)] = currentText == null ? newChar : currentText.substring(0, cursorStart) + newChar + currentText.substring(cursorEnd);
+        /* erase any highlighted digits, they will be overwritten */
+        if (cursorEnd > cursorStart) {
+            for (int i=0; i<cursorEnd - cursorStart; i++) {
+                data[startIndex + i] = GridData.empty;
+            }
+        }
 
-        if (getStringAt(position).length() == numDigitsPerColumn) { // Just entered last character of the group
-            if (getCol(position) == numCols-1) {
+        data[startIndex] = newChar; //(currentText == null || currentText.length() == 0) ? newChar : currentText.substring(0, cursorStart) + Character.toString(newChar) + currentText.substring(cursorEnd);
+
+        if (cursorStart+1 == maxDigits) { // Just entered last character of the group
+            if (numDigitsAtCell(position + 1) <= 0) {
                 Bus.getBus().onRowFilled();
             }
             else {
@@ -68,7 +78,7 @@ public class RecallData extends GridData {
     }
 
     public void onBackSpace(int position) {
-        String[][] data = getData();
+        char[] data = getData();
         String currentText = getStringAt(position);
         int curLength = currentText == null ? 0 : currentText.length();
 
@@ -79,7 +89,15 @@ public class RecallData extends GridData {
         else if (curLength == 0)
             return;
 
-        data[getRow(position)][getCol(position)] = currentText.substring(0, curLength-1);
+        int maxDigits = numDigitsAtCell(position);
+        int startIndex = getStartIndexFromPosition(position);
+
+        for (int i=maxDigits; i>=0; i--) {
+            if (data[startIndex + i] != GridData.empty) {
+                data[startIndex + i] = GridData.empty;
+                break;
+            }
+        }
 
         if (curLength == 1 && getCol(position) > 1) {
             Bus.getBus().onPrevRecallCell();

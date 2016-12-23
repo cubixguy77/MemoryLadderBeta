@@ -8,13 +8,12 @@ import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 
 public class GridData implements Serializable {
 
-    private String[][] data;
+    private char[] data;
     public int numRows;
     public int numCols;
     protected int numDigitsPerColumn;
     private int numDigits;
-    private int numDigitsPerRow;
-    private final String ROW_MARKER = "X";
+    protected static char empty = '\u0000';
 
     public GridData(Challenge challenge) {
         this(
@@ -27,33 +26,29 @@ public class GridData implements Serializable {
         this.numDigits = numDigits;
         this.numDigitsPerColumn = numDigitsPerColumn;
         this.numCols = calculateNumColumns(numDigits, numDigitsPerColumn);
-        this.numDigitsPerRow = (numCols - 1) * numDigitsPerColumn;
+        int numDigitsPerRow = (numCols - 1) * numDigitsPerColumn;
         this.numRows = numDigits / numDigitsPerRow + (numDigits % numDigitsPerRow == 0 ? 0 : 1);
-        data = new String[numRows][numCols];
+        data = new char[numDigits];
     }
 
     void loadData() {
         Random rand = new Random();
 
-        int randMax = (int) Math.pow(10, numDigitsPerColumn);
-
-        for (int i=0; i<numRows; i++) {
-            for (int j=0; j<numCols; j++) {
-                if (j > 0) {
-                    data[i][j] = String.format("%0" + numDigitsPerColumn + "d", rand.nextInt(randMax));
-                }
-                else
-                    data[i][j] = ROW_MARKER;
-            }
+        for (int i=0; i<numDigits; i++) {
+            data[i] = Character.forDigit(rand.nextInt(10), 10);
         }
     }
 
-    protected String getText(int position) {
+    public String getText(int position) {
         return getValue(position) == null ? "" : getValue(position);
     }
 
     int getNumCells() {
         return numRows * numCols;
+    }
+
+    public int getMaxValidHighlightPosition() {
+        return (numDigits / numDigitsPerColumn) + numRows - 1 + (numDigits % numDigitsPerColumn == 0 ? 0 : 1);
     }
 
     public int getNumDigitsAttempted() {
@@ -72,10 +67,50 @@ public class GridData implements Serializable {
         return getCol(position) == 0;
     }
 
-    private String getValue(int position) {
+    protected int getStartIndexFromPosition(int position) {
         int row = getRow(position);
         int col = getCol(position);
-        return data[row][col];
+        if (col <= 0)
+            return -1;
+
+        return ((col - 1) * numDigitsPerColumn) + ((numCols - 1) * numDigitsPerColumn * row);
+    }
+
+    protected int numDigitsAtCell(int position) {
+        int startIndex = getStartIndexFromPosition(position);
+        if (startIndex < 0)
+            return 0;
+
+        if (startIndex >= data.length) {
+            return 0;
+        }
+
+        if (startIndex + (numDigitsPerColumn - 1) >= data.length) {
+            return data.length - startIndex;
+        }
+        else {
+            return numDigitsPerColumn;
+        }
+
+    }
+
+    protected String getValue(int position) {
+        int length = numDigitsAtCell(position);
+        int startIndex = getStartIndexFromPosition(position);
+
+        if (length > 0 && data[startIndex] == GridData.empty)
+            return "";
+
+        if (length == 1 || (length > 1 && data[startIndex+1] == GridData.empty))
+            return new String(new char[] { data[startIndex] });
+
+        if (length == 2 || (length > 2 && data[startIndex+2] == GridData.empty))
+            return new String(new char[] { data[startIndex], data[startIndex+1] });
+
+        if (length == 3)
+            return new String(new char[] { data[startIndex], data[startIndex+1], data[startIndex+2] });
+
+        return "";
     }
 
     private int leastOf(int a, int b) {
@@ -105,7 +140,7 @@ public class GridData implements Serializable {
         return pos / (numCols);
     }
 
-    public String[][] getData() {
+    public char[] getData() {
         return data;
     }
 }
