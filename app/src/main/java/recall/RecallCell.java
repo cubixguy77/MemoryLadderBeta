@@ -1,23 +1,18 @@
 package recall;
 
 import android.content.Context;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
-import android.widget.EditText;
 
 import memorization.Bus;
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class RecallCell extends EditText {
+public class RecallCell extends android.support.v7.widget.AppCompatEditText {
 
     private int position;
     private int numDigitsPerCell;

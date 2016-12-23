@@ -2,17 +2,14 @@ package memorization;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.AbsListView;
-import android.widget.TextView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class MemoryCell extends TextView {
+public class MemoryCell extends android.support.v7.widget.AppCompatTextView {
 
     private boolean isSelected;
 
