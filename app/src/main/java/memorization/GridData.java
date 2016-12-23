@@ -28,7 +28,7 @@ public class GridData implements Serializable {
         this.numDigitsPerColumn = numDigitsPerColumn;
         this.numCols = calculateNumColumns(numDigits, numDigitsPerColumn);
         this.numDigitsPerRow = (numCols - 1) * numDigitsPerColumn;
-        this.numRows = numDigits / numDigitsPerRow;
+        this.numRows = numDigits / numDigitsPerRow + (numDigits % numDigitsPerRow == 0 ? 0 : 1);
         data = new String[numRows][numCols];
     }
 
@@ -78,8 +78,23 @@ public class GridData implements Serializable {
         return data[row][col];
     }
 
+    private int leastOf(int a, int b) {
+        return a < b ? a : b;
+    }
+
     private int calculateNumColumns(int numDigits, int numDigitsPerColumn) {
-        return 6;
+        int numChunks = numDigits / numDigitsPerColumn + (numDigits % numDigitsPerColumn == 0 ? 0 : 1);
+        if (numDigitsPerColumn == 1) {
+            return 1 + leastOf(numChunks, 5);
+        }
+        if (numDigitsPerColumn == 2) {
+            return 1 + leastOf(numChunks, 5);
+        }
+        if (numDigitsPerColumn == 3) {
+            return 1 + leastOf(numChunks, 5);
+        }
+
+        return -1;
     }
 
     protected int getCol(int pos) {

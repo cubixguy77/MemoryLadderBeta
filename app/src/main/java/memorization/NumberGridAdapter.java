@@ -268,6 +268,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
         else {
             memoryData = new GridData(challenge);
             memoryData.loadData();
+            gridView.setNumColumns(memoryData.numCols);
             highlightPosition = 1;
         }
 
