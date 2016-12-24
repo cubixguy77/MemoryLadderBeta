@@ -176,13 +176,15 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     private View getViewMemorization(int position, View convertView) {
         MemoryCell view;
-        if (convertView == null) {
+
+        if (convertView == null || !(convertView instanceof MemoryCell)) {
             view = new MemoryCell(context, null);
             view.setGravity(Gravity.CENTER);
         }
         else
             view = (MemoryCell) convertView;
 
+        view.setVisibility(View.VISIBLE);
         view.setAsDataCell();
         view.setText(memoryData.getText(position));
 
@@ -240,6 +242,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     public View getView(int position, View convertView, ViewGroup parent) {
         boolean isViewRowMarker = memoryData.isRowMarker(position);
+
         if (isViewRowMarker)
         {
             return getRowMarkerView(position, convertView);
@@ -364,7 +367,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
     }
 
     @Override
-    public void onKeyPress(int digit) {
+    public void onKeyPress(char digit) {
         if (recallData.isReviewCell(highlightPosition))
             return;
 

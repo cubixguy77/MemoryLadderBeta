@@ -9,10 +9,11 @@ import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 public class GridData implements Serializable {
 
     private char[] data;
-    public int numRows;
-    public int numCols;
-    protected int numDigitsPerColumn;
+    protected int numRows;
+    protected int numCols;
+    private int numDigitsPerColumn;
     private int numDigits;
+    private int maxValidHighlightPosition;
     protected static char empty = '\u0000';
 
     public GridData(Challenge challenge) {
@@ -28,6 +29,7 @@ public class GridData implements Serializable {
         this.numCols = calculateNumColumns(numDigits, numDigitsPerColumn);
         int numDigitsPerRow = (numCols - 1) * numDigitsPerColumn;
         this.numRows = numDigits / numDigitsPerRow + (numDigits % numDigitsPerRow == 0 ? 0 : 1);
+        maxValidHighlightPosition = (numDigits / numDigitsPerColumn) + numRows - 1 + (numDigits % numDigitsPerColumn == 0 ? 0 : 1);
         data = new char[numDigits];
     }
 
@@ -47,16 +49,12 @@ public class GridData implements Serializable {
         return numRows * numCols;
     }
 
-    public int getMaxValidHighlightPosition() {
-        return (numDigits / numDigitsPerColumn) + numRows - 1 + (numDigits % numDigitsPerColumn == 0 ? 0 : 1);
+    int getMaxValidHighlightPosition() {
+        return this.maxValidHighlightPosition;
     }
 
     public int getNumDigitsAttempted() {
         return this.numDigits;
-    }
-
-    public int getNumDigitsPerColumn() {
-        return this.numDigitsPerColumn;
     }
 
     int getRowNumber(int position) {
@@ -91,7 +89,6 @@ public class GridData implements Serializable {
         else {
             return numDigitsPerColumn;
         }
-
     }
 
     protected String getValue(int position) {

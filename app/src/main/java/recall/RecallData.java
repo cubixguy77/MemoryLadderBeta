@@ -14,11 +14,6 @@ public class RecallData extends GridData {
         reviewCell = new boolean[numRows][numCols];
     }
 
-    public RecallData(int numDigits, int numDigitsPerColumn) {
-        super(numDigits, numDigitsPerColumn);
-        reviewCell = new boolean[numRows][numCols];
-    }
-
     public void onSubmitRow(int row) {
         for (int col=0; col<numCols; col++) {
             reviewCell[row][col] = true;
@@ -47,16 +42,22 @@ public class RecallData extends GridData {
         return getValue(position);
     }
 
-    public void onKeyPress(int digit, int position, int cursorStart, int cursorEnd) {
+    public void onKeyPress(char digit, int position, int cursorStart, int cursorEnd) {
         char[] data = getData();
-        char newChar = Character.forDigit(digit, 10);
         int startIndex = getStartIndexFromPosition(position) + cursorStart;
 
         int maxDigits = numDigitsAtCell(position);
 
         /* cursor is at the end of a filled cell */
-        if (cursorStart == cursorEnd && cursorEnd == maxDigits)
+        if (cursorStart == cursorEnd && cursorEnd == maxDigits) {
+            /* if the next cell is empty, then throw the entered character there */
+            if (numDigitsAtCell(position + 1) > 0 && isNullOrEmpty(getStringAt(position+1))) {
+                Bus.getBus().onNextRecallCell();
+                onKeyPress(digit, position+1, 0, 0);
+            }
+
             return;
+        }
 
         /* erase any highlighted digits, they will be overwritten */
         if (cursorEnd > cursorStart) {
@@ -65,7 +66,7 @@ public class RecallData extends GridData {
             }
         }
 
-        data[startIndex] = newChar; //(currentText == null || currentText.length() == 0) ? newChar : currentText.substring(0, cursorStart) + Character.toString(newChar) + currentText.substring(cursorEnd);
+        data[startIndex] = digit;
 
         if (cursorStart+1 == maxDigits) { // Just entered last character of the group
             if (numDigitsAtCell(position + 1) <= 0) {
@@ -92,7 +93,7 @@ public class RecallData extends GridData {
         int maxDigits = numDigitsAtCell(position);
         int startIndex = getStartIndexFromPosition(position);
 
-        for (int i=maxDigits; i>=0; i--) {
+        for (int i=maxDigits-1; i>=0; i--) {
             if (data[startIndex + i] != GridData.empty) {
                 data[startIndex + i] = GridData.empty;
                 break;
