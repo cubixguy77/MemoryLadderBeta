@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "speednumbers.mastersofmemory.com.memoryladder_speednumbers"
@@ -42,7 +42,7 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.facebook.stetho:stetho:1.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 }
 
 def props = new Properties()

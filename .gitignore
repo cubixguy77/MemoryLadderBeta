@@ -84,3 +84,7 @@ build/generated/mockable-android-25.jar
 .gradle/3.2/
 build/android-profile/
 app/app-release.apk
+.gradle/3.2.1/taskArtifacts/fileHashes.bin
+.gradle/3.2.1/taskArtifacts/fileSnapshots.bin
+.gradle/3.2.1/taskArtifacts/taskArtifacts.bin
+.gradle/3.2.1/taskArtifacts/taskArtifacts.lock
