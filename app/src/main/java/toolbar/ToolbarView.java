@@ -142,7 +142,7 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
     @Override
     public void onRecallComplete(Result result) {
-        setTitle("Results - " + result.getNumDigitsAttempted() + " Digits");
+        setTitle("Results - " + result.getNumDigitsTotal() + " Digits");
         refreshToolbarIcon();
     }
 

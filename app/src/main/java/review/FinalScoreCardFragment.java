@@ -42,7 +42,7 @@ public class FinalScoreCardFragment extends android.support.v4.app.Fragment {
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recallNumberCorrect.setText(Integer.toString(result.getNumDigitsRecalledCorrectly()));
-        digitsAttempted.setText("/ " + result.getNumDigitsAttempted() + " Digits");
+        digitsAttempted.setText("/ " + result.getNumDigitsTotal() + " Digits");
         percentRecalled.setText(result.getAccuracy() + "%");
         memTime.setText(result.getMemTime() + " Sec");
         digitSpeed.setText(result.getDigitsPerMinute() + " Digits");

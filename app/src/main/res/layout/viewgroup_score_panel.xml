@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<review.ScorePanel
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/score_panel.height"
+    android:visibility="gone"
+    android:background="@color/colorPrimary"
+    android:elevation="4dp"
+    tools:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Accuracy"
+            android:gravity="center_horizontal|bottom"
+            android:textSize="@dimen/score_panel.top_label.text.size"
+            android:textStyle="bold"
+            android:textColor="@color/score_panel.top_label"
+            android:paddingBottom="@dimen/score_panel.top_label.padding.bottom"
+            />
+
+        <TextView
+            android:id="@+id/accuracyText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:layout_marginTop="@dimen/score_panel.value.margin.top"
+            android:text="100%"
+            android:textSize="@dimen/score_panel.value.text.size"
+            android:textColor="@color/score_panel.value"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Score"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="@dimen/score_panel.top_label.padding.bottom"
+            android:textSize="@dimen/score_panel.top_label.text.size"
+            android:textStyle="bold"
+            android:textColor="@color/score_panel.top_label"
+            />
+
+        <TextView
+            android:id="@+id/scoreText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:layout_marginTop="@dimen/score_panel.value.margin.top"
+            android:text="90"
+            android:textSize="@dimen/score_panel.value.text.size"
+            android:textColor="@color/score_panel.value"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Mem Time"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="@dimen/score_panel.top_label.padding.bottom"
+            android:textSize="@dimen/score_panel.top_label.text.size"
+            android:textStyle="bold"
+            android:textColor="@color/score_panel.top_label"
+            />
+
+        <TextView
+            android:id="@+id/memTimeText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|top"
+            android:layout_marginTop="@dimen/score_panel.value.margin.top"
+            android:text="2m17s"
+            android:textSize="@dimen/score_panel.value.text.size"
+            android:textColor="@color/score_panel.value"
+            />
+
+    </LinearLayout>
+
+</review.ScorePanel>

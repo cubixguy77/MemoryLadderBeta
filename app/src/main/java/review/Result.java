@@ -7,8 +7,9 @@ public class Result {
 
     private final GridData memory;
     private final RecallData recall;
+    private int numDigitsRecallAttempted;
     private int numDigitsRecalledCorrectly;
-    private int numDigitsAttempted;
+    private int numDigitsTotal;
     private int accuracy;
     private int memTime;
     private int digitsPerMinute;
@@ -20,55 +21,56 @@ public class Result {
     }
 
     private void runCalculations() {
-        numDigitsAttempted = memory.getNumDigitsAttempted();
+        numDigitsTotal = memory.getNumDigitsAttempted();
+        calcNumDigitsRecallAttempted();
         calcNumDigitsRecalledCorrectly();
-        accuracy = (int) ((double) 100*numDigitsRecalledCorrectly / numDigitsAttempted);
-        memTime = 4;
+        accuracy = (int) ((double) 100*numDigitsRecalledCorrectly / numDigitsRecallAttempted);
+        memTime = 73;
         digitsPerMinute = (int) (numDigitsRecalledCorrectly / ((double) memTime / 60));
     }
 
-    private void calcNumDigitsRecalledCorrectly() {
-        /*
-        String[][] memArray = memory.getData();
-        String[][] recArray = recall.getData();
-        int digitsPerCell = memory.getNumDigitsPerColumn();
+    private void calcNumDigitsRecallAttempted() {
+        char[] recArray = recall.getData();
 
-        for (int row=0; row<memory.numRows; row++) {
-            for (int col=1; col<memory.numCols; col++) {
-                if (memArray[row][col] == null || recArray[row][col] == null)
-                    continue;
-
-                for (int c=0; c<digitsPerCell; c++) {
-                    if (c >= recArray[row][col].length())
-                        continue;
-
-                    if (memArray[row][col].charAt(c) == recArray[row][col].charAt(c))
-                        numDigitsRecalledCorrectly++;
-                }
+        for (char digit : recArray) {
+            if (digit != GridData.empty) {
+                numDigitsRecallAttempted++;
             }
-        }*/
+        }
     }
 
-    public int getNumDigitsRecalledCorrectly() {
+    private void calcNumDigitsRecalledCorrectly() {
+        char[] memArray = memory.getData();
+        char[] recArray = recall.getData();
+
+        for (int i=0; i<memArray.length; i++) {
+            if (memArray[i] == recArray[i]) {
+                numDigitsRecalledCorrectly++;
+            }
+        }
+    }
+
+    int getNumDigitsRecalledCorrectly() {
         return this.numDigitsRecalledCorrectly;
     }
 
-    public int getNumDigitsAttempted() {
-        return this.numDigitsAttempted;
+    public int getNumDigitsTotal() {
+        return this.numDigitsTotal;
     }
 
-    public int getAccuracy() {
+    int getAccuracy() {
         return this.accuracy;
     }
 
-    public int getMemTime() {
+    int getMemTime() {
         return this.memTime;
     }
 
-    public int getDigitsPerMinute() {
+    int getDigitsPerMinute() {
         return this.digitsPerMinute;
     }
 
-
-
+    public int getNumDigitsRecallAttempted() {
+        return numDigitsRecallAttempted;
+    }
 }

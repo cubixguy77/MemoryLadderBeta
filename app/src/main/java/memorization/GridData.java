@@ -14,7 +14,7 @@ public class GridData implements Serializable {
     private int numDigitsPerColumn;
     private int numDigits;
     private int maxValidHighlightPosition;
-    protected static char empty = '\u0000';
+    public static char empty = '\u0000';
 
     public GridData(Challenge challenge) {
         this(

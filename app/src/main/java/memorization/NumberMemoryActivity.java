@@ -17,6 +17,7 @@ import injection.modules.ChallengeModule;
 import keyboard.NumericKeyboardView;
 import memorization.navigationPanel.NavigationPanel;
 import review.Result;
+import review.ScorePanel;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
@@ -31,6 +32,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @BindView(R.id.navigationPanel) NavigationPanel navigationPanel;
     @BindView(R.id.tool_bar) ToolbarView toolbar;
     @BindView(R.id.keyboard_layout) NumericKeyboardView keyboard;
+    @BindView(R.id.score_panel) ScorePanel scorePanel;
 
     private long challengeKey;
     private ChallengeComponent challengeComponent;
@@ -62,6 +64,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         timer.init();
         navigationPanel.init();
         keyboard.init();
+        scorePanel.init();
 
         activityInstanceCount++;
     }
@@ -73,6 +76,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             timer.subscribe();
             navigationPanel.subscribe();
             keyboard.subscribe();
+            scorePanel.subscribe();
             Bus.getBus().subscribe(this);
         }
     }

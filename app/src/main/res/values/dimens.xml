@@ -30,4 +30,11 @@
     <dimen name="memory_timer_dialog.colon.adjust">24dp</dimen>
     <dimen name="memory_timer_dialog.label_text.size">18dp</dimen>
 
+    <dimen name="score_panel.height">100dp</dimen>
+    <dimen name="score_panel.top_label.text.size">20sp</dimen>
+    <dimen name="score_panel.top_label.padding.bottom">16dp</dimen>
+
+    <dimen name="score_panel.value.text.size">48sp</dimen>
+    <dimen name="score_panel.value.margin.top">-24dp</dimen>
+
 </resources>
