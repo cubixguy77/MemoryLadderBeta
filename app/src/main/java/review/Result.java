@@ -5,8 +5,8 @@ import recall.RecallData;
 
 public class Result {
 
-    private final GridData memory;
-    private final RecallData recall;
+    private GridData memory;
+    private RecallData recall;
     private int numDigitsRecallAttempted;
     private int numDigitsRecalledCorrectly;
     private int numDigitsTotal;
@@ -14,18 +14,20 @@ public class Result {
     private int memTime;
     private int digitsPerMinute;
 
+    public Result() {
+    }
+
     public Result(GridData memory, RecallData recall) {
         this.memory = memory;
         this.recall = recall;
         runCalculations();
     }
 
-    private void runCalculations() {
+    public void runCalculations() {
         numDigitsTotal = memory.getNumDigitsAttempted();
         calcNumDigitsRecallAttempted();
         calcNumDigitsRecalledCorrectly();
         accuracy = (int) ((double) 100*numDigitsRecalledCorrectly / numDigitsRecallAttempted);
-        memTime = 73;
         digitsPerMinute = (int) (numDigitsRecalledCorrectly / ((double) memTime / 60));
     }
 
@@ -50,6 +52,14 @@ public class Result {
         }
     }
 
+    public void setMemoryData(GridData memory) {
+        this.memory = memory;
+    }
+
+    public void setRecallData(RecallData recall) {
+        this.recall = recall;
+    }
+
     int getNumDigitsRecalledCorrectly() {
         return this.numDigitsRecalledCorrectly;
     }
@@ -61,6 +71,9 @@ public class Result {
     int getAccuracy() {
         return this.accuracy;
     }
+
+    /* Sets the memorization time used by the user, in seconds */
+    public void setMemTime(int memTime) { this.memTime = memTime; }
 
     int getMemTime() {
         return this.memTime;

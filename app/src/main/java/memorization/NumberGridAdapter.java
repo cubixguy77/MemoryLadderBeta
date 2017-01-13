@@ -352,7 +352,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
         notifyDataSetChanged();
 
         if (recallData.allRowsSubmitted()) {
-            Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
+            dispatchRecallCompleteEvent();
         }
         else {
             moveHighlightPositionToNextRow(this.highlightPosition);
@@ -363,7 +363,15 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
     public void onSubmitAllRows() {
         recallData.submitAll();
         notifyDataSetChanged();
-        Bus.getBus().onRecallComplete(new Result(memoryData, recallData));
+        dispatchRecallCompleteEvent();
+    }
+
+    private void dispatchRecallCompleteEvent() {
+        Bus.result.setMemoryData(memoryData);
+        Bus.result.setRecallData(recallData);
+        Bus.result.runCalculations();
+
+        Bus.getBus().onRecallComplete(Bus.result);
     }
 
     @Override

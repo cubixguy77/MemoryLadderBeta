@@ -56,7 +56,7 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
     public void onLoad(Challenge challenge, Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             if (Bus.gameState == GameState.REVIEW) {
-                result = new Result(Bus.memoryData, Bus.recallData);
+                result = Bus.result;
                 showScorePanel();
             } else {
                 hideScorePanel();

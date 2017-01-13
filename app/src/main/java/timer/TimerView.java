@@ -20,6 +20,8 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
+    private long originalTimeLimit;
+    private long timeElapsed = 0;
 
     public TimerView(Context context) {
         super(context);
@@ -41,13 +43,15 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
     }
 
     @Override
-    public void onTimeUpdate(long seconds) {
-        setText(TimeUtils.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? seconds : model.timeLimitInSeconds - seconds));
+    public void onTimeUpdate(long secondsRemaining) {
+        timeElapsed = originalTimeLimit - secondsRemaining;
+        setText(TimeUtils.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? secondsRemaining : timeElapsed));
     }
 
     @Override
     public void onTimeCountdownComplete() {
         System.out.println("Time Expired!");
+        Bus.result.setMemTime((int) model.timeLimitInSeconds);
         Bus.getBus().onTimeExpired();
     }
 
@@ -60,6 +64,7 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
     @Override
     public void onLoad(Challenge challenge, final Bundle savedInstanceState) {
         final Setting timerSetting = NumberChallenge.getMemTimerSetting(challenge);
+        originalTimeLimit = timerSetting.getValue();
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -95,6 +100,8 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
 
     @Override
     public void onTransitionToRecall() {
+        Bus.result.setMemTime((int) this.timeElapsed);
+
         if (getVisibility() == View.VISIBLE)  {
             setVisibility(View.INVISIBLE);
         }

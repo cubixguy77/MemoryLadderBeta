@@ -19,11 +19,16 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     public static RecallData recallData;
 
     public static GameState gameState;
+    public static Result result;
 
     private Bus() {
         observers = new ArrayList<>();
     }
 
+    /* Returns an instance of Bus
+     * Bus is a Singleton and an instance will be created the first time this method is called
+     * The instance will be destroyed on device rotation or on play again, but the static fields will retain their values
+     */
     public static Bus getBus() {
         if(Bus.instance == null) {
             Bus.instance = new Bus();
@@ -69,6 +74,7 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onMemorizationStart() {
         gameState = GameState.MEMORIZATION;
+        Bus.result = new Result();
 
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
