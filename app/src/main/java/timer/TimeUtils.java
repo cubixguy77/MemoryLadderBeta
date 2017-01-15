@@ -36,8 +36,8 @@ public class TimeUtils {
      * 45s
      */
     public static String formatIntoShortTime(int secsIn) {
-        int hours = (int) (secsIn / 3600),
-            remainder = (int) (secsIn % 3600),
+        int hours = (secsIn / 3600),
+            remainder = (secsIn % 3600),
             minutes = remainder / 60,
             seconds = remainder % 60;
 
