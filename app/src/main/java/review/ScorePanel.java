@@ -2,6 +2,8 @@ package review;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +16,7 @@ import memorization.GameState;
 import memorization.GameStateListener;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
+import timer.TimeUtils;
 
 public class ScorePanel extends LinearLayout implements GameStateListener {
 
@@ -43,9 +46,29 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
         /* Bind result model to Views */
         accuracyText.setText(result.getAccuracy() + "%");
         scoreText.setText(String.valueOf(result.getNumDigitsRecalledCorrectly()));
-        memTimeText.setText(result.getMemTime() + "s");
+        memTimeText.setText(getMemorizationTimeText(result.getMemTime()));
 
-        setVisibility(View.VISIBLE);
+        this.setVisibility(View.VISIBLE);
+    }
+
+    private SpannableString getMemorizationTimeText(int seconds) {
+        String s = TimeUtils.formatIntoShortTime(seconds);
+        SpannableString span =  new SpannableString(s);
+
+        int hoursStringIndex = s.indexOf("h"),
+            minutesStringIndex = s.indexOf("m"),
+            secondsStringIndex = s.indexOf("s");
+
+        float shrinkSize = .5f;
+
+        if (hoursStringIndex > 0)   span.setSpan(new RelativeSizeSpan(shrinkSize), hoursStringIndex,   hoursStringIndex+1, 0);
+        if (minutesStringIndex > 0) span.setSpan(new RelativeSizeSpan(shrinkSize), minutesStringIndex, minutesStringIndex+1, 0);
+        if (secondsStringIndex > 0) span.setSpan(new RelativeSizeSpan(shrinkSize), secondsStringIndex, secondsStringIndex+1, 0);
+
+        if (hoursStringIndex > 0)
+            span.setSpan(new RelativeSizeSpan(.7f), 0, s.length(), 0);
+
+        return span;
     }
 
     private void hideScorePanel() {

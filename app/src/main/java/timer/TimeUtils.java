@@ -29,6 +29,29 @@ public class TimeUtils {
         else
             return (minutes < 10 ? "0"+minutes : minutes) + ":" + (seconds < 10 ? "0" : "") + seconds ;
     }
+
+    /* Formats string into:
+     * 1h23m45s
+     * 23m45s
+     * 45s
+     */
+    public static String formatIntoShortTime(int secsIn) {
+        int hours = (int) (secsIn / 3600),
+            remainder = (int) (secsIn % 3600),
+            minutes = remainder / 60,
+            seconds = remainder % 60;
+
+        if (hours > 0) {
+            return hours + "h" + minutes + "m" + seconds + "s";
+        }
+
+        if (minutes > 0) {
+            return minutes + "m" + seconds + "s";
+        }
+
+        return seconds + "s";
+    }
+
     /*
     public int getHours() {
         return hours;

@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/score_panel.value.margin.top"
-            android:text="100%"
+            tools:text="100%"
             android:textSize="@dimen/score_panel.value.text.size"
             android:textColor="@color/score_panel.value"
             />
@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/score_panel.value.margin.top"
-            android:text="90"
+            tools:text="90"
             android:textSize="@dimen/score_panel.value.text.size"
             android:textColor="@color/score_panel.value"
             />
@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/score_panel.value.margin.top"
-            android:text="2m17s"
+            tools:text="2m17s"
             android:textSize="@dimen/score_panel.value.text.size"
             android:textColor="@color/score_panel.value"
             />
