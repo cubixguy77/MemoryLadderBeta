@@ -2,6 +2,7 @@ package memorization;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -28,7 +29,7 @@ public class MemoryCell extends android.support.v7.widget.AppCompatTextView {
     }
 
     public void setAsRowMarker() {
-        setTextColor(Color.RED);
+        setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         setBackgroundResource(0);
     }
 
