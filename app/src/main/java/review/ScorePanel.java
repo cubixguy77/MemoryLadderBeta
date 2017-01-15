@@ -44,11 +44,19 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
     private void showScorePanel() {
 
         /* Bind result model to Views */
-        accuracyText.setText(result.getAccuracy() + "%");
+        accuracyText.setText(getAccuracyText(result.getAccuracy()));
         scoreText.setText(String.valueOf(result.getNumDigitsRecalledCorrectly()));
         memTimeText.setText(getMemorizationTimeText(result.getMemTime()));
 
         this.setVisibility(View.VISIBLE);
+    }
+
+    private SpannableString getAccuracyText(int percentCorrect) {
+        String s = percentCorrect + "%";
+        SpannableString span =  new SpannableString(s);
+        float shrinkSize = .6f;
+        span.setSpan(new RelativeSizeSpan(shrinkSize), s.length()-1, s.length(), 0); // shrink the percentage symbol
+        return span;
     }
 
     private SpannableString getMemorizationTimeText(int seconds) {
@@ -61,12 +69,22 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
 
         float shrinkSize = .5f;
 
-        if (hoursStringIndex > 0)   span.setSpan(new RelativeSizeSpan(shrinkSize), hoursStringIndex,   hoursStringIndex+1, 0);
-        if (minutesStringIndex > 0) span.setSpan(new RelativeSizeSpan(shrinkSize), minutesStringIndex, minutesStringIndex+1, 0);
-        if (secondsStringIndex > 0) span.setSpan(new RelativeSizeSpan(shrinkSize), secondsStringIndex, secondsStringIndex+1, 0);
+        if (hoursStringIndex > 0) {
+            span.setSpan(new RelativeSizeSpan(shrinkSize), hoursStringIndex, hoursStringIndex + 1, 0); // shrink the "h"
+            span.setSpan(new RelativeSizeSpan(.6f), 0, s.length(), 0); // shrink all text to fit better
+        }
 
-        if (hoursStringIndex > 0)
-            span.setSpan(new RelativeSizeSpan(.7f), 0, s.length(), 0);
+        if (minutesStringIndex > 0) {
+            span.setSpan(new RelativeSizeSpan(shrinkSize), minutesStringIndex, minutesStringIndex + 1, 0); // shrink the "m"
+
+            if (hoursStringIndex <= 0) {
+                span.setSpan(new RelativeSizeSpan(.9f), 0, s.length(), 0); // shrink all text to fit better
+            }
+        }
+
+        if (secondsStringIndex > 0) {
+            span.setSpan(new RelativeSizeSpan(shrinkSize), secondsStringIndex, secondsStringIndex + 1, 0); // shrink the "s"
+        }
 
         return span;
     }
