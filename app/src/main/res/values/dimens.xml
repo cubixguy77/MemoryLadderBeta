@@ -17,8 +17,8 @@
     <dimen name="next_group_button.layout_height">80dp</dimen>
     <dimen name="next_group_button.layout_margin">16dp</dimen>
 
-    <dimen name="numeric_keyboard.layout_height">200dp</dimen>
-    <dimen name="numeric_keyboard.textSize">16sp</dimen>
+    <dimen name="numeric_keyboard.layout_height">300dp</dimen>
+    <dimen name="numeric_keyboard.textSize">22sp</dimen>
     <dimen name="numeric_keyboard.iconSize">24dp</dimen>
 
     <dimen name="memory_timer_dialog.arrow.size">50dp</dimen>
