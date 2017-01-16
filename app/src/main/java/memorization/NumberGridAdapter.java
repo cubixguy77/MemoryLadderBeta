@@ -136,11 +136,9 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     private View getRowMarkerView(int position, View convertView) {
         MemoryCell view;
-        if (convertView == null) {
+        if (convertView == null || !(convertView instanceof  MemoryCell)) {
             view = new MemoryCell(context, null);
         }
-        else if (convertView instanceof RecallCell || convertView instanceof ReviewCell)
-            view = new MemoryCell(context, null);
         else
             view = (MemoryCell) convertView;
 
@@ -200,11 +198,9 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     private View getViewRecall(int position, View convertView) {
         RecallCell view;
-        if (convertView == null) {
+        if (convertView == null || !(convertView instanceof RecallCell)) {
             view = new RecallCell(context, null);
         }
-        else if (convertView instanceof MemoryCell || convertView instanceof ReviewCell)
-            view = new RecallCell(context, null);
         else
             view = (RecallCell) convertView;
 
@@ -227,11 +223,9 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     private View getViewReview(int position, View convertView) {
         ReviewCell view;
-        if (convertView == null) {
+        if (convertView == null || !(convertView instanceof ReviewCell)) {
             view = new ReviewCell(context, null);
         }
-        else if (convertView instanceof MemoryCell || convertView instanceof  RecallCell)
-            view = new ReviewCell(context, null);
         else
             view = (ReviewCell) convertView;
 

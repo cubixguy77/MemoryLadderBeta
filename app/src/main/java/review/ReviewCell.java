@@ -7,6 +7,7 @@ import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.AbsListView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
@@ -74,6 +75,7 @@ public class ReviewCell extends android.support.v7.widget.AppCompatTextView {
             */
 
             setText(ssb.build());
+            setVisibility(View.VISIBLE);
         }
     }
 }
