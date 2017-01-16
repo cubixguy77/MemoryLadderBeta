@@ -6,11 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import review.Result;
 import speednumbers.mastersofmemory.challenges.MyApplication;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Game;
@@ -298,6 +301,30 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         return challenge;
     }
 
+    @Override
+    public void insertScore(Result result, IRepository.InsertScoreCallback callback) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(ScoreTableContract.ScoreTable.CHALLENGE_KEY, result.getChallengeKey());
+            values.put(ScoreTableContract.ScoreTable.SCORE, result.getNumDigitsRecalledCorrectly());
+            values.put(ScoreTableContract.ScoreTable.MEM_TIME, result.getMemTime());
+            values.put(ScoreTableContract.ScoreTable.DATE_TIME, DateFormat.getDateTimeInstance().format(new Date()));
+
+            db.insert(ScoreTableContract.ScoreTable.TABLE_NAME, null, values);
+            db.setTransactionSuccessful();
+
+            callback.onScoreAdded(result);
+        }
+        catch (Exception e) {
+            Log.d("ERROR", "Error while trying to add challenge to database");
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+        }
+    }
 
 
 

@@ -18,6 +18,7 @@ import keyboard.NumericKeyboardView;
 import memorization.navigationPanel.NavigationPanel;
 import review.Result;
 import review.ScorePanel;
+import speednumbers.mastersofmemory.challenges.domain.interactors.AddScoreInteractor;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
@@ -37,6 +38,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private long challengeKey;
     private ChallengeComponent challengeComponent;
     @Inject public GetChallengeInteractor getChallengeInteractor;
+    @Inject public AddScoreInteractor addScoreInteractor;
 
     private static int activityInstanceCount = 0;
     private boolean destroyActivity = true;
@@ -260,6 +262,21 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     @Override
     public void onRecallComplete(Result result) {
+
+        result.setChallengeKey((int) challengeKey);
+
+        addScoreInteractor.setResult(result);
+
+        /*
+        addScoreInteractor.setCallback(new AddScoreInteractor.Callback() {
+            @Override
+            public void onScoreAdded(Result result) {
+                System.out.println("Hooray! Score added!");
+            }
+        });
+        */
+
+        addScoreInteractor.execute();
 
         /*
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

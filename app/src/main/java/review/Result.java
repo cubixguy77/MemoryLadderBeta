@@ -5,6 +5,7 @@ import recall.RecallData;
 
 public class Result {
 
+    private int challengeKey;
     private GridData memory;
     private RecallData recall;
     private int numDigitsRecallAttempted;
@@ -60,7 +61,7 @@ public class Result {
         this.recall = recall;
     }
 
-    int getNumDigitsRecalledCorrectly() {
+    public int getNumDigitsRecalledCorrectly() {
         return this.numDigitsRecalledCorrectly;
     }
 
@@ -75,7 +76,7 @@ public class Result {
     /* Sets the memorization time used by the user, in seconds */
     public void setMemTime(int memTime) { this.memTime = memTime; }
 
-    int getMemTime() {
+    public int getMemTime() {
         return this.memTime;
     }
 
@@ -85,5 +86,13 @@ public class Result {
 
     public int getNumDigitsRecallAttempted() {
         return numDigitsRecallAttempted;
+    }
+
+    public int getChallengeKey() {
+        return challengeKey;
+    }
+
+    public void setChallengeKey(int challengeKey) {
+        this.challengeKey = challengeKey;
     }
 }

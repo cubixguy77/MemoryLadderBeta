@@ -1,5 +1,6 @@
 package storage;
 
+import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 import repository.IRepository;
@@ -15,4 +16,6 @@ public interface DatabaseAPI {
         void getSettingsList(long challengeKey, IRepository.GetSettingsCallback callback);
 
         boolean updateSetting(Setting setting);
+
+        void insertScore(Result result, IRepository.InsertScoreCallback callback);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Game;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
@@ -11,11 +12,10 @@ import repository.IRepository;
 
 public class Repository implements IRepository {
 
-
     private final DatabaseAPI db;
 
     @Inject
-    public Repository(DatabaseAPI db) {
+    Repository(DatabaseAPI db) {
         this.db = db;
     }
 
@@ -77,5 +77,10 @@ public class Repository implements IRepository {
     public boolean updateSetting(Setting setting) {
         db.updateSetting(setting);
         return true;
+    }
+
+    @Override
+    public void insertScore(Result result, final IRepository.InsertScoreCallback callback) {
+        db.insertScore(result, callback);
     }
 }
