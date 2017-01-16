@@ -2,15 +2,15 @@ package storage;
 
 import android.provider.BaseColumns;
 
-public class ChallengeSettingTableContract {
+class ChallengeSettingTableContract {
     public ChallengeSettingTableContract() {}
 
-    public static abstract class ChallengeSettingTable implements BaseColumns {
-        protected static final String TABLE_NAME = "Challenge_Setting";
-        protected static final String CHALLENGE_SETTING_CHALLENGE_KEY = "Challenge_Key";
-        protected static final String CHALLENGE_SETTING_SETTING_KEY = "Setting_Key";
-        protected static final String CHALLENGE_SETTING_VALUE = "Value";
-        protected static final String CREATE_CHALLENGE_SETTING_TABLE =
+    static abstract class ChallengeSettingTable implements BaseColumns {
+        static final String TABLE_NAME = "Challenge_Setting";
+        static final String CHALLENGE_SETTING_CHALLENGE_KEY = "Challenge_Key";
+        static final String CHALLENGE_SETTING_SETTING_KEY = "Setting_Key";
+        static final String CHALLENGE_SETTING_VALUE = "Value";
+        static final String CREATE_CHALLENGE_SETTING_TABLE =
                 "CREATE TABLE " + TABLE_NAME +
                 "(" +
                     CHALLENGE_SETTING_CHALLENGE_KEY + " INTEGER REFERENCES " + ChallengeTableContract.ChallengeTable.TABLE_NAME + "," +

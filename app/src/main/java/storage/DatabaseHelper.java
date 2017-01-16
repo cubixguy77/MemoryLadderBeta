@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     // Database Info
     private static final String DATABASE_NAME = "MemoryDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     @Inject
     DatabaseHelper() {
@@ -74,10 +74,14 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion != newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + GameTableContract.GameTable.TABLE_NAME);
-            db.execSQL("DROP TABLE IF EXISTS " + ChallengeTableContract.ChallengeTable.TABLE_NAME);
-            onCreate(db);
+        switch (newVersion) {
+
+        /* Version 2
+         * Introduces saved scores feature
+         * We need to create a table to save those scores
+         */
+            case 2:
+                db.execSQL(ScoreTableContract.ScoreTable.CREATE_SCORE_TABLE);
         }
     }
 
