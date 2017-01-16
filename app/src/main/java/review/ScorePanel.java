@@ -45,7 +45,7 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
 
         /* Bind result model to Views */
         accuracyText.setText(getAccuracyText(result.getAccuracy()));
-        scoreText.setText(String.valueOf(result.getNumDigitsRecalledCorrectly()));
+        scoreText.setText(getScoreText(result.getNumDigitsRecalledCorrectly(), result.getNumDigitsRecallAttempted()));
         memTimeText.setText(getMemorizationTimeText(result.getMemTime()));
 
         this.setVisibility(View.VISIBLE);
@@ -54,8 +54,16 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
     private SpannableString getAccuracyText(int percentCorrect) {
         String s = percentCorrect + "%";
         SpannableString span =  new SpannableString(s);
-        float shrinkSize = .6f;
+        float shrinkSize = .5f;
         span.setSpan(new RelativeSizeSpan(shrinkSize), s.length()-1, s.length(), 0); // shrink the percentage symbol
+        return span;
+    }
+
+    private SpannableString getScoreText(int numCorrect, int numAttempted) {
+        String s = numCorrect + "/" + numAttempted;
+        SpannableString span =  new SpannableString(s);
+        float shrinkSize = .5f;
+        span.setSpan(new RelativeSizeSpan(shrinkSize), s.indexOf('/'), s.length(), 0); // shrink the attempted digits
         return span;
     }
 
