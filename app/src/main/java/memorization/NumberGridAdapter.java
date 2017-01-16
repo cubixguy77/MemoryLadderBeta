@@ -164,7 +164,7 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     private View getViewPreMemorization(View convertView) {
         MemoryCell view;
-        if (convertView == null) {
+        if (convertView == null || !(convertView instanceof MemoryCell)) {
             view = new MemoryCell(context, null);
         }
         else

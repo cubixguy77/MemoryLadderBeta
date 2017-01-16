@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.AbsListView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
@@ -31,10 +32,12 @@ public class MemoryCell extends android.support.v7.widget.AppCompatTextView {
     public void setAsRowMarker() {
         setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
         setBackgroundResource(0);
+        setVisibility(View.VISIBLE);
     }
 
     public void setAsDataCell() {
         setTextColor(Color.BLACK);
+        setVisibility(View.VISIBLE);
     }
 
     public void setAsHiddenDataCell() {
