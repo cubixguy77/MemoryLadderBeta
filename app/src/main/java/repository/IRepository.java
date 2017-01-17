@@ -3,6 +3,7 @@ package repository;
 import java.util.List;
 
 import review.Result;
+import scores.Score;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Game;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
@@ -33,6 +34,10 @@ public interface IRepository {
         void onScoreAdded(Result result);
     }
 
+    interface GetScoresCallback {
+        void onScoresLoaded(List<Score> scores);
+    }
+
     void getGameList(GetGamesCallback callback);
 
     void getChallenge(long challengeKey, GetChallengeCallback callback);
@@ -45,4 +50,5 @@ public interface IRepository {
     boolean updateSetting(Setting setting);
 
     void insertScore(Result result, IRepository.InsertScoreCallback callback);
+    void getScoreList(long challengeKey, IRepository.GetScoresCallback callback);
 }

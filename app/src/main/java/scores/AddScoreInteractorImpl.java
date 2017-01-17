@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challenges.domain.interactors.impl;
+package scores;
 
 import javax.inject.Inject;
 
@@ -7,7 +7,7 @@ import executor.MainThread;
 import interactors.base.AbstractInteractor;
 import repository.IRepository;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.interactors.AddScoreInteractor;
+import scores.AddScoreInteractor;
 
 public class AddScoreInteractorImpl extends AbstractInteractor implements AddScoreInteractor {
 

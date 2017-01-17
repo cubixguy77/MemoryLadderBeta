@@ -6,9 +6,9 @@ import executor.Executor;
 import executor.MainThread;
 import injection.PerActivity;
 import repository.IRepository;
-import speednumbers.mastersofmemory.challenges.domain.interactors.AddScoreInteractor;
+import scores.AddScoreInteractor;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.AddScoreInteractorImpl;
+import scores.AddScoreInteractorImpl;
 import speednumbers.mastersofmemory.challenges.domain.interactors.impl.GetChallengeInteractorImpl;
 
 @Module

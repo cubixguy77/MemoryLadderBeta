@@ -18,4 +18,5 @@ public interface DatabaseAPI {
         boolean updateSetting(Setting setting);
 
         void insertScore(Result result, IRepository.InsertScoreCallback callback);
+        void getScoreList(long challengeKey, IRepository.GetScoresCallback callback);
 }

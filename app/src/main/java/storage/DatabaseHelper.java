@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import review.Result;
+import scores.Score;
 import speednumbers.mastersofmemory.challenges.MyApplication;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Game;
@@ -327,6 +328,57 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     }
 
 
+    @Override
+    public void getScoreList(long challengeKey, IRepository.GetScoresCallback callback) {
+        SQLiteDatabase db = getReadableDatabase();
+        List<Score> scores = new ArrayList<>();
+
+        String SELECT_QUERY = String.format
+        (
+            "SELECT " +
+                "(SELECT COUNT(*) FROM %s AS S2 WHERE %s) AS Rank," +
+                "S1." + ScoreTableContract.ScoreTable.SCORE + "," +
+                "S1." + ScoreTableContract.ScoreTable.MEM_TIME + "," +
+                "S1." + ScoreTableContract.ScoreTable.DATE_TIME + " " +
+            "FROM %s AS S1" +
+            "WHERE %s " +
+            "ORDER BY %s",
+            ScoreTableContract.ScoreTable.TABLE_NAME,
+            "S2." + ScoreTableContract.ScoreTable.SCORE + " >= S1." + ScoreTableContract.ScoreTable.SCORE + " AND S2." + ScoreTableContract.ScoreTable.MEM_TIME + " <= S1." + ScoreTableContract.ScoreTable.MEM_TIME, // sub select
+
+            ScoreTableContract.ScoreTable.TABLE_NAME, // FROM
+
+            "S1." + ScoreTableContract.ScoreTable.CHALLENGE_KEY + " = " + challengeKey, // WHERE
+
+            "S1." + ScoreTableContract.ScoreTable.SCORE + " ASC, " + "S1." + ScoreTableContract.ScoreTable.MEM_TIME + " DESC" // ORDER BY
+        );
+
+        Cursor cursor = db.rawQuery(SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Score score = new Score
+                    (
+                        cursor.getInt(cursor.getColumnIndex("Rank")),
+                        cursor.getInt(cursor.getColumnIndex(ScoreTableContract.ScoreTable.SCORE)),
+                        cursor.getInt(cursor.getColumnIndex(ScoreTableContract.ScoreTable.MEM_TIME)),
+                        new Date(cursor.getLong(cursor.getColumnIndex(ScoreTableContract.ScoreTable.DATE_TIME)))
+                    );
+
+                    scores.add(score);
+                } while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("ERROR", "Error while trying to get scores from database!");
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+
+        callback.onScoresLoaded(scores);
+    }
 
 
     @Override

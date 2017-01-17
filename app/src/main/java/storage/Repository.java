@@ -83,4 +83,9 @@ public class Repository implements IRepository {
     public void insertScore(Result result, final IRepository.InsertScoreCallback callback) {
         db.insertScore(result, callback);
     }
+
+    @Override
+    public void getScoreList(long challengeKey, GetScoresCallback callback) {
+        db.getScoreList(challengeKey, callback);
+    }
 }

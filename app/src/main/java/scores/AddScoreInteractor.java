@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challenges.domain.interactors;
+package scores;
 
 import interactors.base.Interactor;
 import review.Result;

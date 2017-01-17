@@ -18,7 +18,7 @@ import keyboard.NumericKeyboardView;
 import memorization.navigationPanel.NavigationPanel;
 import review.Result;
 import review.ScorePanel;
-import speednumbers.mastersofmemory.challenges.domain.interactors.AddScoreInteractor;
+import scores.AddScoreInteractor;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
