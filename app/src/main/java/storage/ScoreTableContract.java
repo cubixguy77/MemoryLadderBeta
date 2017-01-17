@@ -19,7 +19,7 @@ class ScoreTableContract {
                         CHALLENGE_KEY + " INTEGER REFERENCES " + ChallengeTableContract.ChallengeTable.TABLE_NAME + "," +
                         SCORE + " INTEGER" + "," +
                         MEM_TIME + " INTEGER" + "," +
-                        DATE_TIME + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                        DATE_TIME + " INTEGER" +
                 ")";
     }
 }

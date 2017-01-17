@@ -312,7 +312,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
             values.put(ScoreTableContract.ScoreTable.CHALLENGE_KEY, result.getChallengeKey());
             values.put(ScoreTableContract.ScoreTable.SCORE, result.getNumDigitsRecalledCorrectly());
             values.put(ScoreTableContract.ScoreTable.MEM_TIME, result.getMemTime());
-            values.put(ScoreTableContract.ScoreTable.DATE_TIME, DateFormat.getDateTimeInstance().format(new Date()));
+            values.put(ScoreTableContract.ScoreTable.DATE_TIME, System.currentTimeMillis());
 
             db.insert(ScoreTableContract.ScoreTable.TABLE_NAME, null, values);
             db.setTransactionSuccessful();
@@ -345,11 +345,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
             "ORDER BY %s",
             ScoreTableContract.ScoreTable.TABLE_NAME,
             "S2." + ScoreTableContract.ScoreTable.SCORE + " >= S1." + ScoreTableContract.ScoreTable.SCORE + " AND S2." + ScoreTableContract.ScoreTable.MEM_TIME + " <= S1." + ScoreTableContract.ScoreTable.MEM_TIME, // sub select
-
             ScoreTableContract.ScoreTable.TABLE_NAME, // FROM
-
             "S1." + ScoreTableContract.ScoreTable.CHALLENGE_KEY + " = " + challengeKey, // WHERE
-
             "S1." + ScoreTableContract.ScoreTable.SCORE + " ASC, " + "S1." + ScoreTableContract.ScoreTable.MEM_TIME + " DESC" // ORDER BY
         );
 
