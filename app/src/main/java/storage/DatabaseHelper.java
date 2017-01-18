@@ -340,7 +340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 "S1." + ScoreTableContract.ScoreTable.SCORE + "," +
                 "S1." + ScoreTableContract.ScoreTable.MEM_TIME + "," +
                 "S1." + ScoreTableContract.ScoreTable.DATE_TIME + " " +
-            "FROM %s AS S1" +
+            "FROM %s AS S1 " +
             "WHERE %s " +
             "ORDER BY %s",
             ScoreTableContract.ScoreTable.TABLE_NAME,

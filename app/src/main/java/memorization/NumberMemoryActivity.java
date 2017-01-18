@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -19,6 +21,8 @@ import memorization.navigationPanel.NavigationPanel;
 import review.Result;
 import review.ScorePanel;
 import scores.AddScoreInteractor;
+import scores.GetScoreListInteractor;
+import scores.Score;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
@@ -39,6 +43,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private ChallengeComponent challengeComponent;
     @Inject public GetChallengeInteractor getChallengeInteractor;
     @Inject public AddScoreInteractor addScoreInteractor;
+    @Inject public GetScoreListInteractor getScoreListInteractor;
 
     private static int activityInstanceCount = 0;
     private boolean destroyActivity = true;
@@ -116,6 +121,14 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     protected void onResume() {
         super.onResume();
         System.out.println("onResume()");
+
+        getScoreListInteractor.setCallback(new GetScoreListInteractor.Callback() {
+            @Override
+            public void onScoresLoaded(List<Score> scores) {
+                System.out.println("Scores received!");
+            }
+        });
+        getScoreListInteractor.execute();
 
         /* full screen mode */
         if(Build.VERSION.SDK_INT < 19){

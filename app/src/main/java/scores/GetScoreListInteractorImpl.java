@@ -12,14 +12,14 @@ import repository.IRepository;
 public class GetScoreListInteractorImpl extends AbstractInteractor implements GetScoreListInteractor {
 
     @Inject
-    public Callback mCallback;
+    Callback mCallback;
     private IRepository mRepository;
-    private long gameKey;
+    private long challengeKey;
 
     @Inject
-    public GetScoreListInteractorImpl(long gameKey, Executor threadExecutor, MainThread mainThread, IRepository repository) {
+    public GetScoreListInteractorImpl(long challengeKey, Executor threadExecutor, MainThread mainThread, IRepository repository) {
         super(threadExecutor, mainThread);
-        this.gameKey = gameKey;
+        this.challengeKey = challengeKey;
         mRepository = repository;
     }
 
@@ -31,7 +31,7 @@ public class GetScoreListInteractorImpl extends AbstractInteractor implements Ge
     @Override
     public void run() {
         System.out.println("Interactor: Requesting challenges");
-        mRepository.getScoreList(gameKey, new IRepository.GetScoresCallback() {
+        mRepository.getScoreList(challengeKey, new IRepository.GetScoresCallback() {
             @Override
             public void onScoresLoaded(List<Score> scores) {
                 System.out.println("Interactor: " + scores.size() + " Scores Received");

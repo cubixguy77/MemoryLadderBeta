@@ -7,6 +7,8 @@ import executor.MainThread;
 import injection.PerActivity;
 import repository.IRepository;
 import scores.AddScoreInteractor;
+import scores.GetScoreListInteractor;
+import scores.GetScoreListInteractorImpl;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import scores.AddScoreInteractorImpl;
 import speednumbers.mastersofmemory.challenges.domain.interactors.impl.GetChallengeInteractorImpl;
@@ -30,5 +32,11 @@ public class ChallengeModule {
   @PerActivity
   AddScoreInteractor provideAddScoreInteractor(Executor threadExecutor, MainThread mainThread, IRepository repository) {
     return new AddScoreInteractorImpl(threadExecutor, mainThread, repository);
+  }
+
+  @Provides
+  @PerActivity
+  GetScoreListInteractor provideGetScoreListInteractor(Executor threadExecutor, MainThread mainThread, IRepository repository) {
+    return new GetScoreListInteractorImpl(challengeKey, threadExecutor, mainThread, repository);
   }
 }
