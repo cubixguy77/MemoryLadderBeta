@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -336,19 +335,18 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         String SELECT_QUERY = String.format
         (
             "SELECT " +
-                "(SELECT COUNT(*) FROM %s AS S2 WHERE %s) AS Rank," +
                 "S1." + ScoreTableContract.ScoreTable.SCORE + "," +
                 "S1." + ScoreTableContract.ScoreTable.MEM_TIME + "," +
                 "S1." + ScoreTableContract.ScoreTable.DATE_TIME + " " +
             "FROM %s AS S1 " +
             "WHERE %s " +
             "ORDER BY %s",
-            ScoreTableContract.ScoreTable.TABLE_NAME,
-            "S2." + ScoreTableContract.ScoreTable.SCORE + " >= S1." + ScoreTableContract.ScoreTable.SCORE + " AND S2." + ScoreTableContract.ScoreTable.MEM_TIME + " <= S1." + ScoreTableContract.ScoreTable.MEM_TIME, // sub select
             ScoreTableContract.ScoreTable.TABLE_NAME, // FROM
             "S1." + ScoreTableContract.ScoreTable.CHALLENGE_KEY + " = " + challengeKey, // WHERE
-            "S1." + ScoreTableContract.ScoreTable.SCORE + " ASC, " + "S1." + ScoreTableContract.ScoreTable.MEM_TIME + " DESC" // ORDER BY
+            "S1." + ScoreTableContract.ScoreTable.SCORE + " DESC, S1." + ScoreTableContract.ScoreTable.MEM_TIME + " ASC" + ", S1." + ScoreTableContract.ScoreTable.DATE_TIME + " DESC" // ORDER BY
         );
+
+        System.out.println(SELECT_QUERY);
 
         Cursor cursor = db.rawQuery(SELECT_QUERY, null);
         try {
@@ -356,7 +354,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 do {
                     Score score = new Score
                     (
-                        cursor.getInt(cursor.getColumnIndex("Rank")),
+                        cursor.getPosition()+1, // The results are already sorted via SQL, the row index is the score's "Rank". Add one to make ranks start at one.
                         cursor.getInt(cursor.getColumnIndex(ScoreTableContract.ScoreTable.SCORE)),
                         cursor.getInt(cursor.getColumnIndex(ScoreTableContract.ScoreTable.MEM_TIME)),
                         new Date(cursor.getLong(cursor.getColumnIndex(ScoreTableContract.ScoreTable.DATE_TIME)))
@@ -366,6 +364,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 } while(cursor.moveToNext());
             }
         } catch (Exception e) {
+            System.out.println("Error: Error looking up scores.");
             Log.d("ERROR", "Error while trying to get scores from database!");
             e.printStackTrace();
         } finally {

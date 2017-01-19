@@ -16,8 +16,7 @@ public class Score {
         this.date = date;
     }
 
-
-    public int getRank() {
+    int getRank() {
         return rank;
     }
 
@@ -25,7 +24,7 @@ public class Score {
         return score;
     }
 
-    public int getMemTime() {
+    int getMemTime() {
         return memTime;
     }
 

@@ -30,7 +30,7 @@ public class GetScoreListInteractorImpl extends AbstractInteractor implements Ge
 
     @Override
     public void run() {
-        System.out.println("Interactor: Requesting challenges");
+        System.out.println("Interactor: Requesting score list");
         mRepository.getScoreList(challengeKey, new IRepository.GetScoresCallback() {
             @Override
             public void onScoresLoaded(List<Score> scores) {

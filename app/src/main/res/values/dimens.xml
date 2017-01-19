@@ -37,4 +37,12 @@
     <dimen name="score_panel.value.text.size">48sp</dimen>
     <dimen name="score_panel.value.margin.top">-24dp</dimen>
 
+    <dimen name="score_list.row.height">64dp</dimen>
+    <dimen name="score_list.row.height.large">72dp</dimen>
+    <dimen name="score_list.row.text.size">20sp</dimen>
+    <dimen name="score_list.rank.margin.left">24dp</dimen>
+    <dimen name="score_list.rank.width">64dp</dimen>
+    <dimen name="score_list.name.width">136dp</dimen>
+    <dimen name="score_list.score.margin.left">0dp</dimen>
+
 </resources>

@@ -3,11 +3,12 @@ package memorization;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,7 +23,7 @@ import review.Result;
 import review.ScorePanel;
 import scores.AddScoreInteractor;
 import scores.GetScoreListInteractor;
-import scores.Score;
+import scores.ScoreListFragment;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
@@ -121,14 +122,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     protected void onResume() {
         super.onResume();
         System.out.println("onResume()");
-
-        getScoreListInteractor.setCallback(new GetScoreListInteractor.Callback() {
-            @Override
-            public void onScoresLoaded(List<Score> scores) {
-                System.out.println("Scores received!");
-            }
-        });
-        getScoreListInteractor.execute();
 
         /* full screen mode */
         if(Build.VERSION.SDK_INT < 19){
@@ -279,26 +272,30 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         result.setChallengeKey((int) challengeKey);
 
         addScoreInteractor.setResult(result);
-
-        /*
         addScoreInteractor.setCallback(new AddScoreInteractor.Callback() {
             @Override
             public void onScoreAdded(Result result) {
-                System.out.println("Hooray! Score added!");
+                System.out.println("New Score added successfully: " + result.getNumDigitsRecalledCorrectly());
+
             }
         });
-        */
-
         addScoreInteractor.execute();
 
-        /*
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        FinalScoreCardFragment finalScoreCardFragment = new FinalScoreCardFragment();
-        finalScoreCardFragment.setModel(result);
-        ft.add(R.id.parentMemoryContainer, finalScoreCardFragment, "FinalScoreCardFragment");
-        //ft.addToBackStack(null);
-        ft.commit();
-        */
+
+
+
+        //new Handler(Looper.getMainLooper()).post(new Runnable() {
+        //    @Override
+        //    public void run() {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ScoreListFragment scoreListFragment = new ScoreListFragment();
+                scoreListFragment.provideDependencies(getScoreListInteractor);
+                ft.add(R.id.parentMemoryContainer, scoreListFragment, "ScoreListFragment");
+                ft.commit();
+        //    }
+        //});
+
+
     }
 
     @Override
