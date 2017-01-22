@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -43,12 +45,35 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
     public void onLoad(Challenge challenge, Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             nextGroupButton.setEnabled(savedInstanceState.getBoolean("NavigationPanel.NextGroupButton.Enabled"));
-            setVisibility(savedInstanceState.getBoolean("NavigationPanel.NextGroupButton.Visible") ? View.VISIBLE : View.GONE);
+
+            if (savedInstanceState.getBoolean("NavigationPanel.NextGroupButton.Visible")) {
+                showNavigationPanel();
+            }
+            else {
+                hideNavigationPanel();
+            }
+        }
+        else {
+            showNavigationPanel();
         }
     }
 
     private void showNavigationPanel() {
-        setVisibility(View.VISIBLE);
+        final Animation buttonReveal = AnimationUtils.loadAnimation(getContext(), R.anim.fab_show);
+        buttonReveal.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        startAnimation(buttonReveal);
     }
 
     private void hideNavigationPanel() {
@@ -79,7 +104,7 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
 
     @Override
     public void onMemorizationStart() {
-        showNavigationPanel();
+
     }
 
     @Override
@@ -96,6 +121,10 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
     @Override
     public void onPlayAgain() {}
 
+    @Override
+    public void onShutdown() {
+
+    }
 
 
     @Override
