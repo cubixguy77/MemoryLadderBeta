@@ -30,12 +30,8 @@
     <dimen name="memory_timer_dialog.colon.adjust">24dp</dimen>
 
 
-    <dimen name="score_list.row.height">138dp</dimen>
-    <dimen name="score_list.row.height.large">156dp</dimen>
-    <dimen name="score_list.row.text.size">40sp</dimen>
+    <dimen name="score_list.row.height">88dp</dimen>
+    <dimen name="score_list.row.text.size">26sp</dimen>
     <dimen name="score_list.rank.margin.left">48dp</dimen>
-    <dimen name="score_list.rank.width">136dp</dimen>
-    <dimen name="score_list.name.width">248dp</dimen>
-    <dimen name="score_list.score.margin.left">0dp</dimen>
 
 </resources>

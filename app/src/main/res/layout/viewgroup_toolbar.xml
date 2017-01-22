@@ -6,7 +6,6 @@
     android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:title="@string/memorization"
-    android:elevation="10dp"
     >
 
 </toolbar.ToolbarView>

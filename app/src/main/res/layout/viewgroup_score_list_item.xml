@@ -41,8 +41,6 @@
         android:layout_height="fill_parent"
         android:layout_weight="2"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:paddingLeft="@dimen/score_list.score.margin.left"
-        android:paddingStart="@dimen/score_list.score.margin.left"
         android:gravity="center_vertical|start"
         android:textSize="@dimen/score_list.row.text.size"
         tools:text="13s"

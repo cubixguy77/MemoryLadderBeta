@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/score_panel.value.margin.top"
-            tools:text="2m17s"
+            tools:text="37s"
             android:textSize="@dimen/score_panel.value.text.size"
             android:textColor="@color/score_panel.value"
             />

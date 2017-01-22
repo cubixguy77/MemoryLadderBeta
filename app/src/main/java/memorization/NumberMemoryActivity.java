@@ -94,7 +94,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
         if (Bus.gameState == GameState.REVIEW) {
             this.addScoreListFragment();
-            tabLayout.setVisibility(View.VISIBLE);
         }
         else {
             tabLayout.setVisibility(View.GONE);
@@ -276,9 +275,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
                     @Override
                     public void run() {
                         addScoreListFragment();
-                        tabLayout.setVisibility(View.VISIBLE);
                     }
-                }, 1000);
+                }, 700);
             }
         });
         addScoreInteractor.execute();
@@ -289,6 +287,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         scoreListFragment.provideDependencies(getScoreListInteractor);
         adapter.addFragment(scoreListFragment, getString(R.string.tabLabel_MyScores));
         adapter.notifyDataSetChanged();
+        tabLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -322,7 +321,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             public void run() {
                 Bus.getBus().onLoad(challenge, null);
             }
-        }, 100);
+        }, 50);
     }
 
 

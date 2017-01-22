@@ -46,7 +46,7 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
         /* Bind result model to Views */
         accuracyText.setText(getAccuracyText(result.getAccuracy()));
         scoreText.setText(getScoreText(result.getNumDigitsRecalledCorrectly(), result.getNumDigitsRecallAttempted()));
-        memTimeText.setText(TimeUtils.getMemorizationTimeText(result.getMemTime(), 0.5f));
+        memTimeText.setText(getMemTimeText(result.getMemTime()));
 
         this.setVisibility(View.VISIBLE);
     }
@@ -65,6 +65,10 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
         float shrinkSize = .5f;
         span.setSpan(new RelativeSizeSpan(shrinkSize), s.indexOf('/'), s.length(), 0); // shrink the attempted digits
         return span;
+    }
+
+    private SpannableString getMemTimeText(int memTime) {
+        return TimeUtils.getMemorizationTimeText(memTime, 0.5f);
     }
 
     private void hideScorePanel() {
@@ -102,7 +106,5 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
     public void onPlayAgain() {}
 
     @Override
-    public void onShutdown() {
-
-    }
+    public void onShutdown() {}
 }

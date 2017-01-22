@@ -62,13 +62,9 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
         final Animation buttonReveal = AnimationUtils.loadAnimation(getContext(), R.anim.fab_show);
         buttonReveal.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-                setVisibility(View.VISIBLE);
-            }
-
+            public void onAnimationStart(Animation animation) { setVisibility(View.VISIBLE); }
             @Override
             public void onAnimationEnd(Animation animation) {}
-
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
@@ -103,12 +99,10 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
     }
 
     @Override
-    public void onMemorizationStart() {
-
-    }
+    public void onMemorizationStart() {}
 
     @Override
-    public void onTimeExpired() { }
+    public void onTimeExpired() {}
 
     @Override
     public void onTransitionToRecall() {
@@ -122,9 +116,7 @@ public class NavigationPanel extends LinearLayout implements GameStateListener, 
     public void onPlayAgain() {}
 
     @Override
-    public void onShutdown() {
-
-    }
+    public void onShutdown() {}
 
 
     @Override
