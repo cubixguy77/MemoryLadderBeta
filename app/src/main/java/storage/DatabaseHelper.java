@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        System.out.println("Database: onCreate()");
+        Log.d("Database", "onCreate()");
 
         db.execSQL(GameTableContract.GameTable.CREATE_GAME_TABLE);
         db.execSQL(ChallengeTableContract.ChallengeTable.CREATE_CHALLENGE_TABLE);
@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        System.out.println("Database: onUpgrade(): Old" + oldVersion + " new" + newVersion);
+        Log.d("Database", "onUpgrade(): Old" + oldVersion + " new" + newVersion);
 
         switch (newVersion) {
 
@@ -366,8 +366,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 } while(cursor.moveToNext());
             }
         } catch (Exception e) {
-            System.out.println("Error: Error looking up scores.");
-            Log.d("ERROR", "Error while trying to get scores from database!");
+            Log.d("Database", "Error while trying to get scores from database!");
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed()) {
