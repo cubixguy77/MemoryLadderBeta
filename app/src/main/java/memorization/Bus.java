@@ -8,15 +8,16 @@ import recall.PositionChangeListener;
 import recall.RecallData;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import timer.TimerPlayPauseListener;
 
-public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener {
+public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener, TimerPlayPauseListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
 
     public static Challenge challenge;
-    public static GridData memoryData;
-    public static RecallData recallData;
+    static GridData memoryData;
+    static RecallData recallData;
 
     public static GameState gameState;
     public static Result result;
@@ -42,7 +43,7 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
-    public boolean hasObservers() {
+    boolean hasObservers() {
         return !observers.isEmpty();
     }
 
@@ -119,6 +120,15 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         for (Object observer : observers) {
             if (observer != null && observer instanceof GameStateListener) {
                 ((GameStateListener) observer).onPlayAgain();
+            }
+        }
+    }
+
+    @Override
+    public void onShutdown() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof GameStateListener) {
+                ((GameStateListener) observer).onShutdown();
             }
         }
     }
@@ -274,6 +284,33 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         for (Object observer : observers) {
             if (observer != null && observer instanceof SaveInstanceStateListener) {
                 ((SaveInstanceStateListener) observer).onSaveInstanceState(outState);
+            }
+        }
+    }
+
+    @Override
+    public void startTimer() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof TimerPlayPauseListener) {
+                ((TimerPlayPauseListener) observer).startTimer();
+            }
+        }
+    }
+
+    @Override
+    public void pauseTimer() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof TimerPlayPauseListener) {
+                ((TimerPlayPauseListener) observer).pauseTimer();
+            }
+        }
+    }
+
+    @Override
+    public void stopTimer() {
+        for (Object observer : observers) {
+            if (observer != null && observer instanceof TimerPlayPauseListener) {
+                ((TimerPlayPauseListener) observer).stopTimer();
             }
         }
     }

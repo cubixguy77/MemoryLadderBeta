@@ -27,8 +27,4 @@ public class Score {
     int getMemTime() {
         return memTime;
     }
-
-    public Date getDate() {
-        return date;
-    }
 }

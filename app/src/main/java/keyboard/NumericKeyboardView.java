@@ -86,4 +86,9 @@ public class NumericKeyboardView extends TableLayout implements GameStateListene
 
     @Override
     public void onPlayAgain() {}
+
+    @Override
+    public void onShutdown() {
+
+    }
 }

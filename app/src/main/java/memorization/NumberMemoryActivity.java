@@ -5,7 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +19,6 @@ import butterknife.ButterKnife;
 import injection.components.ChallengeComponent;
 import injection.components.DaggerChallengeComponent;
 import injection.modules.ChallengeModule;
-import keyboard.NumericKeyboardView;
-import memorization.navigationPanel.NavigationPanel;
 import review.Result;
 import review.ScorePanel;
 import scores.AddScoreInteractor;
@@ -28,19 +28,18 @@ import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeIn
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
 import speednumbers.mastersofmemory.com.presentation.R;
-import timer.TimerView;
 import toolbar.ToolbarView;
 
 public class NumberMemoryActivity extends BaseActivityChallenge implements GameStateListener, GetChallengeInteractor.Callback {
 
-    @BindView(R.id.numberGrid) NumberGridView grid;
-    @BindView(R.id.timerView)  TimerView timer;
-    @BindView(R.id.navigationPanel) NavigationPanel navigationPanel;
-    @BindView(R.id.tool_bar) ToolbarView toolbar;
-    @BindView(R.id.keyboard_layout) NumericKeyboardView keyboard;
-    @BindView(R.id.score_panel) ScorePanel scorePanel;
+    @BindView(R.id.toolbar) ToolbarView toolbar;
+    @BindView(R.id.tabLayout) TabLayout tabLayout;
+    @BindView(R.id.viewPager) ViewPager viewPager;
+    ViewPagerAdapter adapter;
+    @BindView(R.id.scorePanel) ScorePanel scorePanel;
 
     private long challengeKey;
+
     private ChallengeComponent challengeComponent;
     @Inject public GetChallengeInteractor getChallengeInteractor;
     @Inject public AddScoreInteractor addScoreInteractor;
@@ -59,20 +58,19 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         initializeInjector();
 
         if (savedInstanceState != null) {
-            System.out.println("onCreate(): with restore");
+            Log.d("ML.NumberMemoryActivity", "onCreate(): with restore");
             Bus.gameState = (GameState) savedInstanceState.getSerializable("GameState");
         }
         else {
-            System.out.println("onCreate()");
+            Log.d("ML.NumberMemoryActivity", "onCreate()");
             Bus.gameState = GameState.PRE_MEMORIZATION;
         }
 
         toolbar.init(this);
-        grid.init();
-        timer.init();
-        navigationPanel.init();
-        keyboard.init();
         scorePanel.init();
+
+        setupSubscriptions();
+        setupViewPager();
 
         activityInstanceCount++;
     }
@@ -80,20 +78,33 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private void setupSubscriptions() {
         if (!Bus.getBus().hasObservers()) {
             toolbar.subscribe();
-            grid.subscribe();
-            timer.subscribe();
-            navigationPanel.subscribe();
-            keyboard.subscribe();
             scorePanel.subscribe();
             Bus.getBus().subscribe(this);
+        }
+    }
+
+    private void setupViewPager() {
+        this.adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        MemoryFragment memoryFragment = new MemoryFragment();
+        this.adapter.addFragment(memoryFragment, getString(R.string.tabLabel_Results));
+
+        viewPager.setAdapter(this.adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        if (Bus.gameState == GameState.REVIEW) {
+            this.addScoreListFragment();
+            tabLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            tabLayout.setVisibility(View.GONE);
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("onStart()");
-        setupSubscriptions();
+        Log.d("ML.NumberMemoryActivity", "onStart()");
 
         if (Bus.gameState == GameState.PRE_MEMORIZATION && Bus.challenge == null) {
             getChallengeInteractor.setCallback(this);
@@ -114,37 +125,29 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     protected void onRestoreInstanceState(Bundle inState) {
         super.onRestoreInstanceState(inState);
-        System.out.println("onRestoreInstanceState()");
+        Log.d("ML.NumberMemoryActivity", "onRestoreInstanceState()");
         Bus.getBus().onLoad(Bus.challenge, inState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("onResume()");
+        Log.d("ML.NumberMemoryActivity", "onResume()");
 
-        /* full screen mode */
-        if(Build.VERSION.SDK_INT < 19){
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        }
-        else {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
+        makeFullScreen();
 
         if (Bus.gameState == GameState.MEMORIZATION) {
-            timer.start();
+            Bus.getBus().startTimer();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("onPause()");
+        Log.d("ML.NumberMemoryActivity", "onPause()");
 
         if (Bus.gameState == GameState.MEMORIZATION) {
-            timer.pause();
+            Bus.getBus().pauseTimer();
         }
     }
 
@@ -157,7 +160,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        System.out.println("onSaveInstanceState()");
+        Log.d("ML.NumberMemoryActivity", "onSaveInstanceState()");
         outState.putSerializable("GameState", Bus.gameState);
         destroyActivity = false;
         Bus.getBus().onSaveInstanceState(outState);
@@ -166,14 +169,14 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     protected void onStop() {
         super.onStop();
-        System.out.println("onStop()");
+        Log.d("ML.NumberMemoryActivity", "onStop()");
         getChallengeInteractor.setCallback(null);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("onDestroy()");
+        Log.d("ML.NumberMemoryActivity", "onDestroy()");
 
         /* If the user decides to play again, then a new activity will be placed on top of the current one
          * This means that the current activity's onStop() and onDestroy() aren't called until
@@ -181,12 +184,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
          * This check will prevent us from removing the new activity's subscribers
          */
         if (activityInstanceCount <= 1) {
-            System.out.println("onDestroy(unsubscribe all)");
+            Log.d("ML.NumberMemoryActivity", "onDestroy(unsubscribe all)");
             Bus.unsubscribeAll();
         }
 
         if (destroyActivity) {
-            System.out.println("onDestroy(destroy bus!)");
+            Log.d("ML.NumberMemoryActivity", "onDestroy(destroy bus!)");
+            Bus.getBus().onShutdown();
             Bus.destroy();
         }
 
@@ -196,11 +200,6 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     @Override
     public void onBackPressed() {
         destroyActivity = true;
-
-        if (timer != null) {
-            timer.cancel();
-        }
-
         finish();
     }
 
@@ -220,17 +219,13 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_submit_memorization) {
-            if (timer != null) {
-                timer.cancel();
-            }
-
             Bus.getBus().onTransitionToRecall();
         }
         else if (id == R.id.action_submit_recall) {
             Bus.getBus().onSubmitAllRows();
         }
         else if (id == R.id.action_replay) {
-            onPlayAgain();
+            this.onPlayAgain();
         }
         else if (id == android.R.id.home) {
             this.onBackPressed();
@@ -275,32 +270,30 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         addScoreInteractor.setCallback(new AddScoreInteractor.Callback() {
             @Override
             public void onScoreAdded(Result result) {
-                System.out.println("New Score added successfully: " + result.getNumDigitsRecalledCorrectly());
+                Log.d("ML.NumberMemoryActivity", "New Score added successfully: " + result.getNumDigitsRecalledCorrectly());
 
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        addScoreListFragment();
+                        tabLayout.setVisibility(View.VISIBLE);
+                    }
+                }, 1000);
             }
         });
         addScoreInteractor.execute();
+    }
 
-
-
-
-        //new Handler(Looper.getMainLooper()).post(new Runnable() {
-        //    @Override
-        //    public void run() {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ScoreListFragment scoreListFragment = new ScoreListFragment();
-                scoreListFragment.provideDependencies(getScoreListInteractor);
-                ft.add(R.id.parentMemoryContainer, scoreListFragment, "ScoreListFragment");
-                ft.commit();
-        //    }
-        //});
-
-
+    private void addScoreListFragment() {
+        ScoreListFragment scoreListFragment = new ScoreListFragment();
+        scoreListFragment.provideDependencies(getScoreListInteractor);
+        adapter.addFragment(scoreListFragment, getString(R.string.tabLabel_MyScores));
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onPlayAgain() {
-        System.out.println("onPlayAgain()");
+        Log.d("ML.NumberMemoryActivity", "onPlayAgain()");
         Bus.unsubscribeAll();
 
         /* When the activity is started anew, the old running activity has not yet been destroyed.
@@ -310,27 +303,26 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
          */
         destroyActivity = false;
 
-        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.remove(getSupportFragmentManager().findFragmentByTag("FinalScoreCardFragment"));
-        //ft.commit();
-
         finish();
         Intent intent = getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
-        //recreate();
     }
 
-
-
-
-
+    @Override
+    public void onShutdown() {}
 
 
     @Override
-    public void onChallengeLoaded(Challenge challenge) {
-        Bus.getBus().onLoad(challenge, null);
-        System.out.println("onChallengeLoaded()");
+    public void onChallengeLoaded(final Challenge challenge) {
+        Log.d("ML.NumberMemoryActivity", "onChallengeLoaded(): " + challenge.getTitle());
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Bus.getBus().onLoad(challenge, null);
+            }
+        }, 100);
     }
 
 
@@ -342,8 +334,17 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
 
 
-
-
+    /* full screen mode */
+    private void makeFullScreen() {
+        if(Build.VERSION.SDK_INT < 19){
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        }
+        else {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
 
 
     ///////// Dependency Injection  ////////////

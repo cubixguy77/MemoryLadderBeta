@@ -1,5 +1,7 @@
 package scores;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,7 +32,7 @@ public class GetScoreListInteractorImpl extends AbstractInteractor implements Ge
 
     @Override
     public void run() {
-        System.out.println("Interactor: Requesting score list");
+        Log.d("GetScoreListInteractor", "Requesting score list for challenge: " + this.challengeKey);
         mRepository.getScoreList(challengeKey, new IRepository.GetScoresCallback() {
             @Override
             public void onScoresLoaded(List<Score> scores) {

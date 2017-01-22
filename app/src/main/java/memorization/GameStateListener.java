@@ -13,5 +13,6 @@ public interface GameStateListener {
     void onTransitionToRecall();
     void onRecallComplete(Result result);
     void onPlayAgain();
+    void onShutdown();
 
 }

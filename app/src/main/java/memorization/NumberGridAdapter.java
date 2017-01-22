@@ -290,7 +290,6 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     @Override
     public void onMemorizationStart() {
-
         notifyDataSetChanged();
     }
 
@@ -318,9 +317,10 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
 
     }
 
+    @Override
+    public void onShutdown() {
 
-
-
+    }
 
 
     ///////////// Recall Methods /////////////

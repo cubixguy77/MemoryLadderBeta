@@ -17,7 +17,7 @@
         android:layout_marginBottom="@dimen/next_group_button.layout_margin"
         android:layout_marginTop="@dimen/next_group_button.layout_margin"
         android:background="@drawable/shape_rounded_corners"
-        android:elevation="0dp"
+        android:elevation="@dimen/button.elevation.resting"
         android:stateListAnimator="@animator/button_elevation"
         android:text="go"
         app:srcCompat="@drawable/ic_arrow_right" />

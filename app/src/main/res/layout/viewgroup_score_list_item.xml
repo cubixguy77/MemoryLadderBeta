@@ -12,10 +12,10 @@
 
     <TextView
         android:id="@+id/rank"
-        android:layout_width="@dimen/score_list.rank.width"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
+        android:layout_weight="3"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
         android:gravity="center_vertical|start"
         android:paddingLeft="@dimen/score_list.rank.margin.left"
         android:paddingStart="@dimen/score_list.rank.margin.left"
@@ -25,8 +25,9 @@
 
     <TextView
         android:id="@+id/score"
-        android:layout_width="@dimen/score_list.name.width"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
+        android:layout_weight="5"
         android:ellipsize="end"
         android:gravity="center_vertical|start"
         android:maxLines="1"
@@ -36,13 +37,14 @@
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
+        android:layout_weight="2"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingLeft="@dimen/score_list.score.margin.left"
         android:paddingStart="@dimen/score_list.score.margin.left"
         android:gravity="center_vertical|start"
         android:textSize="@dimen/score_list.row.text.size"
-        tools:text="1h22m13s"
+        tools:text="13s"
         />
 </LinearLayout>

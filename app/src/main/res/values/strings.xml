@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Speed Numbers</string>
+    <string name="memorization">Memorization</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="scoreList.Rank">Rank</string>
+    <string name="scoreList.Score">Score</string>
+    <string name="scoreList.Time">Time</string>
+    <string name="tabLabel.MyScores">My Scores</string>
+    <string name="tabLabel.Results">Results</string>
+
 </resources>

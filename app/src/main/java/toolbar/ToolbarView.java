@@ -152,6 +152,11 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
     }
 
     @Override
+    public void onShutdown() {
+
+    }
+
+    @Override
     public void onRestoreInstanceState(Bundle inState) {
 
     }

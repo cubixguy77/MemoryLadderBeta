@@ -34,11 +34,13 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        System.out.println("Database: onCreate()");
+
         db.execSQL(GameTableContract.GameTable.CREATE_GAME_TABLE);
         db.execSQL(ChallengeTableContract.ChallengeTable.CREATE_CHALLENGE_TABLE);
-        System.out.println(ChallengeTableContract.ChallengeTable.CREATE_CHALLENGE_TABLE);
         db.execSQL(ChallengeSettingTableContract.ChallengeSettingTable.CREATE_CHALLENGE_SETTING_TABLE);
         db.execSQL(SettingTableContract.SettingTable.CREATE_SETTING_TABLE);
+        db.execSQL(ScoreTableContract.ScoreTable.CREATE_SCORE_TABLE);
 
         long gameKey = insertGame(db, new Game("Speed Numbers", "speedNumbersIcon.png"));
 
@@ -77,6 +79,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        System.out.println("Database: onUpgrade(): Old" + oldVersion + " new" + newVersion);
+
         switch (newVersion) {
 
         /* Version 2
@@ -345,8 +349,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
             "S1." + ScoreTableContract.ScoreTable.CHALLENGE_KEY + " = " + challengeKey, // WHERE
             "S1." + ScoreTableContract.ScoreTable.SCORE + " DESC, S1." + ScoreTableContract.ScoreTable.MEM_TIME + " ASC" + ", S1." + ScoreTableContract.ScoreTable.DATE_TIME + " DESC" // ORDER BY
         );
-
-        System.out.println(SELECT_QUERY);
 
         Cursor cursor = db.rawQuery(SELECT_QUERY, null);
         try {

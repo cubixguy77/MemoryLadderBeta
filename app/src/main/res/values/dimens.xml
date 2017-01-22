@@ -45,4 +45,6 @@
     <dimen name="score_list.name.width">136dp</dimen>
     <dimen name="score_list.score.margin.left">0dp</dimen>
 
+    <dimen name="button.elevation.resting">2dp</dimen>
+
 </resources>

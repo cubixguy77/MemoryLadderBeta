@@ -16,7 +16,7 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 
-public class TimerView extends android.support.v7.widget.AppCompatTextView implements TimerUpdateListener, GameStateListener, SaveInstanceStateListener {
+public class TimerView extends android.support.v7.widget.AppCompatTextView implements TimerUpdateListener, GameStateListener, SaveInstanceStateListener, TimerPlayPauseListener {
 
     private TimerActionListener timerActionListener;
     private TimerModel model;
@@ -101,6 +101,7 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
     @Override
     public void onTransitionToRecall() {
         Bus.result.setMemTime((int) this.timeElapsed);
+        this.cancel();
 
         if (getVisibility() == View.VISIBLE)  {
             setVisibility(View.INVISIBLE);
@@ -112,6 +113,11 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
 
     @Override
     public void onPlayAgain() {}
+
+    @Override
+    public void onShutdown() {
+        this.cancel();
+    }
 
     public void start()  {
         /* This cannot be called immediately because, on restoring from orientation change, the timer may not have been initialized yet */
@@ -139,7 +145,6 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
 
     @Override
     public void onRestoreInstanceState(Bundle inState) {
-
     }
 
     @Override
@@ -147,5 +152,20 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
         if (timerActionListener != null) {
             outState.putLong("TimerView.SecondsRemaining", timerActionListener.getSecondsRemaining());
         }
+    }
+
+    @Override
+    public void startTimer() {
+        this.start();
+    }
+
+    @Override
+    public void pauseTimer() {
+        this.pause();
+    }
+
+    @Override
+    public void stopTimer() {
+        this.cancel();
     }
 }

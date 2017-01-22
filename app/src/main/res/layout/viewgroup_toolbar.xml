@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:title="Memorization"
-    android:elevation="4dp"
+    android:title="@string/memorization"
+    android:elevation="10dp"
     >
 
 </toolbar.ToolbarView>

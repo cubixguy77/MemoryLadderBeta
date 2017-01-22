@@ -1,5 +1,8 @@
 package timer;
 
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+
 public class TimeUtils {
     private int hours;
     private int minutes;
@@ -27,7 +30,7 @@ public class TimeUtils {
         if (hours > 0)
             return  (hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds );
         else
-            return (minutes < 10 ? "0"+minutes : minutes) + ":" + (seconds < 10 ? "0" : "") + seconds ;
+            return (minutes < 10 ? minutes : minutes) + ":" + (seconds < 10 ? "0" : "") + seconds ;
     }
 
     /* Formats string into:
@@ -35,7 +38,7 @@ public class TimeUtils {
      * 23m45s
      * 45s
      */
-    public static String formatIntoShortTime(int secsIn) {
+    static String formatIntoShortTime(int secsIn) {
         int hours = (secsIn / 3600),
             remainder = (secsIn % 3600),
             minutes = remainder / 60,
@@ -50,6 +53,41 @@ public class TimeUtils {
         }
 
         return seconds + "s";
+    }
+
+    public static SpannableString getMemorizationTimeText(int seconds, float shrinkFactor) {
+
+        if (seconds > 59) {
+            String s = TimeUtils.formatIntoHHMMSStruncated(seconds);
+            return new SpannableString(s);
+        }
+
+        String s = TimeUtils.formatIntoShortTime(seconds);
+
+        SpannableString span =  new SpannableString(s);
+
+        int hoursStringIndex = s.indexOf("h"),
+            minutesStringIndex = s.indexOf("m"),
+            secondsStringIndex = s.indexOf("s");
+
+        if (hoursStringIndex > 0) {
+            span.setSpan(new RelativeSizeSpan(shrinkFactor), hoursStringIndex, hoursStringIndex + 1, 0); // shrink the "h"
+            span.setSpan(new RelativeSizeSpan(.6f), 0, s.length(), 0); // shrink all text to fit better
+        }
+
+        if (minutesStringIndex > 0) {
+            span.setSpan(new RelativeSizeSpan(shrinkFactor), minutesStringIndex, minutesStringIndex + 1, 0); // shrink the "m"
+
+            if (hoursStringIndex <= 0) {
+                span.setSpan(new RelativeSizeSpan(.9f), 0, s.length(), 0); // shrink all text to fit better
+            }
+        }
+
+        if (secondsStringIndex > 0) {
+            span.setSpan(new RelativeSizeSpan(shrinkFactor), secondsStringIndex, secondsStringIndex + 1, 0); // shrink the "s"
+        }
+
+        return span;
     }
 
     /*

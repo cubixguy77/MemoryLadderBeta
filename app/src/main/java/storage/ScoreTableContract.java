@@ -13,7 +13,7 @@ class ScoreTableContract {
         static final String MEM_TIME = "Mem_Time";
         static final String DATE_TIME = "Date_Time";
         static final String CREATE_SCORE_TABLE =
-                "CREATE TABLE " + TABLE_NAME +
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" +
                         SCORE_KEY + " INTEGER PRIMARY KEY" + "," +
                         CHALLENGE_KEY + " INTEGER REFERENCES " + ChallengeTableContract.ChallengeTable.TABLE_NAME + "," +

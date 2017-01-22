@@ -1,24 +1,27 @@
 package scores;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
-import speednumbers.mastersofmemory.challenges.MyApplication;
 import speednumbers.mastersofmemory.com.presentation.R;
+import timer.TimeUtils;
 
 class ScoreListAdapter extends ArrayAdapter<Score>
 {
-    ScoreListAdapter(Context context, int resource, List<Score> items)
+    private Context context;
+
+    ScoreListAdapter(Context context, int resource, List<Score> scores)
     {
-        super(context, resource, items);
+        super(context, resource, scores);
+        this.context = context;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ class ScoreListAdapter extends ArrayAdapter<Score>
         if (v == null)
         {
             LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
+            vi = LayoutInflater.from(context);
             v = vi.inflate(R.layout.viewgroup_score_list_item, parent, false);
         }
 
@@ -41,21 +44,41 @@ class ScoreListAdapter extends ArrayAdapter<Score>
             TextView score = (TextView) v.findViewById(R.id.score);
             TextView time = (TextView) v.findViewById(R.id.time);
 
-            if (rank != null) {
-                rank.setText(String.format("#%s", p.getRank()));
+            /* Create header row */
+            if (position == 0) {
+                if (rank != null) {
+                    rank.setText(R.string.scoreList_Rank);
+                    rank.setTypeface(null, Typeface.BOLD);
+                }
+
+                if (score != null) {
+                    score.setText(R.string.scoreList_Score);
+                    score.setTypeface(null, Typeface.BOLD);
+                }
+
+                if (time != null) {
+                    time.setText(R.string.scoreList_Time);
+                    time.setTypeface(null, Typeface.BOLD);
+                }
             }
 
-            if (score != null) {
-                score.setText(String.format("%s digits", p.getScore()));
-            }
+            /* Create standard list row */
+            else {
+                if (rank != null) {
+                    rank.setText(String.format("%s", p.getRank()));
+                    rank.setTypeface(null, Typeface.NORMAL);
+                }
 
-            if (time != null) {
-                time.setText(String.format("%s seconds", p.getMemTime()));
-            }
+                if (score != null) {
+                    score.setText(String.format("%s digits", p.getScore()));
+                    score.setTypeface(null, Typeface.NORMAL);
+                }
 
-            LinearLayout layout = (LinearLayout) v.findViewById(R.id.list_item_layout);
-            layout.setBackgroundColor(MyApplication.getAppContext().getResources().getColor(R.color.leaderboard_row_background_standard));
-            layout.setLayoutParams(new android.widget.AbsListView.LayoutParams(android.widget.AbsListView.LayoutParams.MATCH_PARENT, MyApplication.getAppContext().getResources().getDimensionPixelSize(R.dimen.score_list_row_height)));
+                if (time != null) {
+                    time.setText(TimeUtils.getMemorizationTimeText(p.getMemTime(), 0.7f));
+                    time.setTypeface(null, Typeface.NORMAL);
+                }
+            }
         }
 
         return v;
