@@ -1,7 +1,12 @@
-Welcome! This repository hosts my upcoming redesign of Memory Ladder!
+Welcome! This repository hosts my redesign of Memory Ladder!
+
+<a href="https://play.google.com/store/apps/details?id=speednumbers.mastersofmemory.com.memoryladder_speednumbers&hl=en">Get it on Google Play!</a>
 
 Memory Ladder is the ultimate training tool for competitors of the World Memory Championship.  The app simulates all 10 events and allows the user to customize the tests to their training regiment.
 
-![Alt text](http://i.imgur.com/0EECh6m.png "Here's a preview")
+Memory Ladder Beta is, at this time, a redesign of the Numbers challenges.
 
-This app is close to ready for release as a beta. Stay tuned!
+<img src="http://imgur.com/HxfHOrD.png" width="312">
+<img src="http://imgur.com/3G5KDTt.png" width="312">
+<img src="http://imgur.com/zRXwviD.png" width="312">
+<img src="http://imgur.com/NGuU7JA.png" width="312">
