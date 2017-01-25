@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
 
 import injection.components.ApplicationComponent;
 import injection.components.DaggerApplicationComponent;
@@ -17,6 +18,12 @@ public class MyApplication extends Application {
 
     public void onCreate(){
         super.onCreate();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        
+        LeakCanary.install(this);
         Stetho.initializeWithDefaults(this);
         MyApplication.context = getApplicationContext();
         initializeInjector();
