@@ -10,5 +10,7 @@
     <string name="scoreList.Time">Time</string>
     <string name="tabLabel.MyScores">My Scores</string>
     <string name="tabLabel.Results">Results</string>
+    <string name="add_challenge">Add Challenge</string>
+    <string name="send_feedback">Send Feedback</string>
 
 </resources>

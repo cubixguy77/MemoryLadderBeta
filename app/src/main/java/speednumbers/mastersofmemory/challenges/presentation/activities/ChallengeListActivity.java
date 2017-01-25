@@ -3,9 +3,11 @@ package speednumbers.mastersofmemory.challenges.presentation.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Menu;
@@ -77,9 +79,16 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_add_challenge) {
-            showAddChallengeDialog();
+
+        switch (item.getItemId())
+        {
+            case R.id.action_add_challenge:
+                showAddChallengeDialog();
+                return true;
+
+            case R.id.action_send_feedback:
+                getUserFeedback();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -130,5 +139,24 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         });
 
         alert.show();
+    }
+
+    private void getUserFeedback() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
+        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+        else {
+            Intent Email = new Intent(Intent.ACTION_SEND);
+            Email.setType("text/email");
+            Email.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
+            Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
+            Email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
+            startActivity(Intent.createChooser(Email, "Send Feedback:"));
+        }
     }
 }
