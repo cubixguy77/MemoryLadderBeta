@@ -22,7 +22,7 @@ public class MemoryFragment extends Fragment implements GameStateListener {
     @BindView(R.id.numberGrid) NumberGridView grid;
     @BindView(R.id.timerView) TimerView timer;
     @BindView(R.id.navigationPanel) NavigationPanel navigationPanel;
-    @BindView(R.id.keyboard_layout) NumericKeyboardView keyboard;
+    @BindView(R.id.keyboard) NumericKeyboardView keyboard;
 
     public MemoryFragment() {}
 

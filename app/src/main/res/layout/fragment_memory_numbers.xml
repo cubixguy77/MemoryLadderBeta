@@ -41,7 +41,7 @@
         />
 
     <include
-        android:id="@+id/keyboard_layout"
+        android:id="@+id/keyboard"
         layout="@layout/viewgroup_numeric_keyboard"
         android:visibility="gone"
         tools:visibility="visible"
