@@ -69,7 +69,7 @@ public class Result {
         return this.numDigitsTotal;
     }
 
-    int getAccuracy() {
+    public int getAccuracy() {
         return this.accuracy;
     }
 

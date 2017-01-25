@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import injection.components.ChallengeListComponent;
@@ -23,12 +25,15 @@ import injection.components.DaggerChallengeListComponent;
 import injection.modules.ChallengeListModule;
 import memorization.NumberMemoryActivity;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.presentation.IAddChallengeListener;
 import speednumbers.mastersofmemory.challenges.presentation.IChallengeSelectionListener;
 import speednumbers.mastersofmemory.challenges.presentation.fragments.ChallengeListFragment;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ChallengeListActivity extends BaseActivity implements IChallengeSelectionListener {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
     private ChallengeListComponent challengeListComponent;
     private long gameKey = 1;
 
@@ -40,6 +45,8 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         setContentView(R.layout.activity_challenge_list);
         ButterKnife.bind(this);
         this.initializeInjector();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,9 +73,19 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     @Override
     public void onChallengeSelected(Challenge challenge) {
+
         Intent myIntent = new Intent(ChallengeListActivity.this, NumberMemoryActivity.class);
         myIntent.putExtra("ChallengeKey", challenge.getChallengeKey());
+        recordAnalyticsEventChallengeSelected(challenge);
         startActivity(myIntent);
+    }
+
+    private void recordAnalyticsEventChallengeSelected(Challenge challenge) {
+        Bundle params = new Bundle();
+        params.putString("Num_Digits", Integer.toString(NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        params.putString("Digits_Per_Group", Integer.toString(NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()));
+        params.putString("Mem_Time", Integer.toString(NumberChallenge.getMemTimerSetting(challenge).getValue()));
+        mFirebaseAnalytics.logEvent("Select_Challenge", params);
     }
 
     @Override

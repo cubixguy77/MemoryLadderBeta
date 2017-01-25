@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -26,6 +28,7 @@ import scores.GetScoreListInteractor;
 import scores.ScoreListFragment;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 import toolbar.ToolbarView;
@@ -48,6 +51,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private static int activityInstanceCount = 0;
     private boolean destroyActivity = true;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +61,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
 
         initializeInjector();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (savedInstanceState != null) {
             Log.d("ML.NumberMemoryActivity", "onCreate(): with restore");
@@ -280,6 +287,18 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             }
         });
         addScoreInteractor.execute();
+
+        recordAnalyticsScore(result);
+    }
+
+    private void recordAnalyticsScore(Result result) {
+        Bundle params = new Bundle();
+        params.putString("Challenge_Num_Digits", Integer.toString(result.getNumDigitsTotal()));
+        params.putString("Recall_Attempted", Integer.toString(result.getNumDigitsRecallAttempted()));
+        params.putString("Recall_Correct", Integer.toString(result.getNumDigitsRecalledCorrectly()));
+        params.putString("Accuracy", Integer.toString(result.getAccuracy()));
+        params.putString("Mem_Time", Integer.toString(result.getMemTime()));
+        mFirebaseAnalytics.logEvent("Score_Results", params);
     }
 
     private void addScoreListFragment() {
