@@ -28,7 +28,6 @@ import scores.GetScoreListInteractor;
 import scores.ScoreListFragment;
 import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 import toolbar.ToolbarView;
@@ -288,17 +287,14 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         });
         addScoreInteractor.execute();
 
-        recordAnalyticsScore(result);
+        logScore(result);
     }
 
-    private void recordAnalyticsScore(Result result) {
+    private void logScore(Result result) {
         Bundle params = new Bundle();
-        params.putString("Challenge_Num_Digits", Integer.toString(result.getNumDigitsTotal()));
-        params.putString("Recall_Attempted", Integer.toString(result.getNumDigitsRecallAttempted()));
-        params.putString("Recall_Correct", Integer.toString(result.getNumDigitsRecalledCorrectly()));
-        params.putString("Accuracy", Integer.toString(result.getAccuracy()));
-        params.putString("Mem_Time", Integer.toString(result.getMemTime()));
-        mFirebaseAnalytics.logEvent("Score_Results", params);
+        params.putLong(FirebaseAnalytics.Param.SCORE, result.getNumDigitsRecalledCorrectly());
+        params.putLong(FirebaseAnalytics.Param.LEVEL, result.getNumDigitsTotal());
+        mFirebaseAnalytics.logEvent("POST_SCORE", params);
     }
 
     private void addScoreListFragment() {

@@ -35,7 +35,6 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     private FirebaseAnalytics mFirebaseAnalytics;
     private ChallengeListComponent challengeListComponent;
-    private long gameKey = 1;
 
     @BindView(R.id.tool_bar_challenge_list) Toolbar toolbar;
 
@@ -49,6 +48,10 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() == null)
+            return;
+
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
         this.getSupportActionBar().setTitle("Select a Challenge");
@@ -59,6 +62,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     }
 
     private void initializeInjector() {
+        long gameKey = 1;
         this.challengeListComponent = DaggerChallengeListComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
@@ -82,10 +86,14 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     private void recordAnalyticsEventChallengeSelected(Challenge challenge) {
         Bundle params = new Bundle();
-        params.putString("Num_Digits", Integer.toString(NumberChallenge.getNumDigitsSetting(challenge).getValue()));
-        params.putString("Digits_Per_Group", Integer.toString(NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()));
-        params.putString("Mem_Time", Integer.toString(NumberChallenge.getMemTimerSetting(challenge).getValue()));
-        mFirebaseAnalytics.logEvent("Select_Challenge", params);
+
+        params.putString(FirebaseAnalytics.Param.ITEM_ID, Long.toString(challenge.getGameKey()));
+        params.putString(FirebaseAnalytics.Param.ITEM_NAME, getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "Speed Numbers");
+        params.putString(FirebaseAnalytics.Param.NUMBER_OF_PASSENGERS, Integer.toString(NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()));
+        params.putString(FirebaseAnalytics.Param.NUMBER_OF_NIGHTS, Integer.toString(NumberChallenge.getMemTimerSetting(challenge).getValue()));
+
+        mFirebaseAnalytics.logEvent("VIEW_ITEM", params);
     }
 
     @Override
