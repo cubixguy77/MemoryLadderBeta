@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "143729757130",
+    "firebase_url": "https://memoryladderbeta.firebaseio.com",
+    "project_id": "memoryladderbeta",
+    "storage_bucket": "memoryladderbeta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143729757130:android:71542e1e0b082d7f",
+        "android_client_info": {
+          "package_name": "speednumbers.mastersofmemory.com.memoryladder_speednumbers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143729757130-ftr579ujvs37m5v1qkgsju9u4fss4tiu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "speednumbers.mastersofmemory.com.memoryladder_speednumbers",
+            "certificate_hash": "1F7DD8682FCF9D1E41769030246F485FD6D7BFC0"
+          }
+        },
+        {
+          "client_id": "143729757130-732d2prmtk0gaqkln3rikc0r8qiu4s4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjPNyd-JijqqliftYL4n2KOq9Mbx3NyGw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143729757130-732d2prmtk0gaqkln3rikc0r8qiu4s4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -48,6 +50,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
     private static int activityInstanceCount = 0;
     private boolean destroyActivity = true;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,8 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
         this.challengeKey = getIntent().getLongExtra("ChallengeKey", -1);
 
         initializeInjector();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (savedInstanceState != null) {
             Log.d("ML.NumberMemoryActivity", "onCreate(): with restore");
@@ -280,6 +286,15 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
             }
         });
         addScoreInteractor.execute();
+
+        logScore(result);
+    }
+
+    private void logScore(Result result) {
+        Bundle params = new Bundle();
+        params.putLong(FirebaseAnalytics.Param.SCORE, result.getNumDigitsRecalledCorrectly());
+        params.putLong(FirebaseAnalytics.Param.LEVEL, result.getNumDigitsTotal());
+        mFirebaseAnalytics.logEvent("POST_SCORE", params);
     }
 
     private void addScoreListFragment() {

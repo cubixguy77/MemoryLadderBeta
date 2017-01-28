@@ -3,9 +3,11 @@ package speednumbers.mastersofmemory.challenges.presentation.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Menu;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import injection.components.ChallengeListComponent;
@@ -21,14 +25,16 @@ import injection.components.DaggerChallengeListComponent;
 import injection.modules.ChallengeListModule;
 import memorization.NumberMemoryActivity;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.presentation.IAddChallengeListener;
 import speednumbers.mastersofmemory.challenges.presentation.IChallengeSelectionListener;
 import speednumbers.mastersofmemory.challenges.presentation.fragments.ChallengeListFragment;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ChallengeListActivity extends BaseActivity implements IChallengeSelectionListener {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
     private ChallengeListComponent challengeListComponent;
-    private long gameKey = 1;
 
     @BindView(R.id.tool_bar_challenge_list) Toolbar toolbar;
 
@@ -39,7 +45,13 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         ButterKnife.bind(this);
         this.initializeInjector();
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() == null)
+            return;
+
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
         this.getSupportActionBar().setTitle("Select a Challenge");
@@ -50,6 +62,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     }
 
     private void initializeInjector() {
+        long gameKey = 1;
         this.challengeListComponent = DaggerChallengeListComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
@@ -64,9 +77,23 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     @Override
     public void onChallengeSelected(Challenge challenge) {
+
         Intent myIntent = new Intent(ChallengeListActivity.this, NumberMemoryActivity.class);
         myIntent.putExtra("ChallengeKey", challenge.getChallengeKey());
+        recordAnalyticsEventChallengeSelected(challenge);
         startActivity(myIntent);
+    }
+
+    private void recordAnalyticsEventChallengeSelected(Challenge challenge) {
+        Bundle params = new Bundle();
+
+        params.putString(FirebaseAnalytics.Param.ITEM_ID, Long.toString(challenge.getGameKey()));
+        params.putString(FirebaseAnalytics.Param.ITEM_NAME, getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "Speed Numbers");
+        params.putString(FirebaseAnalytics.Param.NUMBER_OF_PASSENGERS, Integer.toString(NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()));
+        params.putString(FirebaseAnalytics.Param.NUMBER_OF_NIGHTS, Integer.toString(NumberChallenge.getMemTimerSetting(challenge).getValue()));
+
+        mFirebaseAnalytics.logEvent("VIEW_ITEM", params);
     }
 
     @Override
@@ -77,9 +104,16 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_add_challenge) {
-            showAddChallengeDialog();
+
+        switch (item.getItemId())
+        {
+            case R.id.action_add_challenge:
+                showAddChallengeDialog();
+                return true;
+
+            case R.id.action_send_feedback:
+                getUserFeedback();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -130,5 +164,24 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         });
 
         alert.show();
+    }
+
+    private void getUserFeedback() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
+        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+        else {
+            Intent Email = new Intent(Intent.ACTION_SEND);
+            Email.setType("text/email");
+            Email.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
+            Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
+            Email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
+            startActivity(Intent.createChooser(Email, "Send Feedback:"));
+        }
     }
 }

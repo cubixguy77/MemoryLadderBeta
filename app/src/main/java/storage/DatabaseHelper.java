@@ -19,6 +19,7 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.Game;
 import speednumbers.mastersofmemory.challenges.domain.model.Setting;
 import repository.IRepository;
+import speednumbers.mastersofmemory.com.presentation.R;
 
 public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
@@ -60,21 +61,21 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         insertSetting(db, recallTimer);
         settings.add(recallTimer);
 
-        insertChallenge(db, new Challenge(gameKey, -1, "10 Digits", false, settings));
+        insertChallenge(db, new Challenge(gameKey, -1,  MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 10), false, settings));
 
         settings.get(0).setValue(20);  // Digits Per Group
         settings.get(1).setValue(2);  // Digits Per Group
         settings.get(2).setValue(45); // Mem Timer
         settings.get(3).setValue(90); // Recall Timer
 
-        insertChallenge(db, new Challenge(gameKey, -1, "20 Digits", false, settings));
+        insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 20), false, settings));
 
         settings.get(0).setValue(30);  // Digits Per Group
         settings.get(1).setValue(3);   // Digits Per Group
         settings.get(2).setValue(60);  // Mem Timer
         settings.get(3).setValue(120); // Recall Timer
 
-        insertChallenge(db, new Challenge(gameKey, -1, "30 Digits", false, settings));
+        insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 30), false, settings));
     }
 
     @Override

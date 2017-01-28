@@ -6,8 +6,14 @@
     <item
         android:id="@+id/action_add_challenge"
         android:icon="@drawable/icon_add"
-        android:title="Add Challenge"
-        app:showAsAction="always"
-    />
+        android:title="@string/add_challenge"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/action_send_feedback"
+        android:title="@string/send_feedback"
+        app:showAsAction="never"
+        />
 
 </menu>

@@ -2,6 +2,9 @@ package speednumbers.mastersofmemory.challenges.domain.model;
 
 import java.util.ArrayList;
 
+import speednumbers.mastersofmemory.challenges.MyApplication;
+import speednumbers.mastersofmemory.com.presentation.R;
+
 public class ChallengeFactory {
 
     public static Challenge CreateChallenge(long gameKey, int numDigits) {
@@ -17,7 +20,7 @@ public class ChallengeFactory {
         settings.add(memTimer);
         settings.add(recallTimer);
 
-        Challenge challenge = new Challenge(gameKey, String.format("%d Digits", numDigits), false);
+        Challenge challenge = new Challenge(gameKey, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, numDigits), false);
         challenge.setSettings(settings);
 
         return challenge;

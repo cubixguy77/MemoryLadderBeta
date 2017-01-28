@@ -34,7 +34,7 @@ public class RecallCell extends android.support.v7.widget.AppCompatEditText {
         int textSize = (int) getResources().getDimension(R.dimen.recall_cell_textSize);
         setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 
-        setInputType(InputType.TYPE_CLASS_NUMBER);
+        setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS); // Take in numbers and disable spell checker/suggester
         setFilters(new InputFilter[] {new InputFilter.LengthFilter(numDigitsPerCell)});
 
         setGravity(Gravity.CENTER);

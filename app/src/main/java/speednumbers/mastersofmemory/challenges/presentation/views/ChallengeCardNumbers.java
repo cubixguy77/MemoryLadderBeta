@@ -47,8 +47,6 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     }
 
     private void initializeViews(Context context) {
-        //LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //View view = inflater.inflate(R.layout.fragment_challenge_card, this);
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_challenge_card, this);
         ButterKnife.bind(this, view);
         onFinishInflate();
