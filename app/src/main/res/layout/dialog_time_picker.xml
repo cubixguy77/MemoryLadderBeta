@@ -61,7 +61,7 @@
 
     <TextView
         android:layout_height="match_parent"
-        android:layout_width="40dp"
+        android:layout_width="@dimen/memory_timer.column_space"
         android:paddingBottom="@dimen/memory_timer_dialog.colon.adjust"
         android:layout_gravity="center_vertical"
         android:gravity="center"
@@ -118,7 +118,7 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="40dp"
+        android:layout_width="@dimen/memory_timer.column_space"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:paddingBottom="@dimen/memory_timer_dialog.colon.adjust"
