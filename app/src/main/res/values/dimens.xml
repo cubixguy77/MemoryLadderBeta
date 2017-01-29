@@ -22,6 +22,7 @@
     <dimen name="numeric_keyboard.iconSize">24dp</dimen>
 
     <dimen name="memory_timer_dialog.arrow.size">50dp</dimen>
+    <dimen name="memory_timer.column_space">20dp</dimen>
     <dimen name="memory_timer_dialog.margin.top">16dp</dimen>
     <dimen name="memory_timer_dialog.margin.bottom">16dp</dimen>
     <dimen name="memory_timer_dialog.margin.left">30dp</dimen>
@@ -42,5 +43,6 @@
     <dimen name="score_list.rank.margin.left">24dp</dimen>
 
     <dimen name="button.elevation.resting">2dp</dimen>
+
 
 </resources>

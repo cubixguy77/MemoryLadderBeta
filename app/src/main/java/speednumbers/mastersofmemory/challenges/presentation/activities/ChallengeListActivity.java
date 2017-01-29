@@ -93,7 +93,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         params.putString(FirebaseAnalytics.Param.NUMBER_OF_PASSENGERS, Integer.toString(NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()));
         params.putString(FirebaseAnalytics.Param.NUMBER_OF_NIGHTS, Integer.toString(NumberChallenge.getMemTimerSetting(challenge).getValue()));
 
-        mFirebaseAnalytics.logEvent("VIEW_ITEM", params);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
     }
 
     @Override
