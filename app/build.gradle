@@ -8,7 +8,7 @@ android {
         applicationId "speednumbers.mastersofmemory.com.memoryladder_speednumbers"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 5
+        versionCode 7
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
     }
