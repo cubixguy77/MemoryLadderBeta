@@ -16,8 +16,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     private ArrayList<Object> observers;
 
     public static Challenge challenge;
-    static GridData memoryData;
-    static RecallData recallData;
+    public static GridData memoryData;
+    public static RecallData recallData;
 
     public static GameState gameState;
     public static Result result;

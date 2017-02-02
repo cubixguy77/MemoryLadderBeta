@@ -5,27 +5,26 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
+import gridAdapter.NumberGridAdapter;
 import recall.RecallCell;
 
 public class NumberGridView extends GridView {
 
     private int scrollDistance;
     private final int scrollDuration = 500;
-    private NumberGridAdapter adapter;
 
     public NumberGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     public void init() {
-        adapter = new NumberGridAdapter(getContext());
+        NumberGridAdapter adapter = new NumberGridAdapter(getContext());
         adapter.setGridView(this);
         setAdapter(adapter);
     }
 
     public void subscribe() {
         Bus.getBus().subscribe(this);
-        Bus.getBus().subscribe(adapter);
     }
 
     public int getCursorStart(int position) {

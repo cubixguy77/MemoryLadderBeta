@@ -1,4 +1,4 @@
-package memorization;
+package gridAdapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,28 +9,36 @@ import android.widget.BaseAdapter;
 
 import java.util.Locale;
 
+import memorization.Bus;
+import memorization.GameState;
+import memorization.GridData;
+import memorization.GridEvent;
+import memorization.MemoryCell;
+import memorization.NumberGridView;
+import memorization.SaveInstanceStateListener;
 import recall.PositionChangeListener;
 import recall.RecallCell;
 import recall.RecallData;
-import review.Result;
 import review.ReviewCell;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener {
+public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.UserEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener {
 
     private Context context;
     private GridData memoryData;
     private RecallData recallData;
     private int highlightPosition = 1;
-    private Challenge challenge;
     private NumberGridView gridView;
+    private NumberGridPresenter presenter;
 
-    NumberGridAdapter(Context context)
+    public NumberGridAdapter(Context context)
     {
         this.context = context;
+        this.presenter = new NumberGridPresenter(this);
+
+        Bus.getBus().subscribe(this);
     }
 
-    void setGridView(NumberGridView gridView) {
+    public void setGridView(NumberGridView gridView) {
         this.gridView = gridView;
     }
 
@@ -48,8 +56,6 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
     public long getItemId(int position) {
         return 0;
     }
-
-    public void onRowFilled() { }
 
     private void scrollMemorization() {
         if (memoryData.getRowNumber(highlightPosition) >= memoryData.getRowNumber(gridView.getLastVisiblePosition()) - 1) {
@@ -265,65 +271,40 @@ class NumberGridAdapter extends BaseAdapter implements GameStateListener, GridEv
     }
 
 
-
-
-
-
-    @Override
-    public void onLoad(Challenge challenge, Bundle savedInstanceState) {
-        this.challenge = challenge;
-
-        if (savedInstanceState != null) {
-            memoryData = Bus.memoryData;
-            recallData = Bus.recallData;
-            highlightPosition = savedInstanceState.getInt("NumberGridAdapter.highlightPosition");
-        }
-        else {
-            memoryData = new GridData(challenge);
-            memoryData.loadData();
-            gridView.setNumColumns(memoryData.numCols);
-            highlightPosition = 1;
-        }
-
-        notifyDataSetChanged();
+    void setMemoryData(GridData memoryData) {
+        this.memoryData = memoryData;
     }
 
-    @Override
-    public void onMemorizationStart() {
-        notifyDataSetChanged();
+    void setRecallData(RecallData recallData) {
+        this.recallData = recallData;
     }
 
-    @Override
-    public void onTimeExpired() {
-
+    void setHighlightPosition(int highlightPosition) {
+        this.highlightPosition = highlightPosition;
     }
 
-    @Override
-    public void onTransitionToRecall() {
-        highlightPosition = 1;
-        recallData = new RecallData(challenge);
+    void setNumGridColumns(int numColumns) {
+        gridView.setNumColumns(numColumns);
+    }
 
-        notifyDataSetChanged();
-
+    void scrollToTop() {
         gridView.scrollToTop();
     }
 
-    @Override
-    public void onRecallComplete(Result result) {
+    void refresh() {
+        notifyDataSetChanged();
     }
 
-    @Override
-    public void onPlayAgain() {
 
-    }
 
-    @Override
-    public void onShutdown() {
 
-    }
+
 
 
     ///////////// Recall Methods /////////////
+
+    @Override
+    public void onRowFilled() { }
 
     @Override
     public void onPrevRecallCell() {
