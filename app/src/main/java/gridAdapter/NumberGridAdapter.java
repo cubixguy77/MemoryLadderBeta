@@ -23,16 +23,14 @@ import review.ReviewCell;
 
 public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.UserEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener {
 
-    private Context context;
     private GridData memoryData;
     private RecallData recallData;
     private int highlightPosition = 1;
     private NumberGridView gridView;
     private NumberGridPresenter presenter;
 
-    public NumberGridAdapter(Context context)
+    public NumberGridAdapter()
     {
-        this.context = context;
         this.presenter = new NumberGridPresenter(this);
 
         Bus.getBus().subscribe(this);
@@ -140,7 +138,7 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
 
     /////////// View Constructors ////////////
 
-    private View getRowMarkerView(int position, View convertView) {
+    private View getRowMarkerView(int position, View convertView, Context context) {
         MemoryCell view;
         if (convertView == null || !(convertView instanceof  MemoryCell)) {
             view = new MemoryCell(context, null);
@@ -154,7 +152,7 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
         return view;
     }
 
-    private View getEmptyView(View convertView) {
+    private View getEmptyView(View convertView, Context context) {
         if (convertView == null) {
             convertView = new View(context);
             convertView.setVisibility(View.INVISIBLE);
@@ -166,7 +164,7 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
         }
     }
 
-    private View getViewPreMemorization(View convertView) {
+    private View getViewPreMemorization(View convertView, Context context) {
         MemoryCell view;
         if (convertView == null || !(convertView instanceof MemoryCell)) {
             view = new MemoryCell(context, null);
@@ -178,7 +176,7 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
         return view;
     }
 
-    private View getViewMemorization(int position, View convertView) {
+    private View getViewMemorization(int position, View convertView, Context context) {
         MemoryCell view;
 
         if (convertView == null || !(convertView instanceof MemoryCell)) {
@@ -202,7 +200,7 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
         return view;
     }
 
-    private View getViewRecall(int position, View convertView) {
+    private View getViewRecall(int position, View convertView, Context context) {
         RecallCell view;
         if (convertView == null || !(convertView instanceof RecallCell)) {
             view = new RecallCell(context, null);
@@ -227,7 +225,7 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
         return view;
     }
 
-    private View getViewReview(int position, View convertView) {
+    private View getViewReview(int position, View convertView, Context context) {
         ReviewCell view;
         if (convertView == null || !(convertView instanceof ReviewCell)) {
             view = new ReviewCell(context, null);
@@ -241,30 +239,31 @@ public class NumberGridAdapter extends BaseAdapter implements GridEvent.Memory.U
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        boolean isViewRowMarker = memoryData.isRowMarker(position);
+        Context context = parent.getContext();
 
+        boolean isViewRowMarker = memoryData.isRowMarker(position);
         if (isViewRowMarker)
         {
-            return getRowMarkerView(position, convertView);
+            return getRowMarkerView(position, convertView, context);
         }
 
         if (position > memoryData.getMaxValidHighlightPosition()) {
-            return getEmptyView(convertView);
+            return getEmptyView(convertView, context);
         }
 
         if (Bus.gameState == GameState.PRE_MEMORIZATION) {
-            return getViewPreMemorization(convertView);
+            return getViewPreMemorization(convertView, context);
         }
 
         if (Bus.gameState == GameState.MEMORIZATION) {
-            return getViewMemorization(position, convertView);
+            return getViewMemorization(position, convertView, context);
         }
 
         if (Bus.gameState == GameState.RECALL || Bus.gameState == GameState.REVIEW) {
             if (recallData.isReviewCell(position))
-                return getViewReview(position, convertView);
+                return getViewReview(position, convertView, context);
             else
-                return getViewRecall(position, convertView);
+                return getViewRecall(position, convertView, context);
         }
 
         return null;

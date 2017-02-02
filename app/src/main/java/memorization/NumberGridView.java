@@ -18,7 +18,7 @@ public class NumberGridView extends GridView {
     }
 
     public void init() {
-        NumberGridAdapter adapter = new NumberGridAdapter(getContext());
+        NumberGridAdapter adapter = new NumberGridAdapter();
         adapter.setGridView(this);
         setAdapter(adapter);
     }
