@@ -44,7 +44,7 @@ public class RecallData extends GridData {
         return getValue(position);
     }
 
-    public void onKeyPress(char digit, int position, int cursorStart, int cursorEnd) {
+    void onKeyPress(char digit, int position, int cursorStart, int cursorEnd) {
         char[] data = getData();
         int startIndex = getStartIndexFromPosition(position) + cursorStart;
 
@@ -80,7 +80,7 @@ public class RecallData extends GridData {
         }
     }
 
-    public void onBackSpace(int position) {
+    void onBackSpace(int position) {
         char[] data = getData();
         String currentText = getStringAt(position);
         int curLength = currentText == null ? 0 : currentText.length();
