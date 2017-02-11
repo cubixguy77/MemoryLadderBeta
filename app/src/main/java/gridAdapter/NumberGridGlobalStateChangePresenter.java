@@ -5,29 +5,34 @@ import android.os.Bundle;
 import memorization.Bus;
 import memorization.GameStateListener;
 import memorization.GridData;
+import memorization.GridEvent;
+import memorization.NumberMemoryModel;
 import recall.RecallData;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
-class NumberGridPresenter implements GameStateListener {
+class NumberGridGlobalStateChangePresenter implements GameStateListener {
 
-    private NumberGridAdapter adapter;
+    private GridEvent.Recall.Grid adapter;
+    private NumberMemoryModel model;
 
-    private GridData memoryData;
-    private RecallData recallData;
-    private int highlightPosition;
-
-    NumberGridPresenter(NumberGridAdapter adapter) {
+    NumberGridGlobalStateChangePresenter(GridEvent.Recall.Grid adapter, NumberMemoryModel model) {
         this.adapter = adapter;
+        this.model = model;
         Bus.getBus().subscribe(this);
     }
 
     @Override
     public void onLoad(Challenge challenge, Bundle savedInstanceState) {
+
+        GridData memoryData;
+        RecallData recallData;
+        int highlightPosition;
+
         if (savedInstanceState != null) {
             memoryData = Bus.memoryData;
             recallData = Bus.recallData;
-            highlightPosition = savedInstanceState.getInt("NumberGridAdapter.highlightPosition");
+            highlightPosition = savedInstanceState.getInt("NumberGridMemoryAdapter.highlightPosition");
         }
         else {
             memoryData = new GridData(challenge);
@@ -36,11 +41,11 @@ class NumberGridPresenter implements GameStateListener {
             highlightPosition = 1;
         }
 
-        adapter.setMemoryData(memoryData);
-        adapter.setRecallData(recallData);
-        adapter.setHighlightPosition(highlightPosition);
-        adapter.setNumGridColumns(memoryData.numCols);
+        model.setMemoryData(memoryData);
+        model.setRecallData(recallData);
+        model.setHighlightPosition(highlightPosition);
 
+        adapter.setNumGridColumns(memoryData.numCols);
         adapter.refresh();
     }
 
@@ -55,7 +60,7 @@ class NumberGridPresenter implements GameStateListener {
 
     @Override
     public void onTransitionToRecall() {
-        setHighlightPosition(1);
+        model.setHighlightPosition(1);
         adapter.refresh();
         adapter.scrollToTop();
     }
@@ -70,10 +75,5 @@ class NumberGridPresenter implements GameStateListener {
 
     @Override
     public void onShutdown() {
-    }
-
-    private void setHighlightPosition(int highlightPosition) {
-        this.highlightPosition = highlightPosition;
-        adapter.setHighlightPosition(this.highlightPosition);
     }
 }

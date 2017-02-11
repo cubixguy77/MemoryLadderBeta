@@ -133,7 +133,7 @@ public class ChallengeListFragment extends BaseFragment implements IChallengeLis
 
     @Override
     public void renderChallengeList(final List<Challenge> challenges) {
-        System.out.println("View: Challenges received");
+        System.out.println("Grid: Challenges received");
         for (final Challenge challenge : challenges) {
             //System.out.println(challenge.toString());
             new Handler(Looper.getMainLooper()).post(new Runnable() {

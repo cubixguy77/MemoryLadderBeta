@@ -57,7 +57,6 @@ public class MemoryFragment extends Fragment implements GameStateListener {
         navigationPanel.init();
         keyboard.init();
 
-        grid.subscribe();
         timer.subscribe();
         navigationPanel.subscribe();
         keyboard.subscribe();

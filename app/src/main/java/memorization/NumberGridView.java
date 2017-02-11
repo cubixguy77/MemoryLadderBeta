@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-import gridAdapter.NumberGridAdapter;
+import gridAdapter.NumberGridMemoryAdapter;
 import recall.RecallCell;
 
 public class NumberGridView extends GridView {
@@ -18,13 +18,9 @@ public class NumberGridView extends GridView {
     }
 
     public void init() {
-        NumberGridAdapter adapter = new NumberGridAdapter();
+        NumberGridMemoryAdapter adapter = new NumberGridMemoryAdapter();
         adapter.setGridView(this);
         setAdapter(adapter);
-    }
-
-    public void subscribe() {
-        Bus.getBus().subscribe(this);
     }
 
     public int getCursorStart(int position) {
@@ -37,7 +33,7 @@ public class NumberGridView extends GridView {
         return recallCell == null ? 0 : recallCell.getSelectionEnd();
     }
 
-    public void scrollGrid() {
+    public void scrollDown() {
         new Handler().post(new Runnable() {
             @Override
             public void run() {

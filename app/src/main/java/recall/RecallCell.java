@@ -18,7 +18,6 @@ public class RecallCell extends android.support.v7.widget.AppCompatEditText {
     private int numDigitsPerCell;
     private int highlightedPosition;
 
-
     public RecallCell(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
