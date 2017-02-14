@@ -17,6 +17,11 @@ public class RecallData extends GridData {
     void submitRow(int position) {
         int row = getRow(position);
 
+        /* This row has already been submitted */
+        if (reviewCell[row][0]) {
+            return;
+        }
+
         for (int col=0; col<numCols; col++) {
             reviewCell[row][col] = true;
         }

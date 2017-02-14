@@ -1,7 +1,5 @@
 package recall;
 
-import android.os.Handler;
-
 import memorization.Bus;
 import memorization.GridData;
 import memorization.GridEvent.Recall;
@@ -28,16 +26,11 @@ public class RecallKeyboardActionPresenter implements Recall.UserEvents, Positio
 
         model.setHighlightPosition(position + (recallData.numCols - recallData.getCol(position)) + 1);
 
-        if (this.isLastRow(model.getHighlightPosition())) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    grid.scrollDown();
-                }
-            }, 200);
-        }
-
         grid.refresh();
+
+        if (this.isLastRow(model.getHighlightPosition())) {
+            grid.scrollDown();
+        }
     }
 
     @Override
@@ -52,6 +45,7 @@ public class RecallKeyboardActionPresenter implements Recall.UserEvents, Positio
             dispatchRecallCompleteEvent();
         }
         else {
+            grid.refresh();
             this.onNextRow();
         }
     }
@@ -89,7 +83,10 @@ public class RecallKeyboardActionPresenter implements Recall.UserEvents, Positio
 
     @Override
     public void onPositionChange(int newPosition) {
-        model.setHighlightPosition(newPosition);
+        if (newPosition != model.getHighlightPosition()) {
+            model.setHighlightPosition(newPosition);
+            grid.refresh();
+        }
     }
 
     private boolean isLastRow(int position) {

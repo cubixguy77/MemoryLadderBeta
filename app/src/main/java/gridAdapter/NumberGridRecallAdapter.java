@@ -21,13 +21,14 @@ class NumberGridRecallAdapter extends BaseAdapter implements GridEvent.Recall.Gr
 
     private NumberGridView gridView;
     private NumberMemoryModel model;
+    private RecallKeyboardActionPresenter recallKeyboardActionPresenter;
 
     NumberGridRecallAdapter()
     {
         this.model = new NumberMemoryModel();
 
         new NumberGridGlobalStateChangePresenter(this, this.model);
-        new RecallKeyboardActionPresenter(this, this.model);
+        this.recallKeyboardActionPresenter = new RecallKeyboardActionPresenter(this, this.model);
     }
 
     public void setGridView(NumberGridView gridView) {
@@ -90,7 +91,7 @@ class NumberGridRecallAdapter extends BaseAdapter implements GridEvent.Recall.Gr
             view = (RecallCell) convertView;
 
         view.setPosition(position);
-        view.setHighlightedPosition(model.getHighlightPosition());
+        view.setPositionChangeListener(this.recallKeyboardActionPresenter);
         view.setNumDigitsPerCell(model.getMemoryData().numDigitsAtCell(position));
         view.finalizeSetup();
         view.setText(model.getRecallData().getText(position));

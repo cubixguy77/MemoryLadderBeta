@@ -4,13 +4,12 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-import recall.PositionChangeListener;
 import recall.RecallData;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import timer.TimerPlayPauseListener;
 
-public class Bus implements GameStateListener, GridEvent.Memory.NavigationEvents, GridEvent.Memory.NavigationView, GridEvent.Recall.UserEvents, PositionChangeListener, SaveInstanceStateListener, TimerPlayPauseListener {
+public class Bus implements GameStateListener, GridEvent.Memory.NavigationEvents, GridEvent.Memory.NavigationView, GridEvent.Recall.UserEvents, SaveInstanceStateListener, TimerPlayPauseListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
@@ -229,15 +228,6 @@ public class Bus implements GameStateListener, GridEvent.Memory.NavigationEvents
         for (Object observer : observers) {
             if (observer != null && observer instanceof GridEvent.Memory.NavigationView) {
                 ((GridEvent.Memory.NavigationView) observer).onEnableNext();
-            }
-        }
-    }
-
-    @Override
-    public void onPositionChange(int newPosition) {
-        for (Object observer : observers) {
-            if (observer != null && observer instanceof PositionChangeListener) {
-                ((PositionChangeListener) observer).onPositionChange(newPosition);
             }
         }
     }
