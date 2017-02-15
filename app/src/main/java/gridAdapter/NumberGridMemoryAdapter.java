@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 
 import memorization.Bus;
 import memorization.GameState;
-import memorization.GridEvent;
+import memorization.SpeedNumbers;
 import memorization.MemoryCell;
 import memorization.NumberGridNavigationPresenter;
 
 class NumberGridMemoryAdapter extends NumberGridRecallAdapter {
 
-    NumberGridMemoryAdapter(GridEvent.Grid grid)
+    NumberGridMemoryAdapter(SpeedNumbers.Grid grid)
     {
         super(grid);
         new NumberGridNavigationPresenter(grid, getModel());

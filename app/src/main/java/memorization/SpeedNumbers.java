@@ -1,6 +1,6 @@
 package memorization;
 
-public interface GridEvent {
+public interface SpeedNumbers {
 
     interface Grid {
         void scrollToTop();

@@ -2,16 +2,16 @@ package recall;
 
 import memorization.Bus;
 import memorization.GridData;
-import memorization.GridEvent;
-import memorization.GridEvent.Keyboard;
+import memorization.SpeedNumbers;
+import memorization.SpeedNumbers.Keyboard;
 import memorization.NumberMemoryModel;
 
 public class RecallKeyboardActionPresenter implements Keyboard.UserKeyboardActions, PositionChangeListener {
 
-    private GridEvent.Grid grid;
+    private SpeedNumbers.Grid grid;
     private NumberMemoryModel model;
 
-    public RecallKeyboardActionPresenter(GridEvent.Grid grid, NumberMemoryModel model) {
+    public RecallKeyboardActionPresenter(SpeedNumbers.Grid grid, NumberMemoryModel model) {
         this.grid = grid;
         this.model = model;
         Bus.getBus().subscribe(this);

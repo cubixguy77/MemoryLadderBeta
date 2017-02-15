@@ -15,13 +15,13 @@ import butterknife.OnClick;
 import memorization.Bus;
 import memorization.GameState;
 import memorization.GameStateListener;
-import memorization.GridEvent;
+import memorization.SpeedNumbers;
 import memorization.SaveInstanceStateListener;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class NavigationPanel extends LinearLayout implements GameStateListener, GridEvent.Navigation.NavigationView, SaveInstanceStateListener {
+public class NavigationPanel extends LinearLayout implements GameStateListener, SpeedNumbers.Navigation.NavigationView, SaveInstanceStateListener {
 
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
 

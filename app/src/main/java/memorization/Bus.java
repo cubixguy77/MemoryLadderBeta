@@ -9,7 +9,7 @@ import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import timer.TimerPlayPauseListener;
 
-public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigationEvents, GridEvent.Navigation.NavigationView, GridEvent.Keyboard.UserKeyboardActions, SaveInstanceStateListener, TimerPlayPauseListener {
+public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavigationEvents, SpeedNumbers.Navigation.NavigationView, SpeedNumbers.Keyboard.UserKeyboardActions, SaveInstanceStateListener, TimerPlayPauseListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
@@ -135,8 +135,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onNextRow() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Keyboard.UserKeyboardActions) {
-                ((GridEvent.Keyboard.UserKeyboardActions) observer).onNextRow();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onNextRow();
             }
         }
     }
@@ -144,8 +144,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onSubmitRow() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Keyboard.UserKeyboardActions) {
-                ((GridEvent.Keyboard.UserKeyboardActions) observer).onSubmitRow();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onSubmitRow();
             }
         }
     }
@@ -153,8 +153,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onSubmitAllRows() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Keyboard.UserKeyboardActions) {
-                ((GridEvent.Keyboard.UserKeyboardActions) observer).onSubmitAllRows();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onSubmitAllRows();
             }
         }
     }
@@ -162,8 +162,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onKeyPress(char digit) {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Keyboard.UserKeyboardActions) {
-                ((GridEvent.Keyboard.UserKeyboardActions) observer).onKeyPress(digit);
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onKeyPress(digit);
             }
         }
     }
@@ -171,8 +171,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onBackSpace() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Keyboard.UserKeyboardActions) {
-                ((GridEvent.Keyboard.UserKeyboardActions) observer).onBackSpace();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onBackSpace();
             }
         }
     }
@@ -181,8 +181,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onPrevCell() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Navigation.UserNavigationEvents) {
-                ((GridEvent.Navigation.UserNavigationEvents) observer).onPrevCell();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.UserNavigationEvents) {
+                ((SpeedNumbers.Navigation.UserNavigationEvents) observer).onPrevCell();
             }
         }
     }
@@ -190,8 +190,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onNextCell() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Navigation.UserNavigationEvents) {
-                ((GridEvent.Navigation.UserNavigationEvents) observer).onNextCell();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.UserNavigationEvents) {
+                ((SpeedNumbers.Navigation.UserNavigationEvents) observer).onNextCell();
             }
         }
     }
@@ -199,8 +199,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onDisablePrev() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Navigation.NavigationView) {
-                ((GridEvent.Navigation.NavigationView) observer).onDisablePrev();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onDisablePrev();
             }
         }
     }
@@ -208,8 +208,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onDisableNext() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Navigation.NavigationView) {
-                ((GridEvent.Navigation.NavigationView) observer).onDisableNext();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onDisableNext();
             }
         }
     }
@@ -217,8 +217,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onEnablePrev() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Navigation.NavigationView) {
-                ((GridEvent.Navigation.NavigationView) observer).onEnablePrev();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onEnablePrev();
             }
         }
     }
@@ -226,8 +226,8 @@ public class Bus implements GameStateListener, GridEvent.Navigation.UserNavigati
     @Override
     public void onEnableNext() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Navigation.NavigationView) {
-                ((GridEvent.Navigation.NavigationView) observer).onEnableNext();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onEnableNext();
             }
         }
     }

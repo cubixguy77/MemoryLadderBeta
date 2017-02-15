@@ -9,7 +9,7 @@ import java.util.Locale;
 
 import memorization.Bus;
 import memorization.GameState;
-import memorization.GridEvent;
+import memorization.SpeedNumbers;
 import memorization.MemoryCell;
 import memorization.NumberMemoryModel;
 import recall.RecallCell;
@@ -20,7 +20,7 @@ class NumberGridRecallAdapter extends BaseAdapter {
     private NumberMemoryModel model;
     private RecallKeyboardActionPresenter recallKeyboardActionPresenter;
 
-    NumberGridRecallAdapter(GridEvent.Grid grid)
+    NumberGridRecallAdapter(SpeedNumbers.Grid grid)
     {
         this.model = new NumberMemoryModel();
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import memorization.Bus;
 import memorization.GameStateListener;
 import memorization.GridData;
-import memorization.GridEvent;
+import memorization.SpeedNumbers;
 import memorization.NumberMemoryModel;
 import recall.RecallData;
 import review.Result;
@@ -13,10 +13,10 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
 class NumberGridGlobalStateChangePresenter implements GameStateListener {
 
-    private GridEvent.Grid grid;
+    private SpeedNumbers.Grid grid;
     private NumberMemoryModel model;
 
-    NumberGridGlobalStateChangePresenter(GridEvent.Grid grid, NumberMemoryModel model) {
+    NumberGridGlobalStateChangePresenter(SpeedNumbers.Grid grid, NumberMemoryModel model) {
         this.grid = grid;
         this.model = model;
         Bus.getBus().subscribe(this);

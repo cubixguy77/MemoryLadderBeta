@@ -5,10 +5,10 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-import memorization.GridEvent;
+import memorization.SpeedNumbers;
 import recall.RecallCell;
 
-public class NumberGridView extends GridView implements GridEvent.Grid {
+public class NumberGridView extends GridView implements SpeedNumbers.Grid {
 
     private int scrollDistance;
     private final int scrollDuration = 500;
