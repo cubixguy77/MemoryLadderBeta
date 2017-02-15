@@ -1,13 +1,13 @@
 package memorization;
 
-import memorization.GridEvent.Memory;
+import memorization.GridEvent.Navigation;
 
-public class NumberGridNavigationPresenter implements Memory.NavigationEvents {
+public class NumberGridNavigationPresenter implements Navigation.UserNavigationEvents {
 
-    private Memory.Grid grid;
+    private GridEvent.Grid grid;
     private NumberMemoryModel model;
 
-    public NumberGridNavigationPresenter(Memory.Grid grid, NumberMemoryModel model) {
+    public NumberGridNavigationPresenter(GridEvent.Grid grid, NumberMemoryModel model) {
         this.grid = grid;
         this.model = model;
         Bus.getBus().subscribe(this);

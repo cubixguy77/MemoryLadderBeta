@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import gridAdapter.NumberGridView;
 import keyboard.NumericKeyboardView;
 import memorization.navigationPanel.NavigationPanel;
 import review.Result;
@@ -19,7 +20,8 @@ import timer.TimerView;
 
 public class MemoryFragment extends Fragment implements GameStateListener {
 
-    @BindView(R.id.numberGrid) NumberGridView grid;
+    @BindView(R.id.numberGrid)
+    NumberGridView grid;
     @BindView(R.id.timerView) TimerView timer;
     @BindView(R.id.navigationPanel) NavigationPanel navigationPanel;
     @BindView(R.id.keyboard) NumericKeyboardView keyboard;

@@ -2,15 +2,16 @@ package recall;
 
 import memorization.Bus;
 import memorization.GridData;
-import memorization.GridEvent.Recall;
+import memorization.GridEvent;
+import memorization.GridEvent.Keyboard;
 import memorization.NumberMemoryModel;
 
-public class RecallKeyboardActionPresenter implements Recall.UserEvents, PositionChangeListener {
+public class RecallKeyboardActionPresenter implements Keyboard.UserKeyboardActions, PositionChangeListener {
 
-    private Recall.Grid grid;
+    private GridEvent.Grid grid;
     private NumberMemoryModel model;
 
-    public RecallKeyboardActionPresenter(Recall.Grid grid, NumberMemoryModel model) {
+    public RecallKeyboardActionPresenter(GridEvent.Grid grid, NumberMemoryModel model) {
         this.grid = grid;
         this.model = model;
         Bus.getBus().subscribe(this);
@@ -65,7 +66,7 @@ public class RecallKeyboardActionPresenter implements Recall.UserEvents, Positio
         if (recallData.isReviewCell(highlightPosition))
             return;
 
-        recallData.onKeyPress(digit, highlightPosition, grid.getCursorStart(), grid.getCursorEnd());
+        recallData.onKeyPress(digit, highlightPosition, grid.getCursorStart(highlightPosition), grid.getCursorEnd(highlightPosition));
         grid.refresh();
     }
 

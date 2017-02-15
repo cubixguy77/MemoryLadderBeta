@@ -11,28 +11,21 @@ import memorization.Bus;
 import memorization.GameState;
 import memorization.GridEvent;
 import memorization.MemoryCell;
-import memorization.NumberGridView;
 import memorization.NumberMemoryModel;
 import recall.RecallCell;
 import recall.RecallKeyboardActionPresenter;
 import review.ReviewCell;
 
-class NumberGridRecallAdapter extends BaseAdapter implements GridEvent.Recall.Grid {
-
-    private NumberGridView gridView;
+class NumberGridRecallAdapter extends BaseAdapter {
     private NumberMemoryModel model;
     private RecallKeyboardActionPresenter recallKeyboardActionPresenter;
 
-    NumberGridRecallAdapter()
+    NumberGridRecallAdapter(GridEvent.Grid grid)
     {
         this.model = new NumberMemoryModel();
 
-        new NumberGridGlobalStateChangePresenter(this, this.model);
-        this.recallKeyboardActionPresenter = new RecallKeyboardActionPresenter(this, this.model);
-    }
-
-    public void setGridView(NumberGridView gridView) {
-        this.gridView = gridView;
+        new NumberGridGlobalStateChangePresenter(grid, this.model);
+        this.recallKeyboardActionPresenter = new RecallKeyboardActionPresenter(grid, this.model);
     }
 
     NumberMemoryModel getModel() {
@@ -144,43 +137,4 @@ class NumberGridRecallAdapter extends BaseAdapter implements GridEvent.Recall.Gr
     }
 
     /* End View Construction */
-
-    /* Grid Events - Recall */
-
-    @Override
-    public void scrollDown() {
-        gridView.scrollDown();
-    }
-
-    @Override
-    public void scrollToTop() {
-        gridView.scrollToTop();
-    }
-
-    @Override
-    public void setNumGridColumns(int numGridColumns) {
-        gridView.setNumColumns(numGridColumns);
-    }
-
-    @Override
-    public int getCursorStart() {
-        return gridView.getCursorStart(model.getHighlightPosition());
-    }
-
-    @Override
-    public int getCursorEnd() {
-        return gridView.getCursorEnd(model.getHighlightPosition());
-    }
-
-    @Override
-    public int getLastVisiblePosition() {
-        return gridView.getLastVisiblePosition();
-    }
-
-    @Override
-    public void refresh() {
-        notifyDataSetChanged();
-    }
-
-    /* End Grid Events - Recall */
 }

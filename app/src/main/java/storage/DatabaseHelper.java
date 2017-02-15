@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         Setting numDigits = new Setting(-1, -1, 10, "Number of Digits", 10, true);
         Setting digitsPerGroup = new Setting(-1, -1, 1, "Digits Per Group", 20, true);
         Setting memTimer = new Setting(-1, -1, 30, "Memorization Timer", 30, true);
-        Setting recallTimer = new Setting(-1, -1, 60, "Recall Timer", 40, true);
+        Setting recallTimer = new Setting(-1, -1, 60, "Keyboard Timer", 40, true);
 
         // Populate Setting table
         insertSetting(db, numDigits);
@@ -66,14 +66,14 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         settings.get(0).setValue(20);  // Digits Per Group
         settings.get(1).setValue(2);  // Digits Per Group
         settings.get(2).setValue(45); // Mem Timer
-        settings.get(3).setValue(90); // Recall Timer
+        settings.get(3).setValue(90); // Keyboard Timer
 
         insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 20), false, settings));
 
         settings.get(0).setValue(30);  // Digits Per Group
         settings.get(1).setValue(3);   // Digits Per Group
         settings.get(2).setValue(60);  // Mem Timer
-        settings.get(3).setValue(120); // Recall Timer
+        settings.get(3).setValue(120); // Keyboard Timer
 
         insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 30), false, settings));
     }

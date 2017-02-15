@@ -2,16 +2,20 @@ package memorization;
 
 public interface GridEvent {
 
-    interface Memory {
-        interface NavigationEvents {
+    interface Grid {
+        void scrollToTop();
+        void scrollDown();
+        int getCursorStart(int position);
+        int getCursorEnd(int position);
+        int getLastVisiblePosition();
+        void setNumColumns(int numColumns);
+        void refresh();
+    }
+
+    interface Navigation {
+        interface UserNavigationEvents {
             void onPrevCell();
             void onNextCell();
-        }
-
-        interface Grid {
-            void scrollDown();
-            int getLastVisiblePosition();
-            void refresh();
         }
 
         interface NavigationView {
@@ -22,8 +26,8 @@ public interface GridEvent {
         }
     }
 
-    interface Recall {
-        interface UserEvents {
+    interface Keyboard {
+        interface UserKeyboardActions {
             /* Action Buttons */
             void onNextRow();
             void onSubmitRow();
@@ -32,16 +36,6 @@ public interface GridEvent {
             /* Number Keypad Buttons */
             void onKeyPress(char digit);
             void onBackSpace();
-        }
-
-        interface Grid {
-            void scrollToTop();
-            void scrollDown();
-            void setNumGridColumns(int numGridColumns);
-            int getCursorStart();
-            int getCursorEnd();
-            int getLastVisiblePosition();
-            void refresh();
         }
     }
 }

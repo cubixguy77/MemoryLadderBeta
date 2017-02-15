@@ -21,7 +21,7 @@ import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
-public class NavigationPanel extends LinearLayout implements GameStateListener, GridEvent.Memory.NavigationView, SaveInstanceStateListener {
+public class NavigationPanel extends LinearLayout implements GameStateListener, GridEvent.Navigation.NavigationView, SaveInstanceStateListener {
 
     @BindView(R.id.nextGroupButton) ImageButton nextGroupButton;
 

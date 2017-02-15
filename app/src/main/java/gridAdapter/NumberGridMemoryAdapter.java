@@ -11,12 +11,12 @@ import memorization.GridEvent;
 import memorization.MemoryCell;
 import memorization.NumberGridNavigationPresenter;
 
-public class NumberGridMemoryAdapter extends NumberGridRecallAdapter implements GridEvent.Memory.Grid {
+class NumberGridMemoryAdapter extends NumberGridRecallAdapter {
 
-    public NumberGridMemoryAdapter()
+    NumberGridMemoryAdapter(GridEvent.Grid grid)
     {
-        super();
-        new NumberGridNavigationPresenter(this, getModel());
+        super(grid);
+        new NumberGridNavigationPresenter(grid, getModel());
     }
 
     /* View Construction */
@@ -64,7 +64,7 @@ public class NumberGridMemoryAdapter extends NumberGridRecallAdapter implements 
         /* The parent can handle the following views:
          * Row Marker
          * Empty Cell (leftovers on final row)
-         * Recall Cell
+         * Keyboard Cell
          * Review Cell
          */
         View view = super.getView(position, convertView, parent);

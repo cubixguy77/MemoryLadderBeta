@@ -76,7 +76,7 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
         switch (Bus.gameState) {
             case PRE_MEMORIZATION: supportActionBar.setTitle("Memorization"); break;
             case MEMORIZATION: supportActionBar.setTitle("Memorization"); break;
-            case RECALL: supportActionBar.setTitle("Recall"); break;
+            case RECALL: supportActionBar.setTitle("Keyboard"); break;
             case REVIEW: supportActionBar.setTitle("Results - idk how to restore digits yet"); break;
             default: supportActionBar.setTitle("Error Restoring Toolbar");
         }
@@ -136,7 +136,7 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
     @Override
     public void onTransitionToRecall() {
-        setTitle("Recall");
+        setTitle("Keyboard");
         refreshToolbarIcon();
     }
 

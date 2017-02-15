@@ -170,7 +170,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Navigation Ladder");
         intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
@@ -179,7 +179,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
             Intent Email = new Intent(Intent.ACTION_SEND);
             Email.setType("text/email");
             Email.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
-            Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
+            Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Navigation Ladder");
             Email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
             startActivity(Intent.createChooser(Email, "Send Feedback:"));
         }

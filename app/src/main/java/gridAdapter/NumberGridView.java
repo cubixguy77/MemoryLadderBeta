@@ -1,38 +1,46 @@
-package memorization;
+package gridAdapter;
 
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-import gridAdapter.NumberGridMemoryAdapter;
+import memorization.GridEvent;
 import recall.RecallCell;
 
-public class NumberGridView extends GridView {
+public class NumberGridView extends GridView implements GridEvent.Grid {
 
     private int scrollDistance;
     private final int scrollDuration = 500;
+    private NumberGridMemoryAdapter adapter;
 
     public NumberGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
+    @Override
+    public void refresh() {
+        adapter.notifyDataSetChanged();
+    }
+
     public void init() {
-        NumberGridMemoryAdapter adapter = new NumberGridMemoryAdapter();
-        adapter.setGridView(this);
+        adapter = new NumberGridMemoryAdapter(this);
         setAdapter(adapter);
     }
 
+    @Override
     public int getCursorStart(int position) {
         RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
         return recallCell == null ? 0 : recallCell.getSelectionStart();
     }
 
+    @Override
     public int getCursorEnd(int position) {
         RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
         return recallCell == null ? 0 : recallCell.getSelectionEnd();
     }
 
+    @Override
     public void scrollDown() {
         new Handler().post(new Runnable() {
             @Override
@@ -42,6 +50,7 @@ public class NumberGridView extends GridView {
         });
     }
 
+    @Override
     public void scrollToTop() {
         new Handler().post(new Runnable() {
             @Override
@@ -53,10 +62,11 @@ public class NumberGridView extends GridView {
     }
 
     private int getScrollDistance() {
+        /* Lazy load */
         if (scrollDistance <= 0) {
             for (int i = 0; i <= getLastVisiblePosition() - getFirstVisiblePosition(); i++) {
                 if (getChildAt(i) != null) {
-                    scrollDistance = getVerticalSpacing() + getChildAt(i).getHeight(); //scrollDistance = getVerticalSpacing() + getChildAt(getFirstVisiblePosition()).getHeight();
+                    scrollDistance = getVerticalSpacing() + getChildAt(i).getHeight();
                     return scrollDistance;
                 }
             }

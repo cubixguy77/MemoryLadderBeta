@@ -13,11 +13,11 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 
 class NumberGridGlobalStateChangePresenter implements GameStateListener {
 
-    private GridEvent.Recall.Grid adapter;
+    private GridEvent.Grid grid;
     private NumberMemoryModel model;
 
-    NumberGridGlobalStateChangePresenter(GridEvent.Recall.Grid adapter, NumberMemoryModel model) {
-        this.adapter = adapter;
+    NumberGridGlobalStateChangePresenter(GridEvent.Grid grid, NumberMemoryModel model) {
+        this.grid = grid;
         this.model = model;
         Bus.getBus().subscribe(this);
     }
@@ -45,13 +45,13 @@ class NumberGridGlobalStateChangePresenter implements GameStateListener {
         model.setRecallData(recallData);
         model.setHighlightPosition(highlightPosition);
 
-        adapter.setNumGridColumns(memoryData.numCols);
-        adapter.refresh();
+        grid.setNumColumns(memoryData.numCols);
+        grid.refresh();
     }
 
     @Override
     public void onMemorizationStart() {
-        adapter.refresh();
+        grid.refresh();
     }
 
     @Override
@@ -61,8 +61,8 @@ class NumberGridGlobalStateChangePresenter implements GameStateListener {
     @Override
     public void onTransitionToRecall() {
         model.setHighlightPosition(1);
-        adapter.refresh();
-        adapter.scrollToTop();
+        grid.refresh();
+        grid.scrollToTop();
     }
 
     @Override
