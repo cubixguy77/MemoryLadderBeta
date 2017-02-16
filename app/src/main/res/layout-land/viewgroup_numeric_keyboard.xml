@@ -21,6 +21,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_backspace"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallActions"
                 android:text="BackSpace" />
 
@@ -30,6 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_next_row"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallActions"
                 android:text="Next Row"
                 />
@@ -40,6 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/icon_check_black"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallActions"
                 android:text="Submit Row"
                 />
@@ -57,6 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_1" />
             <Button
@@ -65,6 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_2" />
             <Button
@@ -73,6 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_3" />
             <Button
@@ -81,6 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_4" />
             <Button
@@ -89,6 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_5" />
 
@@ -99,6 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_6" />
             <Button
@@ -107,6 +116,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_7" />
             <Button
@@ -115,6 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_8" />
             <Button
@@ -123,6 +134,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_9" />
             <Button
@@ -131,6 +143,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_0" />
         </TableRow>
