@@ -74,10 +74,10 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
     private void refreshToolbarTitleText() {
         switch (Bus.gameState) {
-            case PRE_MEMORIZATION: supportActionBar.setTitle("Memorization"); break;
-            case MEMORIZATION: supportActionBar.setTitle("Memorization"); break;
-            case RECALL: supportActionBar.setTitle("Keyboard"); break;
-            case REVIEW: supportActionBar.setTitle("Results - idk how to restore digits yet"); break;
+            case PRE_MEMORIZATION: supportActionBar.setTitle(getResources().getString(R.string.memorization)); break;
+            case MEMORIZATION: supportActionBar.setTitle(getResources().getString(R.string.memorization)); break;
+            case RECALL: supportActionBar.setTitle(getResources().getString(R.string.recall)); break;
+            case REVIEW: supportActionBar.setTitle(getResources().getString(R.string.review)); break;
             default: supportActionBar.setTitle("Error Restoring Toolbar");
         }
     }
@@ -119,13 +119,12 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
             System.out.println("onLoad(Toolbar): with restore");
             supportActionBar.setTitle(savedInstanceState.getString("Toolbar.Title"));
             restoreTitle = false;
-            //supportActionBar.invalidateOptionsMenu();
         }
     }
 
     @Override
     public void onMemorizationStart() {
-        setTitle("Memorization");
+        setTitle(getResources().getString(R.string.memorization));
         refreshToolbarIcon();
     }
 
@@ -136,13 +135,13 @@ public class ToolbarView extends android.support.v7.widget.Toolbar implements Ga
 
     @Override
     public void onTransitionToRecall() {
-        setTitle("Keyboard");
+        setTitle(getResources().getString(R.string.recall));
         refreshToolbarIcon();
     }
 
     @Override
     public void onRecallComplete(Result result) {
-        setTitle("Results - " + result.getNumDigitsTotal() + " Digits");
+        setTitle(getResources().getString(R.string.toolbar_ResultsAndDigits, result.getNumDigitsTotal()));
         refreshToolbarIcon();
     }
 

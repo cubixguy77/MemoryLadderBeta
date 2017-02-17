@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recall">Reproducción</string>
+    <string name="review">Revisión</string>
+    <string name="toolbar.ResultsAndDigits">Resultado - %s Dígitos</string>
+    <string name="selectChallenge">Seleccione un Reto</string>
+    <string name="digitsPerGroup">%s Dígitos Cada Agrupamiento</string>
+    <string name="Off">Apagado</string>
+    <string name="memorizationTime">Tiempo de Memorizar</string>
+    <string name="newChallenge">Nuevo Reto</string>
+    <string name="numberOfDigits">Cantidad de Números</string>
+</resources>

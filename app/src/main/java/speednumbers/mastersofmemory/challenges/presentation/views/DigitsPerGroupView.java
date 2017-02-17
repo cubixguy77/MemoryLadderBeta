@@ -58,9 +58,9 @@ public class DigitsPerGroupView extends BaseSettingView {
 
     private void displayValue(int value) {
         switch (value) {
-            case 1: digitsPerGroupValue.setText("1 digit"); break;
-            case 2: digitsPerGroupValue.setText("2 digits"); break;
-            case 3: digitsPerGroupValue.setText("3 digits"); break;
+            case 1: digitsPerGroupValue.setText(getResources().getString(R.string.challengeList_numDigits, "1")); break;
+            case 2: digitsPerGroupValue.setText(getResources().getString(R.string.challengeList_numDigits, "2")); break;
+            case 3: digitsPerGroupValue.setText(getResources().getString(R.string.challengeList_numDigits, "3")); break;
             default: break;
         }
     }
@@ -75,11 +75,11 @@ public class DigitsPerGroupView extends BaseSettingView {
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Digits Grouping");
+        builder.setTitle(getResources().getString(R.string.digit_grouping));
         final CharSequence[] items = {
-                "1 Digit Per Group",
-                "2 Digits Per Group",
-                "3 Digits Per Group"
+                getResources().getString(R.string.digitsPerGroup, "1"),
+                getResources().getString(R.string.digitsPerGroup, "2"),
+                getResources().getString(R.string.digitsPerGroup, "3")
         };
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int selectionIndex) {

@@ -54,7 +54,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
-        this.getSupportActionBar().setTitle("Select a Challenge");
+        this.getSupportActionBar().setTitle(getString(R.string.selectChallenge));
 
         if (savedInstanceState == null) {
             addFragment(R.id.ChallengeListScroller, new ChallengeListFragment());
@@ -122,8 +122,8 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     private void showAddChallengeDialog() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("New Challenge");
-        alert.setMessage("Number of Digits");
+        alert.setTitle(getResources().getString(R.string.newChallenge));
+        alert.setMessage(getResources().getString(R.string.numberOfDigits));
 
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);

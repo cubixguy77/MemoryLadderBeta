@@ -2,8 +2,6 @@
     <string name="app_name">Speed Numbers</string>
     <string name="memorization">Memorization</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="challengeList.numDigits">%s Digits</string>
 
     <string name="scoreList.Rank">Rank</string>
@@ -13,5 +11,23 @@
     <string name="tabLabel.Results">Results</string>
     <string name="add_challenge">Add Challenge</string>
     <string name="send_feedback">Send Feedback</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="play">Play</string>
+    <string name="accuracy">Accuracy</string>
+    <string name="mem_time">Mem Time</string>
+    <string name="digit_grouping">Digit Grouping</string>
+    <string name="memorization_timer">Memorization Timer</string>
+    <string name="recall_timer">Recall Timer</string>
+    <string name="recall">Recall</string>
+    <string name="review">Review</string>
+    <string name="toolbar.ResultsAndDigits">Results - %s Digits</string>
+    <string name="selectChallenge">Select a Challenge</string>
+    <string name="digitsPerGroup">%s Digits Per Group</string>
+    <string name="Off">Off</string>
+    <string name="memorizationTime">Memorization Time</string>
+    <string name="newChallenge">New Challenge</string>
+    <string name="numberOfDigits">Number of Digits</string>
 
 </resources>

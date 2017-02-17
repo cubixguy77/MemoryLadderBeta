@@ -11,7 +11,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:textSize="20sp"
-        android:text="Memorization Timer"
+        android:text="@string/memorization_timer"
         android:textStyle="normal|bold" />
 
     <Switch

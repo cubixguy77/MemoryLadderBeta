@@ -60,7 +60,7 @@ public class MemTimerSettingView extends BaseSettingView {
 
     private void displaySettingValue(int value) {
         if (!isTimerEnabled()) {
-            memorizationTimeText.setText("Off");
+            memorizationTimeText.setText(getResources().getString(R.string.Off));
             memorizationTimerSwitch.setChecked(false);
         }
         else {
@@ -84,7 +84,7 @@ public class MemTimerSettingView extends BaseSettingView {
     }
 
     private void showDialog() {
-        TimePickerDialog dialog = new TimePickerDialog(context, this.setting.getValue(), "Memorization Time");
+        TimePickerDialog dialog = new TimePickerDialog(context, this.setting.getValue(), getResources().getString(R.string.memorizationTime));
         dialog.setDialogResult(new TimePickerDialog.OnMyDialogResultTime() {
             public void finish(int result) {
                 onSelectValue(result);
