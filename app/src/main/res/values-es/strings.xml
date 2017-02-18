@@ -2,7 +2,7 @@
 <resources>
     <string name="recall">Reproducir</string>
     <string name="review">Revisión</string>
-    <string name="toolbar.ResultsAndDigits">Resultado - %s Dígitos</string>
+    <string name="toolbar.ResultsAndDigits">Resultados - %s Dígitos</string>
     <string name="selectChallenge">Selecciona un Reto</string>
     <string name="digitsPerGroup">%s Dígitos Agrupados</string>
     <string name="Off">Apagado</string>
