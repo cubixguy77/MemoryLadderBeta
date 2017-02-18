@@ -49,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         Setting numDigits = new Setting(-1, -1, 10, "Number of Digits", 10, true);
         Setting digitsPerGroup = new Setting(-1, -1, 1, "Digits Per Group", 20, true);
         Setting memTimer = new Setting(-1, -1, 30, "Memorization Timer", 30, true);
-        Setting recallTimer = new Setting(-1, -1, 60, "Keyboard Timer", 40, true);
+        Setting recallTimer = new Setting(-1, -1, 60, "Recall Timer", 40, true);
 
         // Populate Setting table
         insertSetting(db, numDigits);
