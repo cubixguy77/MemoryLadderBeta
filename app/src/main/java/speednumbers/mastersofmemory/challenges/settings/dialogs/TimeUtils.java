@@ -1,5 +1,11 @@
 package speednumbers.mastersofmemory.challenges.settings.dialogs;
 
+import android.content.res.Resources;
+
+import java.util.Locale;
+
+import speednumbers.mastersofmemory.com.presentation.R;
+
 public class TimeUtils {
 
     /*
@@ -23,28 +29,32 @@ public class TimeUtils {
     }
     */
 
-    public static String formatIntoEnglishTime(int secsIn) {
+    public static String formatIntoEnglishTime(int secsIn, Resources resources) {
         int hours = (secsIn / 3600),
         remainder = (secsIn % 3600),
         minutes = remainder / 60,
         seconds = remainder % 60;
 
+        String secondsString = resources.getString(R.string.seconds);
+        String minutesString = resources.getString(R.string.minutes);
+        String hoursString = resources.getString(R.string.hours);
+
         StringBuilder sb = new StringBuilder();
 
         if (hours > 0) {
             if (hours == 1)
-                sb.append(String.format("%d hour", 1));
+                sb.append(String.format(Locale.getDefault(), "%d %s", 1, hoursString));
             else
-                sb.append(String.format("%d hours", hours));
+                sb.append(String.format(Locale.getDefault(), "%d %s", hours, hoursString));
             if (minutes > 0 || seconds > 0)
                 sb.append(", ");
         }
 
         if (minutes > 0) {
             if (minutes == 1)
-                sb.append(String.format("%d minute", 1));
+                sb.append(String.format(Locale.getDefault(), "%d %s", 1, minutesString));
             else
-                sb.append(String.format("%d minutes", minutes));
+                sb.append(String.format(Locale.getDefault(), "%d %s", minutes, minutesString));
 
             if (seconds > 0)
                 sb.append(", ");
@@ -52,9 +62,9 @@ public class TimeUtils {
 
         if (seconds > 0) {
             if (seconds == 1)
-                sb.append(String.format("%d second", 1));
+                sb.append(String.format(Locale.getDefault(), "%d %s", 1, secondsString));
             else
-                sb.append(String.format("%d seconds", seconds));
+                sb.append(String.format(Locale.getDefault(), "%d %s", seconds, secondsString));
         }
 
         return sb.toString();

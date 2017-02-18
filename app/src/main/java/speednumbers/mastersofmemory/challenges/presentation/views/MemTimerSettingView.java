@@ -64,7 +64,7 @@ public class MemTimerSettingView extends BaseSettingView {
             memorizationTimerSwitch.setChecked(false);
         }
         else {
-            memorizationTimeText.setText(TimeUtils.formatIntoEnglishTime(value));
+            memorizationTimeText.setText(TimeUtils.formatIntoEnglishTime(value, getResources()));
             memorizationTimerSwitch.setChecked(true);
         }
     }

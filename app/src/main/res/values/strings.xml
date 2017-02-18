@@ -16,7 +16,7 @@
     <string name="seconds">Seconds</string>
     <string name="play">Play</string>
     <string name="accuracy">Accuracy</string>
-    <string name="mem_time">Mem Time</string>
+    <string name="mem_time">Time</string>
     <string name="digit_grouping">Digit Grouping</string>
     <string name="memorization_timer">Memorization Timer</string>
     <string name="recall_timer">Recall Timer</string>
@@ -29,5 +29,11 @@
     <string name="memorizationTime">Memorization Time</string>
     <string name="newChallenge">New Challenge</string>
     <string name="numberOfDigits">Number of Digits</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Add">Add</string>
+    <string name="ChallengeDeleted">Challenge deleted</string>
+    <string name="Save">Save</string>
+    <string name="feedback.EmailSubjectText">Feedback for Memory Ladder</string>
+    <string name="feedback.EmailMessageBodyText">It\'s a great app, but it really needs:</string>
 
 </resources>
