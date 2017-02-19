@@ -63,7 +63,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
 
         onContract();
 
-        challengeText.setText(challenge.getTitle());
+        challengeText.setText(getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
         digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
         memorizationTimerContainer.setModel(NumberChallenge.getMemTimerSetting(challenge));
     }
