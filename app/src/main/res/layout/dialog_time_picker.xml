@@ -55,7 +55,7 @@
             android:textColor="@color/colorSecondaryText"
             android:gravity="center_horizontal"
             android:textSize="@dimen/memory_timer_dialog.label_text.size"
-            android:text="Hours"
+            android:text="@string/hours"
             />
     </LinearLayout>
 
@@ -113,7 +113,7 @@
             android:textColor="@color/colorSecondaryText"
             android:gravity="center_horizontal"
             android:textSize="@dimen/memory_timer_dialog.label_text.size"
-            android:text="Minutes"
+            android:text="@string/minutes"
             />
     </LinearLayout>
 
@@ -171,7 +171,7 @@
             android:gravity="center_horizontal"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/memory_timer_dialog.label_text.size"
-            android:text="Seconds"
+            android:text="@string/seconds"
             />
     </LinearLayout>
 

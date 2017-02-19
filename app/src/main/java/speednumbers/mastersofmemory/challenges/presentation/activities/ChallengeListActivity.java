@@ -54,7 +54,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
-        this.getSupportActionBar().setTitle("Select a Challenge");
+        this.getSupportActionBar().setTitle(getString(R.string.selectChallenge));
 
         if (savedInstanceState == null) {
             addFragment(R.id.ChallengeListScroller, new ChallengeListFragment());
@@ -122,8 +122,8 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
     private void showAddChallengeDialog() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("New Challenge");
-        alert.setMessage("Number of Digits");
+        alert.setTitle(getResources().getString(R.string.newChallenge));
+        alert.setMessage(getResources().getString(R.string.numberOfDigits));
 
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -145,7 +145,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
         alert.setView(edittext);
 
-        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.Add), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String text = edittext.getText().toString();
                 if (text.length() == 0)
@@ -159,7 +159,7 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {}
         });
 
@@ -170,8 +170,8 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
-        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_EmailSubjectText));
+        intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(getString(R.string.feedback_EmailMessageBodyText)));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
@@ -179,9 +179,9 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
             Intent Email = new Intent(Intent.ACTION_SEND);
             Email.setType("text/email");
             Email.putExtra(Intent.EXTRA_EMAIL, new String[] { "mastersofmemorycontact@gmail.com" });
-            Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for Memory Ladder");
-            Email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("It's a great app, but it really needs: "));
-            startActivity(Intent.createChooser(Email, "Send Feedback:"));
+            Email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_EmailSubjectText));
+            Email.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(getString(R.string.feedback_EmailMessageBodyText)));
+            startActivity(Intent.createChooser(Email, getString(R.string.send_feedback)));
         }
     }
 }

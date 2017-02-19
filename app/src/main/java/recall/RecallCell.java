@@ -6,18 +6,17 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 
-import memorization.Bus;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class RecallCell extends android.support.v7.widget.AppCompatEditText {
 
     private int position;
     private int numDigitsPerCell;
-    private int highlightedPosition;
-
+    private PositionChangeListener positionChangeListener;
 
     public RecallCell(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,12 +40,15 @@ public class RecallCell extends android.support.v7.widget.AppCompatEditText {
         setRawInputType(InputType.TYPE_CLASS_TEXT); // Disables keyboard
         setTextIsSelectable(true);
         setSelectAllOnFocus(true);
-        setOnFocusChangeListener(new OnFocusChangeListener() {
+
+        setOnTouchListener(new OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && position != highlightedPosition) {
-                    Bus.getBus().onPositionChange(position);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    positionChangeListener.onPositionChange(position);
                 }
+
+                return false;
             }
         });
     }
@@ -55,11 +57,11 @@ public class RecallCell extends android.support.v7.widget.AppCompatEditText {
         this.position = position;
     }
 
-    public void setHighlightedPosition(int highlightedPosition) {
-        this.highlightedPosition = highlightedPosition;
-    }
-
     public void setNumDigitsPerCell(int numDigitsPerCell) {
         this.numDigitsPerCell = numDigitsPerCell;
+    }
+
+    public void setPositionChangeListener(RecallKeyboardActionPresenter positionChangeListener) {
+        this.positionChangeListener = positionChangeListener;
     }
 }

@@ -4,20 +4,19 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-import recall.PositionChangeListener;
 import recall.RecallData;
 import review.Result;
 import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import timer.TimerPlayPauseListener;
 
-public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, GridEvent.Memory.ViewEvents, GridEvent.Recall.UserEvents, GridEvent.Recall.ViewEvents, PositionChangeListener, SaveInstanceStateListener, TimerPlayPauseListener {
+public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavigationEvents, SpeedNumbers.Navigation.NavigationView, SpeedNumbers.Keyboard.UserKeyboardActions, SaveInstanceStateListener, TimerPlayPauseListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
 
     public static Challenge challenge;
-    static GridData memoryData;
-    static RecallData recallData;
+    public static GridData memoryData;
+    public static RecallData recallData;
 
     public static GameState gameState;
     public static Result result;
@@ -133,39 +132,11 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
         }
     }
 
-
-    @Override
-    public void onPrevRecallCell() {
-        for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.ViewEvents) {
-                ((GridEvent.Recall.ViewEvents) observer).onPrevRecallCell();
-            }
-        }
-    }
-
-    @Override
-    public void onNextRecallCell() {
-        for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.ViewEvents) {
-                ((GridEvent.Recall.ViewEvents) observer).onNextRecallCell();
-            }
-        }
-    }
-
-    @Override
-    public void onRowFilled() {
-        for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.ViewEvents) {
-                ((GridEvent.Recall.ViewEvents) observer).onRowFilled();
-            }
-        }
-    }
-
     @Override
     public void onNextRow() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
-                ((GridEvent.Recall.UserEvents) observer).onNextRow();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onNextRow();
             }
         }
     }
@@ -173,8 +144,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onSubmitRow() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
-                ((GridEvent.Recall.UserEvents) observer).onSubmitRow();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onSubmitRow();
             }
         }
     }
@@ -182,8 +153,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onSubmitAllRows() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
-                ((GridEvent.Recall.UserEvents) observer).onSubmitAllRows();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onSubmitAllRows();
             }
         }
     }
@@ -191,8 +162,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onKeyPress(char digit) {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
-                ((GridEvent.Recall.UserEvents) observer).onKeyPress(digit);
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onKeyPress(digit);
             }
         }
     }
@@ -200,27 +171,27 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onBackSpace() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Recall.UserEvents) {
-                ((GridEvent.Recall.UserEvents) observer).onBackSpace();
+            if (observer != null && observer instanceof SpeedNumbers.Keyboard.UserKeyboardActions) {
+                ((SpeedNumbers.Keyboard.UserKeyboardActions) observer).onBackSpace();
             }
         }
     }
 
 
     @Override
-    public void onPrevMemoryCell() {
+    public void onPrevCell() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Memory.UserEvents) {
-                ((GridEvent.Memory.UserEvents) observer).onPrevMemoryCell();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.UserNavigationEvents) {
+                ((SpeedNumbers.Navigation.UserNavigationEvents) observer).onPrevCell();
             }
         }
     }
 
     @Override
-    public void onNextMemoryCell() {
+    public void onNextCell() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Memory.UserEvents) {
-                ((GridEvent.Memory.UserEvents) observer).onNextMemoryCell();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.UserNavigationEvents) {
+                ((SpeedNumbers.Navigation.UserNavigationEvents) observer).onNextCell();
             }
         }
     }
@@ -228,8 +199,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onDisablePrev() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Memory.ViewEvents) {
-                ((GridEvent.Memory.ViewEvents) observer).onDisablePrev();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onDisablePrev();
             }
         }
     }
@@ -237,8 +208,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onDisableNext() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Memory.ViewEvents) {
-                ((GridEvent.Memory.ViewEvents) observer).onDisableNext();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onDisableNext();
             }
         }
     }
@@ -246,8 +217,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onEnablePrev() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Memory.ViewEvents) {
-                ((GridEvent.Memory.ViewEvents) observer).onEnablePrev();
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onEnablePrev();
             }
         }
     }
@@ -255,17 +226,8 @@ public class Bus implements GameStateListener, GridEvent.Memory.UserEvents, Grid
     @Override
     public void onEnableNext() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof GridEvent.Memory.ViewEvents) {
-                ((GridEvent.Memory.ViewEvents) observer).onEnableNext();
-            }
-        }
-    }
-
-    @Override
-    public void onPositionChange(int newPosition) {
-        for (Object observer : observers) {
-            if (observer != null && observer instanceof PositionChangeListener) {
-                ((PositionChangeListener) observer).onPositionChange(newPosition);
+            if (observer != null && observer instanceof SpeedNumbers.Navigation.NavigationView) {
+                ((SpeedNumbers.Navigation.NavigationView) observer).onEnableNext();
             }
         }
     }

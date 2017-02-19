@@ -1,44 +1,47 @@
-package memorization;
+package gridAdapter;
 
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
+import memorization.SpeedNumbers;
 import recall.RecallCell;
 
-public class NumberGridView extends GridView {
+public class NumberGridView extends GridView implements SpeedNumbers.Grid {
 
     private int scrollDistance;
     private final int scrollDuration = 500;
-    private NumberGridAdapter adapter;
+    private NumberGridMemoryAdapter adapter;
 
     public NumberGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
+    @Override
+    public void refresh() {
+        adapter.notifyDataSetChanged();
+    }
+
     public void init() {
-        adapter = new NumberGridAdapter(getContext());
-        adapter.setGridView(this);
+        adapter = new NumberGridMemoryAdapter(this);
         setAdapter(adapter);
     }
 
-    public void subscribe() {
-        Bus.getBus().subscribe(this);
-        Bus.getBus().subscribe(adapter);
-    }
-
+    @Override
     public int getCursorStart(int position) {
         RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
         return recallCell == null ? 0 : recallCell.getSelectionStart();
     }
 
+    @Override
     public int getCursorEnd(int position) {
         RecallCell recallCell = (RecallCell) getChildAt(getAdjustedPosition(position));
         return recallCell == null ? 0 : recallCell.getSelectionEnd();
     }
 
-    public void scrollGrid() {
+    @Override
+    public void scrollDown() {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -47,6 +50,7 @@ public class NumberGridView extends GridView {
         });
     }
 
+    @Override
     public void scrollToTop() {
         new Handler().post(new Runnable() {
             @Override
@@ -58,10 +62,11 @@ public class NumberGridView extends GridView {
     }
 
     private int getScrollDistance() {
+        /* Lazy load */
         if (scrollDistance <= 0) {
             for (int i = 0; i <= getLastVisiblePosition() - getFirstVisiblePosition(); i++) {
                 if (getChildAt(i) != null) {
-                    scrollDistance = getVerticalSpacing() + getChildAt(i).getHeight(); //scrollDistance = getVerticalSpacing() + getChildAt(getFirstVisiblePosition()).getHeight();
+                    scrollDistance = getVerticalSpacing() + getChildAt(i).getHeight();
                     return scrollDistance;
                 }
             }

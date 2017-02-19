@@ -23,21 +23,21 @@ public class RecallTimerSettingView extends BaseSettingView {
     public RecallTimerSettingView(Context context) {
         super(context);
         this.setting = new Setting(1,1,3,"Test1",1,true);
-        System.out.println("Recall Timer Constructor: 1");
+        System.out.println("Keyboard Timer Constructor: 1");
         initializeViews(context);
     }
 
     public RecallTimerSettingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setting = new Setting(1,1,3,"Test2",1,true);
-        System.out.println("Recall Timer Constructor: 2");
+        System.out.println("Keyboard Timer Constructor: 2");
         initializeViews(context);
     }
 
     public RecallTimerSettingView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.setting = new Setting(1,1,3,"Test3",1,true);
-        System.out.println("Recall Timer Constructor: 3");
+        System.out.println("Keyboard Timer Constructor: 3");
         initializeViews(context);
     }
 
@@ -45,18 +45,18 @@ public class RecallTimerSettingView extends BaseSettingView {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.viewgroup_setting_recall_timer, this);
         ButterKnife.bind(this, view);
-        System.out.println("Recall Timer: Views initialized");
+        System.out.println("Keyboard Timer: Views initialized");
     }
 
     @Override
     protected void onFinishInflate() {
-        System.out.println("Recall Timer: on finish inflate");
+        System.out.println("Keyboard Timer: on finish inflate");
         super.onFinishInflate();
         displaySettingValue(this.setting.getValue());
     }
 
     public void setModel(Setting setting) {
-        System.out.println("Recall Timer: set model");
+        System.out.println("Keyboard Timer: set model");
         this.setting = setting;
         displaySettingValue(this.setting.getValue());
     }

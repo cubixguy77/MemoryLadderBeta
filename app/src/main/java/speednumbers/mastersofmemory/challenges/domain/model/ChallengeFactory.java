@@ -13,7 +13,7 @@ public class ChallengeFactory {
         Setting numDigitsSetting = new Setting(-1, 1, numDigits, "Number of Digits", 10, true);
         Setting digitsPerGroup = new Setting(-1, 2, 1, "Digits Per Group", 20, true);
         Setting memTimer = new Setting(-1, 3, 30, "Memorization Timer", 30, true);
-        Setting recallTimer = new Setting(-1, 4, 60, "Recall Timer", 40, true);
+        Setting recallTimer = new Setting(-1, 4, 60, "Keyboard Timer", 40, true);
 
         settings.add(numDigitsSetting);
         settings.add(digitsPerGroup);

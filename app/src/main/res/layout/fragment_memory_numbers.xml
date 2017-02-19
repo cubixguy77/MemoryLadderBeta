@@ -19,7 +19,7 @@
         />
 
 
-    <memorization.NumberGridView
+    <gridAdapter.NumberGridView
         android:id="@+id/numberGrid"
         android:layout_width="match_parent"
         android:layout_height="0dp"

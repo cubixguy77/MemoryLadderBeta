@@ -14,7 +14,14 @@ public class RecallData extends GridData {
         reviewCell = new boolean[numRows][numCols];
     }
 
-    public void onSubmitRow(int row) {
+    void submitRow(int position) {
+        int row = getRow(position);
+
+        /* This row has already been submitted */
+        if (reviewCell[row][0]) {
+            return;
+        }
+
         for (int col=0; col<numCols; col++) {
             reviewCell[row][col] = true;
         }
@@ -22,7 +29,7 @@ public class RecallData extends GridData {
         rowsRecalled++;
     }
 
-    public void submitAll() {
+    void submitAll() {
         for (int row=0; row<numRows; row++) {
             for (int col=0; col<numCols; col++) {
                 reviewCell[row][col] = true;
@@ -30,7 +37,7 @@ public class RecallData extends GridData {
         }
     }
 
-    public boolean allRowsSubmitted() {
+    boolean allRowsSubmitted() {
         return rowsRecalled >= numRows;
     }
 
@@ -42,7 +49,7 @@ public class RecallData extends GridData {
         return getValue(position);
     }
 
-    public void onKeyPress(char digit, int position, int cursorStart, int cursorEnd) {
+    void onKeyPress(char digit, int position, int cursorStart, int cursorEnd) {
         char[] data = getData();
         int startIndex = getStartIndexFromPosition(position) + cursorStart;
 
@@ -52,7 +59,7 @@ public class RecallData extends GridData {
         if (cursorStart == cursorEnd && cursorEnd == maxDigits) {
             /* if the next cell is empty, then throw the entered character there */
             if (numDigitsAtCell(position + 1) > 0 && isNullOrEmpty(getStringAt(position+1))) {
-                Bus.getBus().onNextRecallCell();
+                Bus.getBus().onNextCell();
                 onKeyPress(digit, position+1, 0, 0);
             }
 
@@ -70,21 +77,21 @@ public class RecallData extends GridData {
 
         if (cursorStart+1 == maxDigits) { // Just entered last character of the group
             if (numDigitsAtCell(position + 1) <= 0) {
-                Bus.getBus().onRowFilled();
+                /* Row Filled, do not advance cursor */
             }
             else {
-                Bus.getBus().onNextRecallCell();
+                Bus.getBus().onNextCell();
             }
         }
     }
 
-    public void onBackSpace(int position) {
+    void onBackSpace(int position) {
         char[] data = getData();
         String currentText = getStringAt(position);
         int curLength = currentText == null ? 0 : currentText.length();
 
         if (curLength == 0 && getCol(position) > 1) {
-            Bus.getBus().onPrevRecallCell();
+            Bus.getBus().onPrevCell();
             return;
         }
         else if (curLength == 0)
@@ -101,7 +108,7 @@ public class RecallData extends GridData {
         }
 
         if (curLength == 1 && getCol(position) > 1) {
-            Bus.getBus().onPrevRecallCell();
+            Bus.getBus().onPrevCell();
         }
     }
 

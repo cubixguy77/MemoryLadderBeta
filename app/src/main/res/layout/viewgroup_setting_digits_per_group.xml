@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/digitsPerGroupTitle"
@@ -12,7 +13,7 @@
         android:layout_marginLeft="12dp"
         android:textSize="20sp"
         android:textStyle="normal|bold"
-        android:text="Digit Grouping"
+        android:text="@string/digit_grouping"
         />
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_marginLeft="12dp"
         android:layout_below="@+id/digitsPerGroupTitle"
         android:textSize="18sp"
-        android:text="2"
+        tools:text="2"
         />
 
 </merge>

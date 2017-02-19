@@ -45,7 +45,7 @@ public class ReviewCell extends android.support.v7.widget.AppCompatTextView {
             int[] result = new int[memoryString.length()];
 
             for (int i=0; i<memoryString.length(); i++) {
-                if (i < recallString.length()) // Recall character present
+                if (i < recallString.length()) // Keyboard character present
                     result[i] = memoryString.charAt(i) == recallString.charAt(i) ? 1 : 0;
                 else
                     result[i] = -1;

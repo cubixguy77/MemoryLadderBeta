@@ -9,8 +9,8 @@ import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 public class GridData implements Serializable {
 
     private char[] data;
-    protected int numRows;
-    protected int numCols;
+    public int numRows;
+    public int numCols;
     private int numDigitsPerColumn;
     private int numDigits;
     private int maxValidHighlightPosition;
@@ -33,7 +33,7 @@ public class GridData implements Serializable {
         data = new char[numDigits];
     }
 
-    void loadData() {
+    public void loadData() {
         Random rand = new Random();
 
         for (int i=0; i<numDigits; i++) {
@@ -45,11 +45,11 @@ public class GridData implements Serializable {
         return getValue(position) == null ? "" : getValue(position);
     }
 
-    int getNumCells() {
+    public int getNumCells() {
         return numRows * numCols;
     }
 
-    int getMaxValidHighlightPosition() {
+    public int getMaxValidHighlightPosition() {
         return this.maxValidHighlightPosition;
     }
 
@@ -57,11 +57,11 @@ public class GridData implements Serializable {
         return this.numDigits;
     }
 
-    int getRowNumber(int position) {
+    public int getRowNumber(int position) {
         return this.getRow(position) + 1;
     }
 
-    boolean isRowMarker(int position) {
+    public boolean isRowMarker(int position) {
         return getCol(position) == 0;
     }
 
@@ -74,7 +74,7 @@ public class GridData implements Serializable {
         return ((col - 1) * numDigitsPerColumn) + ((numCols - 1) * numDigitsPerColumn * row);
     }
 
-    protected int numDigitsAtCell(int position) {
+    public int numDigitsAtCell(int position) {
         int startIndex = getStartIndexFromPosition(position);
         if (startIndex < 0)
             return 0;
@@ -129,11 +129,11 @@ public class GridData implements Serializable {
         return -1;
     }
 
-    protected int getCol(int pos) {
+    public int getCol(int pos) {
         return pos % (numCols);
     }
 
-    protected int getRow(int pos) {
+    public int getRow(int pos) {
         return pos / (numCols);
     }
 

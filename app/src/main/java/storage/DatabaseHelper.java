@@ -66,14 +66,14 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         settings.get(0).setValue(20);  // Digits Per Group
         settings.get(1).setValue(2);  // Digits Per Group
         settings.get(2).setValue(45); // Mem Timer
-        settings.get(3).setValue(90); // Recall Timer
+        settings.get(3).setValue(90); // Keyboard Timer
 
         insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 20), false, settings));
 
         settings.get(0).setValue(30);  // Digits Per Group
         settings.get(1).setValue(3);   // Digits Per Group
         settings.get(2).setValue(60);  // Mem Timer
-        settings.get(3).setValue(120); // Recall Timer
+        settings.get(3).setValue(120); // Keyboard Timer
 
         insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 30), false, settings));
     }

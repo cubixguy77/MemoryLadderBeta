@@ -19,7 +19,7 @@
         android:background="@drawable/shape_rounded_corners"
         android:elevation="@dimen/button.elevation.resting"
         android:stateListAnimator="@animator/button_elevation"
-        android:text="go"
+        android:contentDescription="go"
         app:srcCompat="@drawable/ic_arrow_right" />
 
 </memorization.navigationPanel.NavigationPanel>

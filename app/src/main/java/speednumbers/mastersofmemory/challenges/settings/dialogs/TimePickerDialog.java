@@ -61,14 +61,14 @@ public class TimePickerDialog extends AlertDialog.Builder implements OnClickList
 			}
 		});
 
-		setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		setNegativeButton(getContext().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mDialogResult.finish(TimePickerDialog.this.initialNumSeconds);
 			}
 		});
 
-		setPositiveButton("Save", new DialogInterface.OnClickListener() {
+		setPositiveButton(getContext().getString(R.string.Save), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mDialogResult.finish(TimePickerDialog.this.numSeconds);

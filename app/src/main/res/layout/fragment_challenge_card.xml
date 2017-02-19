@@ -84,7 +84,7 @@
                 android:layout_height="50dp"
                 android:textSize="20sp"
                 android:theme="@style/PlayButton"
-                android:text="Play"
+                android:text="@string/play"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 />
 
