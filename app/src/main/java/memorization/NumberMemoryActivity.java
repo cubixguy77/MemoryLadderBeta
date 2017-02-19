@@ -292,9 +292,9 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     private void logScore(Result result) {
         Bundle params = new Bundle();
-        params.putLong(FirebaseAnalytics.Param.SCORE, result.getNumDigitsRecalledCorrectly());
-        params.putLong(FirebaseAnalytics.Param.LEVEL, result.getNumDigitsTotal());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.POST_SCORE, params);
+        params.putString(FirebaseAnalytics.Param.ITEM_ID, "Score: " + result.getNumDigitsRecalledCorrectly());
+        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, result.getNumDigitsTotal() + " Digits");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
     private void addScoreListFragment() {

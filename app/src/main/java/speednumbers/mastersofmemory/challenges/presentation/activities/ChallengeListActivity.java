@@ -86,14 +86,9 @@ public class ChallengeListActivity extends BaseActivity implements IChallengeSel
 
     private void recordAnalyticsEventChallengeSelected(Challenge challenge) {
         Bundle params = new Bundle();
-
-        params.putString(FirebaseAnalytics.Param.ITEM_ID, Long.toString(challenge.getGameKey()));
-        params.putString(FirebaseAnalytics.Param.ITEM_NAME, getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
-        params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "Speed Numbers");
-        params.putString(FirebaseAnalytics.Param.NUMBER_OF_PASSENGERS, Integer.toString(NumberChallenge.getDigitsPerGroupSetting(challenge).getValue()));
-        params.putString(FirebaseAnalytics.Param.NUMBER_OF_NIGHTS, Integer.toString(NumberChallenge.getMemTimerSetting(challenge).getValue()));
-
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
+        params.putString(FirebaseAnalytics.Param.CONTENT_TYPE, NumberChallenge.getNumDigitsSetting(challenge).getValue() + " Digits");
+        params.putString(FirebaseAnalytics.Param.ITEM_ID, "Digits Per Group: " + NumberChallenge.getDigitsPerGroupSetting(challenge).getValue());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
     }
 
     @Override
