@@ -55,13 +55,27 @@ public class TimeUtils {
         return seconds + "s";
     }
 
-    public static SpannableString getMemorizationTimeText(int seconds, float shrinkFactor) {
+    public static SpannableString getMemorizationTimeText(float seconds) {
+        float shrinkFactor = 0.7f;
 
-        if (seconds > 59) {
-            String s = TimeUtils.formatIntoHHMMSStruncated(seconds);
-            return new SpannableString(s);
+        if (seconds < 60) {
+            String s = String.format(java.util.Locale.US, "%.1f", seconds) + "s";
+            SpannableString span =  new SpannableString(s);
+            span.setSpan(new RelativeSizeSpan(shrinkFactor), s.length()-1, s.length(), 0); // shrink the "s"
+            return span;
         }
 
+        String s = TimeUtils.formatIntoHHMMSStruncated((int) seconds);
+        SpannableString span =  new SpannableString(s);
+
+        if (seconds >= 3600)
+            span.setSpan(new RelativeSizeSpan(.6f), 0, s.length(), 0); // shrink all text to fit better
+        else if (seconds >= 600)
+            span.setSpan(new RelativeSizeSpan(.9f), 0, s.length(), 0); // shrink all text to fit better
+
+        return span;
+
+        /*
         String s = TimeUtils.formatIntoShortTime(seconds);
 
         SpannableString span =  new SpannableString(s);
@@ -88,6 +102,7 @@ public class TimeUtils {
         }
 
         return span;
+        */
     }
 
     /*

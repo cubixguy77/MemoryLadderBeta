@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="9">
 
         <TextView
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="10">
 
         <TextView
             android:layout_width="match_parent"
@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="9">
 
         <TextView
             android:layout_width="match_parent"
@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/score_panel.value.margin.top"
-            tools:text="37s"
+            tools:text="37.1s"
             android:textSize="@dimen/score_panel.value.text.size"
             android:textColor="@color/score_panel.value"
             />

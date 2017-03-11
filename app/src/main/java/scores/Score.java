@@ -6,10 +6,10 @@ public class Score {
 
     private int rank;
     private int score;
-    private int memTime;
+    private float memTime;
     private Date date;
 
-    public Score(int rank, int score, int memTime, Date date) {
+    public Score(int rank, int score, float memTime, Date date) {
         this.rank = rank;
         this.score = score;
         this.memTime = memTime;
@@ -24,7 +24,7 @@ public class Score {
         return score;
     }
 
-    int getMemTime() {
+    float getMemTime() {
         return memTime;
     }
 }

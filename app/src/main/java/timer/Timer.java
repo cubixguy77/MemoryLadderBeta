@@ -37,8 +37,7 @@ class Timer extends CountDownTimerPausable implements TimerActionListener {
     @Override
     public void onTick(long millisUntilFinished)
     {
-        secondsRemaining = millisUntilFinished / 1000;
-        listener.onTimeUpdate(secondsRemaining);
+        listener.onTimeUpdate(millisUntilFinished);
     }
 
     @Override

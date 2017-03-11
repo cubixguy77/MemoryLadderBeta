@@ -12,7 +12,7 @@ public class Result {
     private int numDigitsRecalledCorrectly;
     private int numDigitsTotal;
     private int accuracy;
-    private int memTime;
+    private float memTime;
     private int digitsPerMinute;
 
     public Result() {
@@ -29,7 +29,7 @@ public class Result {
         calcNumDigitsRecallAttempted();
         calcNumDigitsRecalledCorrectly();
         accuracy = (int) ((double) 100*numDigitsRecalledCorrectly / numDigitsRecallAttempted);
-        digitsPerMinute = (int) (numDigitsRecalledCorrectly / ((double) memTime / 60));
+        digitsPerMinute = (int) (numDigitsRecalledCorrectly / (memTime / 60));
     }
 
     private void calcNumDigitsRecallAttempted() {
@@ -69,14 +69,14 @@ public class Result {
         return this.numDigitsTotal;
     }
 
-    public int getAccuracy() {
+    int getAccuracy() {
         return this.accuracy;
     }
 
     /* Sets the memorization time used by the user, in seconds */
-    public void setMemTime(int memTime) { this.memTime = memTime; }
+    public void setMemTime(float memTime) { this.memTime = memTime; }
 
-    public int getMemTime() {
+    public float getMemTime() {
         return this.memTime;
     }
 
@@ -84,7 +84,7 @@ public class Result {
         return this.digitsPerMinute;
     }
 
-    public int getNumDigitsRecallAttempted() {
+    int getNumDigitsRecallAttempted() {
         return numDigitsRecallAttempted;
     }
 

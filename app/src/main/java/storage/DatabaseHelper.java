@@ -359,7 +359,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                     (
                         cursor.getPosition()+1, // The results are already sorted via SQL, the row index is the score's "Rank". Add one to make ranks start at one.
                         cursor.getInt(cursor.getColumnIndex(ScoreTableContract.ScoreTable.SCORE)),
-                        cursor.getInt(cursor.getColumnIndex(ScoreTableContract.ScoreTable.MEM_TIME)),
+                        cursor.getFloat(cursor.getColumnIndex(ScoreTableContract.ScoreTable.MEM_TIME)),
                         new Date(cursor.getLong(cursor.getColumnIndex(ScoreTableContract.ScoreTable.DATE_TIME)))
                     );
 

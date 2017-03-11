@@ -67,8 +67,8 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
         return span;
     }
 
-    private SpannableString getMemTimeText(int memTime) {
-        return TimeUtils.getMemorizationTimeText(memTime, 0.5f);
+    private SpannableString getMemTimeText(float memTime) {
+        return TimeUtils.getMemorizationTimeText(memTime);
     }
 
     private void hideScorePanel() {

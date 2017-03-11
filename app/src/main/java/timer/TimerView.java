@@ -21,7 +21,7 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
     private TimerActionListener timerActionListener;
     private TimerModel model;
     private long originalTimeLimit;
-    private long timeElapsed = 0;
+    private float timeElapsed = 0;
 
     public TimerView(Context context) {
         super(context);
@@ -43,9 +43,11 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
     }
 
     @Override
-    public void onTimeUpdate(long secondsRemaining) {
-        timeElapsed = originalTimeLimit - secondsRemaining;
-        setText(TimeUtils.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? secondsRemaining : timeElapsed));
+    public void onTimeUpdate(long millisUntilFinished) {
+        long secondsRemaining = millisUntilFinished / 1000;
+        long secondsElapsed = originalTimeLimit - (millisUntilFinished / 1000);
+        timeElapsed = (float) originalTimeLimit - ((float) millisUntilFinished / 1000);
+        setText(TimeUtils.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? secondsRemaining : secondsElapsed));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
                     }
 
                     setModel(model);
-                    onTimeUpdate(model.timeLimitInSeconds);
+                    onTimeUpdate(model.timeLimitInSeconds * 1000);
                 }
                 else {
                     setVisibility(View.GONE);
@@ -100,7 +102,7 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
 
     @Override
     public void onTransitionToRecall() {
-        Bus.result.setMemTime((int) this.timeElapsed);
+        Bus.result.setMemTime(this.timeElapsed);
         this.cancel();
 
         if (getVisibility() == View.VISIBLE)  {

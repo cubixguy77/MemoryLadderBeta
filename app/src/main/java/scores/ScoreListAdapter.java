@@ -75,7 +75,7 @@ class ScoreListAdapter extends ArrayAdapter<Score>
                 }
 
                 if (time != null) {
-                    time.setText(TimeUtils.getMemorizationTimeText(p.getMemTime(), 0.7f));
+                    time.setText(TimeUtils.getMemorizationTimeText(p.getMemTime()));
                     time.setTypeface(null, Typeface.NORMAL);
                 }
             }
