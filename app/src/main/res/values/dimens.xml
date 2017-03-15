@@ -38,8 +38,8 @@
     <dimen name="score_panel.top_label.text.size">20sp</dimen>
     <dimen name="score_panel.top_label.padding.bottom">16dp</dimen>
 
-    <dimen name="score_panel.value.text.size">48sp</dimen>
-    <dimen name="score_panel.value.margin.top">-24dp</dimen>
+    <dimen name="score_panel.value.text.size">44sp</dimen>
+    <dimen name="score_panel.value.margin.top">-20dp</dimen>
 
     <dimen name="score_list.row.height">64dp</dimen>
     <dimen name="score_list.row.text.size">20sp</dimen>
