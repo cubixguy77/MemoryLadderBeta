@@ -3,6 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="challenge_card.textSize">34sp</dimen>
+    <dimen name="challenge_card.play_button.textSize">24sp</dimen>
+
     <dimen name="timer.textSize">20sp</dimen>
 
     <dimen name="number_grid.layout_margin">8dp</dimen>

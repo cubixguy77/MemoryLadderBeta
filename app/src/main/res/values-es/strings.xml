@@ -15,4 +15,8 @@
     <string name="Save">Guardar</string>
     <string name="feedback.EmailSubjectText">Comentarios por Memory Ladder</string>
     <string name="feedback.EmailMessageBodyText">"Yo he usado la aplicación y quiero decir que: "</string>
+    <string name="challengeList_numDigits_pi">%d Dígitos de Pi</string>
+    <string name="digit_source">Banco de Sifras</string>
+    <string name="pi">π (pi)</string>
+    <string name="random">Números Aleatorios</string>
 </resources>

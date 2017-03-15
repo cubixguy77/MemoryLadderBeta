@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     // Database Info
     private static final String DATABASE_NAME = "MemoryDatabase";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     @Inject
     DatabaseHelper() {
@@ -50,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         Setting digitsPerGroup = new Setting(-1, -1, 1, "Digits Per Group", 20, true);
         Setting memTimer = new Setting(-1, -1, 30, "Memorization Timer", 30, true);
         Setting recallTimer = new Setting(-1, -1, 60, "Recall Timer", 40, true);
+        Setting digitSource = new Setting(-1, -1, 0, "Digit Source", 50, true);
 
         // Populate Setting table
         insertSetting(db, numDigits);
@@ -60,26 +61,38 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         settings.add(memTimer);
         insertSetting(db, recallTimer);
         settings.add(recallTimer);
+        insertSetting(db, digitSource);
+        settings.add(digitSource);
 
         insertChallenge(db, new Challenge(gameKey, -1,  MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 10), false, settings));
 
         settings.get(0).setValue(20);  // Digits Per Group
         settings.get(1).setValue(2);  // Digits Per Group
         settings.get(2).setValue(45); // Mem Timer
-        settings.get(3).setValue(90); // Keyboard Timer
+        settings.get(3).setValue(90); // Recall Timer
+        settings.get(4).setValue(0); // Digit Source
 
         insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 20), false, settings));
 
         settings.get(0).setValue(30);  // Digits Per Group
         settings.get(1).setValue(3);   // Digits Per Group
         settings.get(2).setValue(60);  // Mem Timer
-        settings.get(3).setValue(120); // Keyboard Timer
+        settings.get(3).setValue(120); // Recall Timer
+        settings.get(4).setValue(0); // Digit Source
 
         insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 30), false, settings));
+
+        settings.get(0).setValue(100);  // Digits Per Group
+        settings.get(1).setValue(2);   // Digits Per Group
+        settings.get(2).setValue(300);  // Mem Timer
+        settings.get(3).setValue(120); // Recall Timer
+        settings.get(4).setValue(1); // Digit Source
+
+        insertChallenge(db, new Challenge(gameKey, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 100), false, settings));
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(final SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("Database", "onUpgrade(): Old" + oldVersion + " new" + newVersion);
 
         switch (newVersion) {
@@ -90,6 +103,38 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
          */
             case 2:
                 db.execSQL(ScoreTableContract.ScoreTable.CREATE_SCORE_TABLE);
+
+        /* Version 3
+         * Introduces ability to memorize Pi
+         * Auto adds a pi memorization challenge
+         */
+            case 3:
+                Setting defaultDigitSource = new Setting(-1, -1, 0, "Digit Source", 50, true);
+                final long digitSourceSettingKey = insertSetting(db, defaultDigitSource);
+
+                getChallengeList(db, 1, new IRepository.GetChallengesCallback() {
+                    @Override
+                    public void onChallengesLoaded(List<Challenge> challenges) {
+                        for (Challenge challenge : challenges) {
+                            insertChallengeSetting(db, challenge.getChallengeKey(), digitSourceSettingKey, 0);
+                        }
+                    }
+                });
+
+                ArrayList<Setting> settings = new ArrayList<>();
+                Setting numDigits = new Setting(-1, -1, 100, "Number of Digits", 10, true);
+                Setting digitsPerGroup = new Setting(-1, -1, 2, "Digits Per Group", 20, true);
+                Setting memTimer = new Setting(-1, -1, 300, "Memorization Timer", 30, true);
+                Setting recallTimer = new Setting(-1, -1, 600, "Recall Timer", 40, true);
+                Setting digitSource = new Setting(-1, -1, 1, "Digit Source", 50, true);
+
+                settings.add(numDigits);
+                settings.add(digitsPerGroup);
+                settings.add(memTimer);
+                settings.add(recallTimer);
+                settings.add(digitSource);
+
+                insertChallenge(db, new Challenge(1, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 100) + " of Pi", false, settings));
         }
     }
 
@@ -213,30 +258,73 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         List<Challenge> challenges = new ArrayList<>();
 
         String SELECT_QUERY = String.format
-        (
-            "SELECT " +
-                ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
-                ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
-                ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
-                ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
-            "FROM %s " +
-            "WHERE %s.%s = %s",
-            ChallengeTableContract.ChallengeTable.TABLE_NAME,
-            ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey
-        );
+                (
+                        "SELECT " +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
+                                "FROM %s " +
+                                "WHERE %s.%s = %s",
+                        ChallengeTableContract.ChallengeTable.TABLE_NAME,
+                        ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey
+                );
 
         Cursor cursor = db.rawQuery(SELECT_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
                 do {
                     Challenge challenge = new Challenge
-                    (
-                        cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY)),
-                        cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY)),
-                        cursor.getString(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE)),
-                        cursor.getInt(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED)) == 1,
-                        null
-                    );
+                            (
+                                    cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY)),
+                                    cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY)),
+                                    cursor.getString(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE)),
+                                    cursor.getInt(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED)) == 1,
+                                    null
+                            );
+
+                    challenges.add(challenge);
+                } while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("ERROR", "Error while trying to get challenges from database!");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+
+        callback.onChallengesLoaded(challenges);
+    }
+
+    public void getChallengeList(SQLiteDatabase db, long gameKey, IRepository.GetChallengesCallback callback) {
+        List<Challenge> challenges = new ArrayList<>();
+
+        String SELECT_QUERY = String.format
+                (
+                        "SELECT " +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
+                                ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
+                                "FROM %s " +
+                                "WHERE %s.%s = %s",
+                        ChallengeTableContract.ChallengeTable.TABLE_NAME,
+                        ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey
+                );
+
+        Cursor cursor = db.rawQuery(SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Challenge challenge = new Challenge
+                            (
+                                    cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY)),
+                                    cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY)),
+                                    cursor.getString(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE)),
+                                    cursor.getInt(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED)) == 1,
+                                    null
+                            );
 
                     challenges.add(challenge);
                 } while(cursor.moveToNext());

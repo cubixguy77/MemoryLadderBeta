@@ -3,6 +3,7 @@
     <string name="memorization">Memorization</string>
 
     <string name="challengeList.numDigits">%s Digits</string>
+    <string name="challengeList_numDigits_pi">%d Digits of Pi</string>
 
     <string name="scoreList.Rank">Rank</string>
     <string name="scoreList.Score">Score</string>
@@ -35,5 +36,9 @@
     <string name="Save">Save</string>
     <string name="feedback.EmailSubjectText">Feedback for Memory Ladder</string>
     <string name="feedback.EmailMessageBodyText">It\'s a great app, but it really needs:</string>
+    <string name="digit_source">Digit Source</string>
+    <string name="random">Random</string>
+    <string name="pi">π (pi)</string>
+
 
 </resources>

@@ -9,39 +9,42 @@
 
     <LinearLayout
         android:id="@+id/vertContainer"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="80dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/challengeText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_weight="5"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
                 android:paddingLeft="8dp"
                 android:paddingStart="8dp"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground"
+                android:scrollHorizontally="true"
+                android:textSize="@dimen/challenge_card.textSize"
                 android:textStyle="bold"
-                android:textSize="40sp"
-                android:text="10 Digits"
-                />
+                tools:text="100 Digits of pi" />
 
             <ImageView
                 android:id="@+id/expandContractButton"
-                android:layout_width="wrap_content"
+                android:layout_width="72dp"
                 android:layout_height="80dp"
-                android:layout_weight="1"
-                android:clickable="true"
                 android:background="?attr/selectableItemBackground"
-                app:srcCompat="@drawable/ic_arrow_down"/>
+                android:clickable="true"
+                android:contentDescription="Expand Button"
+                app:srcCompat="@drawable/ic_arrow_down"
+                />
         </LinearLayout>
 
         <speednumbers.mastersofmemory.challenges.presentation.views.DigitsPerGroupView
@@ -49,8 +52,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible">
-        </speednumbers.mastersofmemory.challenges.presentation.views.DigitsPerGroupView>
+            tools:visibility="visible"></speednumbers.mastersofmemory.challenges.presentation.views.DigitsPerGroupView>
+
+        <speednumbers.mastersofmemory.challenges.presentation.views.DigitSourceView
+            android:id="@+id/digitSourceContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            tools:visibility="visible"></speednumbers.mastersofmemory.challenges.presentation.views.DigitSourceView>
 
         <speednumbers.mastersofmemory.challenges.presentation.views.MemTimerSettingView
             android:id="@+id/memorizationTimerContainer"
@@ -58,8 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            tools:visibility="visible">
-        </speednumbers.mastersofmemory.challenges.presentation.views.MemTimerSettingView>
+            tools:visibility="visible"></speednumbers.mastersofmemory.challenges.presentation.views.MemTimerSettingView>
 
         <LinearLayout
             android:id="@+id/challengeCardBottomActionContainer"
@@ -67,26 +76,25 @@
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            tools:visibility="visible"
-            >
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/deleteButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
+                android:contentDescription="Play Button"
                 app:srcCompat="@drawable/ic_delete"
                 />
 
             <Button
                 android:id="@+id/playButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textSize="20sp"
-                android:theme="@style/PlayButton"
                 android:text="@string/play"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                />
+                android:textSize="@dimen/challenge_card.play_button.textSize"
+                android:theme="@style/PlayButton" />
 
         </LinearLayout>
     </LinearLayout>

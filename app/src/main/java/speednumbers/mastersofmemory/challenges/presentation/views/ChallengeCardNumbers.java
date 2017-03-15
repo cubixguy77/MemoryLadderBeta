@@ -15,6 +15,7 @@ import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
 import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
 import speednumbers.mastersofmemory.challenges.presentation.IChallengeCardNumbers;
 import speednumbers.mastersofmemory.challenges.presentation.IDeleteChallengeListener;
+import speednumbers.mastersofmemory.challenges.presentation.enums.DigitSource;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCardNumbers.View {
@@ -23,8 +24,9 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
 
     @BindView(R.id.challengeText) TextView challengeText;
     @BindView(R.id.deleteButton) ImageView deleteButton;
-    @BindView(R.id.memorizationTimerContainer) MemTimerSettingView memorizationTimerContainer;
     @BindView(R.id.digitGroupingContainer) DigitsPerGroupView digitsPerGroupView;
+    @BindView(R.id.digitSourceContainer) DigitSourceView digitSourceView;
+    @BindView(R.id.memorizationTimerContainer) MemTimerSettingView memorizationTimerContainer;
     @BindView(R.id.challengeCardBottomActionContainer) LinearLayout actionContainer;
 
     public ChallengeCardNumbers(Context context) {
@@ -63,8 +65,14 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
 
         onContract();
 
-        challengeText.setText(getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        DigitSource digitSource = DigitSource.values()[NumberChallenge.getDigitSourceSetting(challenge).getValue()];
+        if (digitSource == DigitSource.RANDOM)
+            challengeText.setText(getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        else if (digitSource == DigitSource.PI)
+            challengeText.setText(getResources().getString(R.string.challengeList_numDigits_pi, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+
         digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
+        digitSourceView.setModel(NumberChallenge.getDigitSourceSetting(challenge));
         memorizationTimerContainer.setModel(NumberChallenge.getMemTimerSetting(challenge));
     }
 
@@ -80,6 +88,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     @Override
     public void onExpand() {
         digitsPerGroupView.setVisibility(VISIBLE);
+        digitSourceView.setVisibility(VISIBLE);
         memorizationTimerContainer.setVisibility(VISIBLE);
         actionContainer.setVisibility(VISIBLE);
     }
@@ -87,6 +96,7 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
     @Override
     public void onContract() {
         digitsPerGroupView.setVisibility(GONE);
+        digitSourceView.setVisibility(GONE);
         memorizationTimerContainer.setVisibility(GONE);
         actionContainer.setVisibility(GONE);
     }
