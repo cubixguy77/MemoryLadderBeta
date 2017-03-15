@@ -122,11 +122,11 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 });
 
                 ArrayList<Setting> settings = new ArrayList<>();
-                Setting numDigits = new Setting(-1, -1, 100, "Number of Digits", 10, true);
-                Setting digitsPerGroup = new Setting(-1, -1, 2, "Digits Per Group", 20, true);
-                Setting memTimer = new Setting(-1, -1, 300, "Memorization Timer", 30, true);
-                Setting recallTimer = new Setting(-1, -1, 600, "Recall Timer", 40, true);
-                Setting digitSource = new Setting(-1, -1, 1, "Digit Source", 50, true);
+                Setting numDigits = new Setting(-1, 1, 100, "Number of Digits", 10, true);
+                Setting digitsPerGroup = new Setting(-1, 2, 2, "Digits Per Group", 20, true);
+                Setting memTimer = new Setting(-1, 3, 300, "Memorization Timer", 30, true);
+                Setting recallTimer = new Setting(-1, 4, 600, "Recall Timer", 40, true);
+                Setting digitSource = new Setting(-1, 5, 1, "Digit Source", 50, true);
 
                 settings.add(numDigits);
                 settings.add(digitsPerGroup);
@@ -300,8 +300,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     public void getChallengeList(SQLiteDatabase db, long gameKey, IRepository.GetChallengesCallback callback) {
         List<Challenge> challenges = new ArrayList<>();
 
-        System.out.println("Get challenge list on upgrade");
-
         String SELECT_QUERY = String.format
                 (
                         "SELECT " +
@@ -367,8 +365,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     private Challenge insertChallenge(SQLiteDatabase db, Challenge challenge) {
         db.beginTransaction();
-
-        System.out.println("Inserting challenge on upgrade with num settings: " + challenge.getSettings().size());
 
         long challengeKey = -1;
         try {
@@ -566,7 +562,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     }
 
     private boolean insertChallengeSetting(SQLiteDatabase db, long challengeKey, long settingKey, int value) {
-        System.out.println("Inserting challenge_setting record: " + challengeKey + " " + settingKey);
         ContentValues values = new ContentValues();
         values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY, challengeKey);
         values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_SETTING_KEY, settingKey);
