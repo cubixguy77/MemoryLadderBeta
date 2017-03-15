@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
                 settings.add(recallTimer);
                 settings.add(digitSource);
 
-                insertChallenge(db, new Challenge(1, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits, 100) + " of Pi", false, settings));
+                insertChallenge(db, new Challenge(1, -1, MyApplication.getAppContext().getResources().getString(R.string.challengeList_numDigits_pi, 100), false, settings));
         }
     }
 
