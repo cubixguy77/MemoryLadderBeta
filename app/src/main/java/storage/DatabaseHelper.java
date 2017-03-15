@@ -251,53 +251,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         });
     }
 
-
     @Override
     public void getChallengeList(long gameKey, IRepository.GetChallengesCallback callback) {
-        SQLiteDatabase db = getReadableDatabase();
-        List<Challenge> challenges = new ArrayList<>();
-
-        String SELECT_QUERY = String.format
-                (
-                        "SELECT " +
-                                ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY + "," +
-                                ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "," +
-                                ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE + "," +
-                                ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED + " " +
-                                "FROM %s " +
-                                "WHERE %s.%s = %s",
-                        ChallengeTableContract.ChallengeTable.TABLE_NAME,
-                        ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, gameKey
-                );
-
-        Cursor cursor = db.rawQuery(SELECT_QUERY, null);
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    Challenge challenge = new Challenge
-                            (
-                                    cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY)),
-                                    cursor.getLong(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY)),
-                                    cursor.getString(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_TITLE)),
-                                    cursor.getInt(cursor.getColumnIndex(ChallengeTableContract.ChallengeTable.CHALLENGE_LOCKED)) == 1,
-                                    null
-                            );
-
-                    challenges.add(challenge);
-                } while(cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.d("ERROR", "Error while trying to get challenges from database!");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-
-        callback.onChallengesLoaded(challenges);
+        getChallengeList(getReadableDatabase(), gameKey, callback);
     }
 
-    public void getChallengeList(SQLiteDatabase db, long gameKey, IRepository.GetChallengesCallback callback) {
+    private void getChallengeList(SQLiteDatabase db, long gameKey, IRepository.GetChallengesCallback callback) {
         List<Challenge> challenges = new ArrayList<>();
 
         String SELECT_QUERY = String.format
