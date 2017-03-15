@@ -300,6 +300,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     public void getChallengeList(SQLiteDatabase db, long gameKey, IRepository.GetChallengesCallback callback) {
         List<Challenge> challenges = new ArrayList<>();
 
+        System.out.println("Get challenge list on upgrade");
+
         String SELECT_QUERY = String.format
                 (
                         "SELECT " +
@@ -365,6 +367,8 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
 
     private Challenge insertChallenge(SQLiteDatabase db, Challenge challenge) {
         db.beginTransaction();
+
+        System.out.println("Inserting challenge on upgrade with num settings: " + challenge.getSettings().size());
 
         long challengeKey = -1;
         try {
@@ -562,6 +566,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     }
 
     private boolean insertChallengeSetting(SQLiteDatabase db, long challengeKey, long settingKey, int value) {
+        System.out.println("Inserting challenge_setting record: " + challengeKey + " " + settingKey);
         ContentValues values = new ContentValues();
         values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY, challengeKey);
         values.put(ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_SETTING_KEY, settingKey);
