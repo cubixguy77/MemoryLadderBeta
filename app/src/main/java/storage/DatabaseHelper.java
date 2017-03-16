@@ -14,10 +14,9 @@ import javax.inject.Inject;
 
 import review.Result;
 import scores.Score;
-import speednumbers.mastersofmemory.challenges.MyApplication;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.Game;
-import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+import selectChallenge.MyApplication;
+import selectChallenge.viewChallengeCard.Challenge;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 import repository.IRepository;
 import speednumbers.mastersofmemory.com.presentation.R;
 

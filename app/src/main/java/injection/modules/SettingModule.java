@@ -5,9 +5,9 @@ import dagger.Provides;
 import injection.PerActivity;
 import executor.Executor;
 import executor.MainThread;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.UpdateSettingInteractorImpl;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.update.UpdateSettingInteractorImpl;
 import repository.IRepository;
-import speednumbers.mastersofmemory.challenges.domain.interactors.UpdateSettingInteractor;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.update.UpdateSettingInteractor;
 
 @Module
 public class SettingModule {

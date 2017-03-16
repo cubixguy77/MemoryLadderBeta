@@ -12,9 +12,9 @@ import memorization.GameState;
 import memorization.GameStateListener;
 import memorization.SaveInstanceStateListener;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
-import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+import selectChallenge.viewChallengeCard.Challenge;
+import selectChallenge.viewChallengeCard.NumberChallenge;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 
 public class TimerView extends android.support.v7.widget.AppCompatTextView implements TimerUpdateListener, GameStateListener, SaveInstanceStateListener, TimerPlayPauseListener {
 
@@ -47,7 +47,7 @@ public class TimerView extends android.support.v7.widget.AppCompatTextView imple
         long secondsRemaining = millisUntilFinished / 1000;
         long secondsElapsed = originalTimeLimit - (millisUntilFinished / 1000);
         timeElapsed = (float) originalTimeLimit - ((float) millisUntilFinished / 1000);
-        setText(TimeUtils.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? secondsRemaining : secondsElapsed));
+        setText(TimeFormat.formatIntoHHMMSStruncated(model.countDirection == CountDirection.DOWN ? secondsRemaining : secondsElapsed));
     }
 
     @Override

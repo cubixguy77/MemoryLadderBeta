@@ -1,9 +1,8 @@
 package injection.components;
 
 import dagger.Component;
-import memorization.NumberMemoryActivity;
-import speednumbers.mastersofmemory.challenges.presentation.activities.ChallengeListActivity;
-import speednumbers.mastersofmemory.challenges.presentation.fragments.ChallengeListFragment;
+import selectChallenge.viewChallengeList.ChallengeListActivity;
+import selectChallenge.viewChallengeList.ChallengeListFragment;
 import injection.PerActivity;
 import injection.modules.ActivityModule;
 import injection.modules.ChallengeListModule;

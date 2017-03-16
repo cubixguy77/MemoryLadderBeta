@@ -12,7 +12,7 @@ import memorization.Bus;
 import memorization.GameStateListener;
 import memorization.SaveInstanceStateListener;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ToolbarView extends android.support.v7.widget.Toolbar implements GameStateListener, SaveInstanceStateListener {

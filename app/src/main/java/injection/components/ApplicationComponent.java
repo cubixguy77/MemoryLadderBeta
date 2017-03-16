@@ -11,8 +11,8 @@ import injection.modules.ApplicationModule;
 import executor.Executor;
 import executor.MainThread;
 import repository.IRepository;
-import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivity;
-import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
+import selectChallenge.viewChallengeList.BaseActivity;
+import memorization.BaseActivityChallenge;
 
 /**
  * A component whose lifetime is the life of the application.

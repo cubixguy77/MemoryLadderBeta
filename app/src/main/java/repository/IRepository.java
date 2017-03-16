@@ -4,9 +4,9 @@ import java.util.List;
 
 import review.Result;
 import scores.Score;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.Game;
-import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+import selectChallenge.viewChallengeCard.Challenge;
+import storage.Game;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 
 public interface IRepository {
 

@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 import memorization.Bus;
 import memorization.GameState;
 import memorization.GameStateListener;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
-import timer.TimeUtils;
+import timer.TimeFormat;
 
 public class ScorePanel extends LinearLayout implements GameStateListener {
 
@@ -68,7 +68,7 @@ public class ScorePanel extends LinearLayout implements GameStateListener {
     }
 
     private SpannableString getMemTimeText(float memTime) {
-        return TimeUtils.getMemorizationTimeText(memTime);
+        return TimeFormat.getMemorizationTimeText(memTime);
     }
 
     private void hideScorePanel() {

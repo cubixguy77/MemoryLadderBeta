@@ -3,7 +3,7 @@
     package="speednumbers.mastersofmemory.com.presentation">
 
     <application
-        android:name="speednumbers.mastersofmemory.challenges.MyApplication"
+        android:name="selectChallenge.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:theme="@style/MyMaterialTheme"
         android:launchMode="singleTop">
         <activity
-            android:name="speednumbers.mastersofmemory.challenges.presentation.activities.ChallengeListActivity"
+            android:name="selectChallenge.viewChallengeList.ChallengeListActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
         <activity
             android:name="memorization.NumberMemoryActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
-            android:parentActivityName="speednumbers.mastersofmemory.challenges.presentation.activities.ChallengeListActivity">
+            android:parentActivityName="selectChallenge.viewChallengeList.ChallengeListActivity">
         </activity>
 
     </application>

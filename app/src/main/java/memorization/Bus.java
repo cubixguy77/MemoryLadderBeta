@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import recall.RecallData;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 import timer.TimerPlayPauseListener;
 
 public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavigationEvents, SpeedNumbers.Navigation.NavigationView, SpeedNumbers.Keyboard.UserKeyboardActions, SaveInstanceStateListener, TimerPlayPauseListener {

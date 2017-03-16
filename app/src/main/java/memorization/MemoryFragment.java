@@ -14,7 +14,7 @@ import gridAdapter.NumberGridView;
 import keyboard.NumericKeyboardView;
 import memorization.navigationPanel.NavigationPanel;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 import timer.TimerView;
 

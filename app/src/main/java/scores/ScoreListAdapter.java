@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import speednumbers.mastersofmemory.com.presentation.R;
-import timer.TimeUtils;
+import timer.TimeFormat;
 
 class ScoreListAdapter extends ArrayAdapter<Score>
 {
@@ -75,7 +75,7 @@ class ScoreListAdapter extends ArrayAdapter<Score>
                 }
 
                 if (time != null) {
-                    time.setText(TimeUtils.getMemorizationTimeText(p.getMemTime()));
+                    time.setText(TimeFormat.getMemorizationTimeText(p.getMemTime()));
                     time.setTypeface(null, Typeface.NORMAL);
                 }
             }

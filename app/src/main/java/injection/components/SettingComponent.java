@@ -1,7 +1,7 @@
 package injection.components;
 
 import dagger.Component;
-import speednumbers.mastersofmemory.challenges.presentation.views.BaseSettingView;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.BaseSettingView;
 import injection.PerActivity;
 import injection.modules.SettingModule;
 

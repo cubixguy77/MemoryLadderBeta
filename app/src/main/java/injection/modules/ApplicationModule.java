@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import speednumbers.mastersofmemory.challenges.MyApplication;
+import selectChallenge.MyApplication;
 import executor.Executor;
 import executor.MainThread;
 import executor.impl.ThreadExecutor;

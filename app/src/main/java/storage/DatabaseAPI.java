@@ -1,8 +1,8 @@
 package storage;
 
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+import selectChallenge.viewChallengeCard.Challenge;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 import repository.IRepository;
 
 public interface DatabaseAPI {

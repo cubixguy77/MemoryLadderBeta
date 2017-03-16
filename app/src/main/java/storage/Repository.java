@@ -5,9 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.Game;
-import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+import selectChallenge.viewChallengeCard.Challenge;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 import repository.IRepository;
 
 public class Repository implements IRepository {

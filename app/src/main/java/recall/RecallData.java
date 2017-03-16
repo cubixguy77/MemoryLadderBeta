@@ -2,7 +2,7 @@ package recall;
 
 import memorization.Bus;
 import memorization.GridData;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 
 public class RecallData extends GridData {
 

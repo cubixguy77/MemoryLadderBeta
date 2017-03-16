@@ -26,9 +26,8 @@ import review.ScorePanel;
 import scores.AddScoreInteractor;
 import scores.GetScoreListInteractor;
 import scores.ScoreListFragment;
-import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.presentation.activities.BaseActivityChallenge;
+import selectChallenge.getChallenge.GetChallengeInteractor;
+import selectChallenge.viewChallengeCard.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 import toolbar.ToolbarView;
 

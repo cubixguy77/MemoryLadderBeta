@@ -3,7 +3,7 @@ package memorization;
 import android.os.Bundle;
 
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 
 public interface GameStateListener {
 

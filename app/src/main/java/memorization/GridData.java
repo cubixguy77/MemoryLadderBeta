@@ -3,9 +3,9 @@ package memorization;
 import java.io.Serializable;
 import java.util.Random;
 
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
-import speednumbers.mastersofmemory.challenges.domain.model.NumberChallenge;
-import speednumbers.mastersofmemory.challenges.presentation.enums.DigitSource;
+import selectChallenge.viewChallengeCard.Challenge;
+import selectChallenge.viewChallengeCard.NumberChallenge;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource.DigitSource;
 
 public class GridData implements Serializable {
 

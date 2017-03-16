@@ -9,9 +9,9 @@ import repository.IRepository;
 import scores.AddScoreInteractor;
 import scores.GetScoreListInteractor;
 import scores.GetScoreListInteractorImpl;
-import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeInteractor;
+import selectChallenge.getChallenge.GetChallengeInteractor;
 import scores.AddScoreInteractorImpl;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.GetChallengeInteractorImpl;
+import selectChallenge.getChallenge.GetChallengeInteractorImpl;
 
 @Module
 public class ChallengeModule {

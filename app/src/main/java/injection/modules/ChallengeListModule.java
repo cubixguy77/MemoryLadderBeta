@@ -7,16 +7,16 @@ import dagger.Provides;
 import injection.PerActivity;
 import executor.Executor;
 import executor.MainThread;
-import speednumbers.mastersofmemory.challenges.domain.interactors.AddChallengeInteractor;
-import speednumbers.mastersofmemory.challenges.domain.interactors.DeleteChallengeInteractor;
-import speednumbers.mastersofmemory.challenges.domain.interactors.GetChallengeListInteractor;
-import speednumbers.mastersofmemory.challenges.domain.interactors.UpdateSettingInteractor;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.AddChallengeInteractorImpl;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.GetChallengeListInteractorImpl;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.UpdateSettingInteractorImpl;
+import selectChallenge.addChallenge.AddChallengeInteractor;
+import selectChallenge.deleteChallenge.DeleteChallengeInteractor;
+import selectChallenge.getChallengeList.GetChallengeListInteractor;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.update.UpdateSettingInteractor;
+import selectChallenge.addChallenge.AddChallengeInteractorImpl;
+import selectChallenge.getChallengeList.GetChallengeListInteractorImpl;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.update.UpdateSettingInteractorImpl;
 import repository.IRepository;
-import speednumbers.mastersofmemory.challenges.domain.interactors.impl.DeleteChallengeInteractorImpl;
-import speednumbers.mastersofmemory.challenges.presentation.presenters.ChallengeListPresenter;
+import selectChallenge.deleteChallenge.DeleteChallengeInteractorImpl;
+import selectChallenge.viewChallengeList.ChallengeListPresenter;
 
 @Module
 public class ChallengeListModule {

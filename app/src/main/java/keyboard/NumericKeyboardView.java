@@ -12,7 +12,7 @@ import memorization.Bus;
 import memorization.GameState;
 import memorization.GameStateListener;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class NumericKeyboardView extends TableLayout implements GameStateListener {

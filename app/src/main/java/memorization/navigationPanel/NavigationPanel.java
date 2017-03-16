@@ -18,7 +18,7 @@ import memorization.GameStateListener;
 import memorization.SpeedNumbers;
 import memorization.SaveInstanceStateListener;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class NavigationPanel extends LinearLayout implements GameStateListener, SpeedNumbers.Navigation.NavigationView, SaveInstanceStateListener {

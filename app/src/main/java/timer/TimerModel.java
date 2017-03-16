@@ -1,6 +1,6 @@
 package timer;
 
-import speednumbers.mastersofmemory.challenges.domain.model.Setting;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 
 public class TimerModel {
 

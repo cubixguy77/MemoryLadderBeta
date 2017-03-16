@@ -9,7 +9,7 @@ import memorization.SpeedNumbers;
 import memorization.NumberMemoryModel;
 import recall.RecallData;
 import review.Result;
-import speednumbers.mastersofmemory.challenges.domain.model.Challenge;
+import selectChallenge.viewChallengeCard.Challenge;
 
 class NumberGridGlobalStateChangePresenter implements GameStateListener {
 
