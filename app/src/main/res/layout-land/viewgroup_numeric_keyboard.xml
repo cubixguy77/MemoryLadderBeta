@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<keyboard.NumericKeyboardView
+<playChallenge.writtenNumbersChallenge.recall.keyboard.NumericKeyboardView
     android:layout_width="match_parent"
     android:layout_height="@dimen/numeric_keyboard.layout_height"
     android:visibility="gone"
@@ -148,4 +148,4 @@
                 android:id="@+id/key_0" />
         </TableRow>
 
-</keyboard.NumericKeyboardView>
+</playChallenge.writtenNumbersChallenge.recall.keyboard.NumericKeyboardView>

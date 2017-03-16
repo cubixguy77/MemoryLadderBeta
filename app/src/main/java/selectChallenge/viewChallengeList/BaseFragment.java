@@ -3,7 +3,7 @@ package selectChallenge.viewChallengeList;
 import android.app.Fragment;
 import android.widget.Toast;
 
-import injection.HasComponent;
+import framework.injection.HasComponent;
 
 /**
  * Base {@link Fragment} class for every fragment in this application.

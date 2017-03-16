@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<review.ScorePanel
+<playChallenge.writtenNumbersChallenge.review.ScorePanel
     android:layout_width="match_parent"
     android:layout_height="@dimen/score_panel.height"
     android:visibility="gone"
@@ -105,4 +105,4 @@
 
     </LinearLayout>
 
-</review.ScorePanel>
+</playChallenge.writtenNumbersChallenge.review.ScorePanel>

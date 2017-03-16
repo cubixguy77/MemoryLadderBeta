@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatDelegate;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 
-import injection.components.ApplicationComponent;
-import injection.components.DaggerApplicationComponent;
-import injection.modules.ApplicationModule;
+import framework.injection.components.ApplicationComponent;
+import framework.injection.components.DaggerApplicationComponent;
+import framework.injection.modules.ApplicationModule;
 
 public class MyApplication extends Application {
 

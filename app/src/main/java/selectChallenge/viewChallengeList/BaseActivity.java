@@ -7,12 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
-import injection.components.ChallengeListComponent;
-import repository.IRepository;
+import framework.injection.components.ChallengeListComponent;
+import database.repository.IRepository;
 import selectChallenge.MyApplication;
-import injection.HasComponent;
-import injection.components.ApplicationComponent;
-import injection.modules.ActivityModule;
+import framework.injection.HasComponent;
+import framework.injection.components.ApplicationComponent;
+import framework.injection.modules.ActivityModule;
 
 /**
  * Base {@link Activity} class for every Activity in this application.

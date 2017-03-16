@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challengelist.challenge.settings.memorizationtimer;
+package selectChallenge.viewChallengeCard.challengeSettings.memorizationtimer;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,9 +11,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
-import speednumbers.mastersofmemory.challengelist.challenge.settings.BaseSettingView;
+import selectChallenge.viewChallengeCard.challengeSettings.BaseSettingView;
 import speednumbers.mastersofmemory.com.presentation.R;
-import timer.TimeFormat;
+import playChallenge.timer.TimeFormat;
 
 
 public class MemTimerSettingView extends BaseSettingView {

@@ -19,10 +19,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import injection.components.ChallengeListComponent;
-import injection.components.DaggerChallengeListComponent;
-import injection.modules.ChallengeListModule;
-import memorization.NumberMemoryActivity;
+import framework.injection.components.ChallengeListComponent;
+import framework.injection.components.DaggerChallengeListComponent;
+import framework.injection.modules.ChallengeListModule;
+import playChallenge.writtenNumbersChallenge.memorization.NumberMemoryActivity;
 import selectChallenge.viewChallengeCard.Challenge;
 import selectChallenge.viewChallengeCard.NumberChallenge;
 import selectChallenge.addChallenge.IAddChallengeListener;

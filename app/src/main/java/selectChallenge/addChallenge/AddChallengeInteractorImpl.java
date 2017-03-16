@@ -2,12 +2,12 @@ package selectChallenge.addChallenge;
 
 import javax.inject.Inject;
 
-import executor.Executor;
-import executor.MainThread;
+import framework.executor.Executor;
+import framework.executor.MainThread;
 import selectChallenge.viewChallengeCard.ChallengeFactory;
 import selectChallenge.viewChallengeCard.Challenge;
-import repository.IRepository;
-import interactors.base.AbstractInteractor;
+import database.repository.IRepository;
+import framework.interactors.AbstractInteractor;
 
 public class AddChallengeInteractorImpl extends AbstractInteractor implements AddChallengeInteractor {
 

@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import selectChallenge.getChallengeList.GetChallengeListInteractor;
 import selectChallenge.viewChallengeCard.Challenge;
-import injection.PerActivity;
+import framework.injection.PerActivity;
 
 @PerActivity
 public class ChallengeListPresenter implements IChallengeListPresenter, GetChallengeListInteractor.Callback {

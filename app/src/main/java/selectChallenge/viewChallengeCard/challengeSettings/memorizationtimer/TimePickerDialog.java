@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challengelist.challenge.settings.memorizationtimer;
+package selectChallenge.viewChallengeCard.challengeSettings.memorizationtimer;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
-import timer.TimeFormat;
+import playChallenge.timer.TimeFormat;
 
 class TimePickerDialog extends AlertDialog.Builder implements OnClickListener {
 

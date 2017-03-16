@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import injection.components.ChallengeListComponent;
+import framework.injection.components.ChallengeListComponent;
 import selectChallenge.addChallenge.AddChallengeInteractor;
 import selectChallenge.deleteChallenge.DeleteChallengeInteractor;
 import selectChallenge.viewChallengeCard.Challenge;

@@ -1,7 +1,7 @@
 package selectChallenge.deleteChallenge;
 
 import selectChallenge.viewChallengeCard.Challenge;
-import interactors.base.Interactor;
+import framework.interactors.Interactor;
 
 public interface DeleteChallengeInteractor extends Interactor {
     void deleteChallenge(Challenge challenge);

@@ -1,6 +1,6 @@
 package selectChallenge.addChallenge;
 
-import interactors.base.Interactor;
+import framework.interactors.Interactor;
 import selectChallenge.viewChallengeCard.Challenge;
 
 public interface AddChallengeInteractor extends Interactor {

@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource;
+package selectChallenge.viewChallengeCard.challengeSettings.digitsource;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import speednumbers.mastersofmemory.challengelist.challenge.settings.BaseSettingView;
+import selectChallenge.viewChallengeCard.challengeSettings.BaseSettingView;
 import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 import speednumbers.mastersofmemory.com.presentation.R;
 

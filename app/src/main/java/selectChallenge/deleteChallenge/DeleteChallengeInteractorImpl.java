@@ -2,11 +2,11 @@ package selectChallenge.deleteChallenge;
 
 import javax.inject.Inject;
 
-import executor.Executor;
-import executor.MainThread;
-import interactors.base.AbstractInteractor;
+import framework.executor.Executor;
+import framework.executor.MainThread;
+import framework.interactors.AbstractInteractor;
 import selectChallenge.viewChallengeCard.Challenge;
-import repository.IRepository;
+import database.repository.IRepository;
 
 public class DeleteChallengeInteractorImpl extends AbstractInteractor implements DeleteChallengeInteractor {
 

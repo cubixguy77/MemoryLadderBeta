@@ -47,28 +47,31 @@
                 />
         </LinearLayout>
 
-        <speednumbers.mastersofmemory.challengelist.challenge.settings.digitgrouping.DigitsPerGroupView
+        <selectChallenge.viewChallengeCard.challengeSettings.digitgrouping.DigitsPerGroupView
             android:id="@+id/digitGroupingContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"></speednumbers.mastersofmemory.challengelist.challenge.settings.digitgrouping.DigitsPerGroupView>
+            tools:visibility="visible">
+        </selectChallenge.viewChallengeCard.challengeSettings.digitgrouping.DigitsPerGroupView>
 
-        <speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource.DigitSourceView
+        <selectChallenge.viewChallengeCard.challengeSettings.digitsource.DigitSourceView
             android:id="@+id/digitSourceContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            tools:visibility="visible"></speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource.DigitSourceView>
+            tools:visibility="visible">
+        </selectChallenge.viewChallengeCard.challengeSettings.digitsource.DigitSourceView>
 
-        <speednumbers.mastersofmemory.challengelist.challenge.settings.memorizationtimer.MemTimerSettingView
+        <selectChallenge.viewChallengeCard.challengeSettings.memorizationtimer.MemTimerSettingView
             android:id="@+id/memorizationTimerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            tools:visibility="visible"></speednumbers.mastersofmemory.challengelist.challenge.settings.memorizationtimer.MemTimerSettingView>
+            tools:visibility="visible">
+        </selectChallenge.viewChallengeCard.challengeSettings.memorizationtimer.MemTimerSettingView>
 
         <LinearLayout
             android:id="@+id/challengeCardBottomActionContainer"

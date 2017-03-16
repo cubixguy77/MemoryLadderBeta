@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challengelist.challenge.settings;
+package selectChallenge.viewChallengeCard.challengeSettings;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,10 +7,11 @@ import android.widget.RelativeLayout;
 import javax.inject.Inject;
 
 import selectChallenge.MyApplication;
-import injection.components.SettingComponent;
-import injection.modules.SettingModule;
+import framework.injection.components.SettingComponent;
+import framework.injection.modules.SettingModule;
+import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 import speednumbers.mastersofmemory.challengelist.challenge.settings.update.UpdateSettingInteractor;
-import injection.components.DaggerSettingComponent;
+import framework.injection.components.DaggerSettingComponent;
 
 public abstract class BaseSettingView extends RelativeLayout {
 

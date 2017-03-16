@@ -7,7 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <timer.TimerView
+    <playChallenge.timer.TimerView
         android:id="@+id/timerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         />
 
 
-    <gridAdapter.NumberGridView
+    <playChallenge.writtenNumbersChallenge.numberGrid.NumberGridView
         android:id="@+id/numberGrid"
         android:layout_width="match_parent"
         android:layout_height="0dp"

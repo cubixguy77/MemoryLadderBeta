@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="memorization.NumberMemoryActivity"
+            android:name="playChallenge.writtenNumbersChallenge.memorization.NumberMemoryActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:parentActivityName="selectChallenge.viewChallengeList.ChallengeListActivity">
         </activity>

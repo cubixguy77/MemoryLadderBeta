@@ -3,7 +3,7 @@ package selectChallenge.getChallengeList;
 import java.util.List;
 
 import selectChallenge.viewChallengeCard.Challenge;
-import interactors.base.Interactor;
+import framework.interactors.Interactor;
 
 
 public interface GetChallengeListInteractor extends Interactor {

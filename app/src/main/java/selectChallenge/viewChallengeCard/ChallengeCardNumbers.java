@@ -12,10 +12,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import selectChallenge.deleteChallenge.IDeleteChallengeListener;
-import speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource.DigitSource;
-import speednumbers.mastersofmemory.challengelist.challenge.settings.digitgrouping.DigitsPerGroupView;
-import speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource.DigitSourceView;
-import speednumbers.mastersofmemory.challengelist.challenge.settings.memorizationtimer.MemTimerSettingView;
+import selectChallenge.viewChallengeCard.challengeSettings.digitsource.DigitSource;
+import selectChallenge.viewChallengeCard.challengeSettings.digitgrouping.DigitsPerGroupView;
+import selectChallenge.viewChallengeCard.challengeSettings.digitsource.DigitSourceView;
+import selectChallenge.viewChallengeCard.challengeSettings.memorizationtimer.MemTimerSettingView;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCard.View {

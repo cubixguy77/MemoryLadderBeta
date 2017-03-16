@@ -1,4 +1,4 @@
-package speednumbers.mastersofmemory.challengelist.challenge.settings.digitsource;
+package selectChallenge.viewChallengeCard.challengeSettings.digitsource;
 
 public enum DigitSource {
     RANDOM,
