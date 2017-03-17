@@ -4,12 +4,10 @@ class Timer extends CountDownTimerPausable implements TimerActionListener {
 
     private TimerUpdateListener listener;
     private long secondsRemaining;
-    private TimerModel model;
 
     Timer(TimerModel model, TimerUpdateListener timerListener)
     {
         super(model.timeLimited ? model.timeLimitInSeconds * 1000 : 100000000L, 1);
-        this.model = model;
         this.secondsRemaining = model.timeLimitInSeconds;
         this.listener = timerListener;
     }
@@ -37,6 +35,7 @@ class Timer extends CountDownTimerPausable implements TimerActionListener {
     @Override
     public void onTick(long millisUntilFinished)
     {
+        this.secondsRemaining = millisUntilFinished / 1000;
         listener.onTimeUpdate(millisUntilFinished);
     }
 

@@ -1,8 +1,6 @@
 package playChallenge.timer;
 
-
-public interface TimerActionListener {
-
+interface TimerActionListener {
     void startTimer();
     void pauseTimer();
     void cancelTimer();
