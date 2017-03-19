@@ -16,4 +16,10 @@
         app:showAsAction="never"
         />
 
+    <item
+        android:id="@+id/action_rate_app"
+        android:title="@string/rate_this_app"
+        app:showAsAction="never"
+        />
+
 </menu>
