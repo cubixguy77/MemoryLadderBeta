@@ -84,7 +84,8 @@ public class MemTimerSettingView extends BaseSettingView {
         return this.setting != null && this.setting.getValue() > 0;
     }
 
-    private void showDialog() {
+    @Override
+    public void showDialog() {
         TimePickerDialog dialog = new TimePickerDialog(context, this.setting.getValue(), getResources().getString(R.string.memorizationTime));
         dialog.setDialogResult(new TimePickerDialog.OnMyDialogResultTime() {
             public void finish(int result) {
@@ -92,14 +93,6 @@ public class MemTimerSettingView extends BaseSettingView {
             }
         });
         dialog.show();
-    }
-
-    @OnClick(R.id.memorizationTimerTitle) void onTitleClick() {
-        showDialog();
-    }
-
-    @OnClick(R.id.memorizationTimeText) void onSettingValueClick() {
-        showDialog();
     }
 
     @OnClick(R.id.memorizationTimerSwitch) void onToggleTimer() {

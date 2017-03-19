@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import selectChallenge.viewChallengeCard.challengeSettings.BaseSettingView;
 import speednumbers.mastersofmemory.challengelist.challenge.settings.Setting;
 import speednumbers.mastersofmemory.com.presentation.R;
@@ -73,7 +72,8 @@ public class DigitSourceView extends BaseSettingView {
         }
     }
 
-    private void showDialog() {
+    @Override
+    public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(getResources().getString(R.string.digit_source));
         final CharSequence[] items = {
@@ -88,9 +88,4 @@ public class DigitSourceView extends BaseSettingView {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    @OnClick(R.id.digitSourceValue) void onSelectSettingValue() {
-        showDialog();
-    }
-    @OnClick(R.id.digitSourceTitle) void onSelectSettingTitle() { showDialog(); }
 }

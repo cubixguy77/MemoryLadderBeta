@@ -2,6 +2,7 @@ package selectChallenge.viewChallengeCard.challengeSettings;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import javax.inject.Inject;
@@ -38,7 +39,16 @@ public abstract class BaseSettingView extends RelativeLayout {
                 .settingModule(new SettingModule())
                 .build();
         c.inject(this);
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseSettingView.this.showDialog();
+            }
+        });
     }
+
+    public abstract void showDialog();
 
     public void updateSettingValue(Setting setting) {
         updateSettingInteractor.updateSetting(setting);
