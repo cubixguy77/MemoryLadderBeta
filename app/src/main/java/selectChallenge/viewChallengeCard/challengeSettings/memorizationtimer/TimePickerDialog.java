@@ -121,6 +121,7 @@ class TimePickerDialog extends AlertDialog.Builder implements OnClickListener {
                 }
                 else {
                     timePickerLayout.setVisibility(View.VISIBLE);
+					refreshTimeDisplay();
                 }
             }
         });
