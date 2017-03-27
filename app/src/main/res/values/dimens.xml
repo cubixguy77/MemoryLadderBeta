@@ -26,13 +26,13 @@
 
     <dimen name="memory_timer_dialog.arrow.size">50dp</dimen>
     <dimen name="memory_timer.column_space">20dp</dimen>
-    <dimen name="memory_timer_dialog.margin.top">16dp</dimen>
+    <dimen name="memory_timer_dialog.margin.top">12dp</dimen>
     <dimen name="memory_timer_dialog.margin.bottom">16dp</dimen>
-    <dimen name="memory_timer_dialog.margin.left">30dp</dimen>
+    <dimen name="memory_timer_dialog.margin.left">18dp</dimen>
     <dimen name="memory_timer_dialog.numeric_text.size">50sp</dimen>
     <dimen name="memory_timer_dialog.numeric_text.margin">-10dp</dimen>
     <dimen name="memory_timer_dialog.colon.adjust">24dp</dimen>
-    <dimen name="memory_timer_dialog.label_text.size">18dp</dimen>
+    <dimen name="memory_timer_dialog.label_text.size">18sp</dimen>
 
     <dimen name="score_panel.height">100dp</dimen>
     <dimen name="score_panel.top_label.text.size">20sp</dimen>

@@ -7,7 +7,10 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import speednumbers.mastersofmemory.com.presentation.R;
@@ -17,7 +20,11 @@ class TimePickerDialog extends AlertDialog.Builder implements OnClickListener {
 
 	private int initialNumSeconds;
 	private int numSeconds;
-	
+
+	private CheckBox noLimitCheckbox;
+
+    private ViewGroup timePickerLayout;
+
 	private TextView Hours;
 	private TextView Minutes;
 	private TextView Seconds;
@@ -46,7 +53,7 @@ class TimePickerDialog extends AlertDialog.Builder implements OnClickListener {
 		setCancelable(true);
 
 		this.initialNumSeconds = numSeconds;
-		this.numSeconds = numSeconds;
+		this.numSeconds = numSeconds == -1 ? 0 : numSeconds;
 
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 		View dialoglayout = inflater.inflate(R.layout.dialog_time_picker, null);
@@ -97,9 +104,29 @@ class TimePickerDialog extends AlertDialog.Builder implements OnClickListener {
 		Seconds = (TextView) layout.findViewById(R.id.Seconds);
 		
 		refreshTimeDisplay();
+
+        if (numSeconds == 0) {
+            noLimitCheckbox.setChecked(true);
+        }
 	}
 	
 	private void initButtons(View layout) {
+        noLimitCheckbox = (CheckBox) layout.findViewById(R.id.noLimitCheckbox);
+        noLimitCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    timePickerLayout.setVisibility(View.GONE);
+                    numSeconds = 0; // 0 seconds signifies no time limit
+                }
+                else {
+                    timePickerLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        timePickerLayout = (ViewGroup) layout.findViewById(R.id.timePickerLayout);
+
 		HoursUp = (Button) layout.findViewById(R.id.HoursUp);
 		HoursUp.setOnClickListener(this);
 		HoursDown = (Button) layout.findViewById(R.id.HoursDown);

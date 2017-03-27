@@ -12,6 +12,7 @@ import android.os.CountDownTimer;
 abstract class CountDownTimerPausable {
     private long countDownInterval = 0;
     private long millisRemaining =  0;
+    private long originalTimeLimitInMillis = 0;
 
     private CountDownTimer countDownTimer = null;
 
@@ -20,7 +21,8 @@ abstract class CountDownTimerPausable {
     CountDownTimerPausable(long millisInFuture, long countDownInterval) {
         super();
         this.countDownInterval = countDownInterval;
-        this.millisRemaining = millisInFuture;
+        this.millisRemaining = originalTimeLimitInMillis = millisInFuture;
+
     }
 
     private void createCountDownTimer(){
@@ -61,6 +63,10 @@ abstract class CountDownTimerPausable {
             countDownTimer.cancel();
         }
         this.millisRemaining = 0;
+    }
+
+    long getOriginalTimeLimitInMillis() {
+        return originalTimeLimitInMillis;
     }
 
     /**

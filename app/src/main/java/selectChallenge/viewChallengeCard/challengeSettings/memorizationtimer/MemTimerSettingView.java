@@ -23,6 +23,9 @@ public class MemTimerSettingView extends BaseSettingView {
     private Context context;
     private Setting setting;
 
+    public final static int UNLIMITED = 0;
+    public final static int DISABLED = -1;
+
     public MemTimerSettingView(Context context) {
         super(context);
         this.setting = new Setting(1,1,3,"Test1",1,true);
@@ -65,7 +68,13 @@ public class MemTimerSettingView extends BaseSettingView {
             memorizationTimerSwitch.setChecked(false);
         }
         else {
-            memorizationTimeText.setText(TimeFormat.formatIntoEnglishTime(value, getResources()));
+            if (value == UNLIMITED) {
+                memorizationTimeText.setText(getResources().getString(R.string.no_time_limit));
+            }
+            else {
+                memorizationTimeText.setText(TimeFormat.formatIntoEnglishTime(value, getResources()));
+            }
+
             memorizationTimerSwitch.setChecked(true);
         }
     }
@@ -81,7 +90,7 @@ public class MemTimerSettingView extends BaseSettingView {
     }
 
     private boolean isTimerEnabled() {
-        return this.setting != null && this.setting.getValue() > 0;
+        return this.setting != null && this.setting.getValue() >= 0;
     }
 
     @Override
@@ -97,7 +106,7 @@ public class MemTimerSettingView extends BaseSettingView {
 
     @OnClick(R.id.memorizationTimerSwitch) void onToggleTimer() {
         if (isTimerEnabled())
-            onSelectValue(0);
+            onSelectValue(DISABLED);
         else
             showDialog();
     }

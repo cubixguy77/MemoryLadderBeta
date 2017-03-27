@@ -4,14 +4,14 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+import playChallenge.timer.ITimer;
 import playChallenge.writtenNumbersChallenge.memorization.GridData;
 import playChallenge.writtenNumbersChallenge.memorization.SpeedNumbers;
 import playChallenge.writtenNumbersChallenge.recall.RecallData;
 import playChallenge.writtenNumbersChallenge.review.Result;
 import selectChallenge.viewChallengeCard.Challenge;
-import playChallenge.timer.TimerPlayPauseListener;
 
-public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavigationEvents, SpeedNumbers.Navigation.NavigationView, SpeedNumbers.Keyboard.UserKeyboardActions, SaveInstanceStateListener, TimerPlayPauseListener {
+public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavigationEvents, SpeedNumbers.Navigation.NavigationView, SpeedNumbers.Keyboard.UserKeyboardActions, SaveInstanceStateListener, ITimer.TimerPlayPauseListener {
 
     private static Bus instance = null;
     private ArrayList<Object> observers;
@@ -255,8 +255,8 @@ public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavig
     @Override
     public void startTimer() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof TimerPlayPauseListener) {
-                ((TimerPlayPauseListener) observer).startTimer();
+            if (observer != null && observer instanceof ITimer.TimerPlayPauseListener) {
+                ((ITimer.TimerPlayPauseListener) observer).startTimer();
             }
         }
     }
@@ -264,17 +264,17 @@ public class Bus implements GameStateListener, SpeedNumbers.Navigation.UserNavig
     @Override
     public void pauseTimer() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof TimerPlayPauseListener) {
-                ((TimerPlayPauseListener) observer).pauseTimer();
+            if (observer != null && observer instanceof ITimer.TimerPlayPauseListener) {
+                ((ITimer.TimerPlayPauseListener) observer).pauseTimer();
             }
         }
     }
 
     @Override
-    public void stopTimer() {
+    public void cancelTimer() {
         for (Object observer : observers) {
-            if (observer != null && observer instanceof TimerPlayPauseListener) {
-                ((TimerPlayPauseListener) observer).stopTimer();
+            if (observer != null && observer instanceof ITimer.TimerPlayPauseListener) {
+                ((ITimer.TimerPlayPauseListener) observer).cancelTimer();
             }
         }
     }

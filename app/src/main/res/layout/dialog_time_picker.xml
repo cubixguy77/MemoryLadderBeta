@@ -1,179 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    android:id="@+id/linearLayout2"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    <CheckBox
+        android:id="@+id/noLimitCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
-        android:layout_marginBottom="@dimen/memory_timer_dialog.margin.bottom"
         android:layout_marginLeft="@dimen/memory_timer_dialog.margin.left"
         android:layout_marginStart="@dimen/memory_timer_dialog.margin.left"
-        android:orientation="vertical"
-        >
-
-        <Button
-            android:id="@+id/HoursUp"
-            android:layout_height="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_width="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_arrow_up" />
-
-        <TextView
-            android:id="@+id/Hours"
-            android:layout_height="wrap_content"
-            android:layout_width="70dp"
-            android:layout_marginTop="@dimen/memory_timer_dialog.numeric_text.margin"
-            android:layout_marginBottom="@dimen/memory_timer_dialog.numeric_text.margin"
-            android:gravity="center"
-            android:textColor="@color/colorPrimaryText"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="@dimen/memory_timer_dialog.numeric_text.size"
-            android:text="00"
-            />
-
-        <Button
-            android:id="@+id/HoursDown"
-            android:layout_height="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_width="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_arrow_down"
-            />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorSecondaryText"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/memory_timer_dialog.label_text.size"
-            android:text="@string/hours"
-            />
-    </LinearLayout>
-
-    <TextView
-        android:layout_height="match_parent"
-        android:layout_width="@dimen/memory_timer.column_space"
-        android:paddingBottom="@dimen/memory_timer_dialog.colon.adjust"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=":"
+        android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/memory_timer_dialog.label_text.size"
+        android:text="@string/no_time_limit"
         />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_height="fill_parent"
+        android:id="@+id/timePickerLayout"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         >
 
-        <Button
-            android:id="@+id/MinutesUp"
-            android:layout_height="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_width="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_arrow_up" />
-
-        <TextView
-            android:id="@+id/Minutes"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/memory_timer_dialog.numeric_text.margin"
-            android:layout_marginBottom="@dimen/memory_timer_dialog.numeric_text.margin"
-            android:gravity="center"
-            android:textColor="@color/colorPrimaryText"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="@dimen/memory_timer_dialog.numeric_text.size"
-            android:text="00"
-            />
-
-        <Button
-            android:id="@+id/MinutesDown"
-            android:layout_height="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_width="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_arrow_down"
-            />
-
-        <TextView
-            android:id="@+id/TextView03"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorSecondaryText"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/memory_timer_dialog.label_text.size"
-            android:text="@string/minutes"
-            />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:paddingLeft="-2dp"
+            android:layout_marginLeft="@dimen/memory_timer_dialog.margin.left"
+            android:layout_marginStart="@dimen/memory_timer_dialog.margin.left"
+            android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
+            android:layout_marginBottom="@dimen/memory_timer_dialog.margin.bottom"
+            android:orientation="vertical"
+            >
 
-    <TextView
-        android:layout_width="@dimen/memory_timer.column_space"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:paddingBottom="@dimen/memory_timer_dialog.colon.adjust"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"
-        android:text=":"
-        />
+            <Button
+                android:id="@+id/HoursUp"
+                android:layout_height="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_width="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_arrow_up" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
-        android:orientation="vertical"
-        >
+            <TextView
+                android:id="@+id/Hours"
+                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_marginTop="@dimen/memory_timer_dialog.numeric_text.margin"
+                android:layout_marginBottom="@dimen/memory_timer_dialog.numeric_text.margin"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryText"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/memory_timer_dialog.numeric_text.size"
+                android:text="00"
+                />
 
-        <Button
-            android:id="@+id/SecondsUp"
-            android:layout_height="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_width="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_arrow_up" />
+            <Button
+                android:id="@+id/HoursDown"
+                android:layout_height="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_width="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_arrow_down"
+                />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorSecondaryText"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/memory_timer_dialog.label_text.size"
+                android:text="@string/hours"
+                />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/Seconds"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/memory_timer_dialog.numeric_text.margin"
-            android:layout_marginBottom="@dimen/memory_timer_dialog.numeric_text.margin"
+            android:layout_height="match_parent"
+            android:layout_width="@dimen/memory_timer.column_space"
+            android:paddingBottom="@dimen/memory_timer_dialog.colon.adjust"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:textSize="@dimen/memory_timer_dialog.numeric_text.size"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorPrimaryText"
-            android:text="00"
+            android:text=":"
             />
 
-        <Button
-            android:id="@+id/SecondsDown"
-            android:layout_height="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_width="@dimen/memory_timer_dialog.arrow.size"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/selector_arrow_down"
-            />
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/MinutesUp"
+                android:layout_height="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_width="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_arrow_up" />
+
+            <TextView
+                android:id="@+id/Minutes"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/memory_timer_dialog.numeric_text.margin"
+                android:layout_marginBottom="@dimen/memory_timer_dialog.numeric_text.margin"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryText"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/memory_timer_dialog.numeric_text.size"
+                android:text="00"
+                />
+
+            <Button
+                android:id="@+id/MinutesDown"
+                android:layout_height="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_width="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_arrow_down"
+                />
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorSecondaryText"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/memory_timer_dialog.label_text.size"
+                android:text="@string/minutes"
+                />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/TextView04"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/memory_timer_dialog.label_text.size"
-            android:text="@string/seconds"
+            android:layout_width="@dimen/memory_timer.column_space"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/memory_timer_dialog.colon.adjust"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:gravity="center"
+            android:text=":"
             />
-    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/memory_timer_dialog.margin.top"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/SecondsUp"
+                android:layout_height="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_width="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_arrow_up" />
+
+            <TextView
+                android:id="@+id/Seconds"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/memory_timer_dialog.numeric_text.margin"
+                android:layout_marginBottom="@dimen/memory_timer_dialog.numeric_text.margin"
+                android:gravity="center"
+                android:textSize="@dimen/memory_timer_dialog.numeric_text.size"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorPrimaryText"
+                android:text="00"
+                />
+
+            <Button
+                android:id="@+id/SecondsDown"
+                android:layout_height="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_width="@dimen/memory_timer_dialog.arrow.size"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_arrow_down"
+                />
+
+            <TextView
+                android:id="@+id/TextView04"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/memory_timer_dialog.label_text.size"
+                android:text="@string/seconds"
+                />
+        </LinearLayout>
 
 </LinearLayout>
 
+
+</LinearLayout>
