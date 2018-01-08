@@ -55,6 +55,16 @@
             android:layout_weight="1">
 
             <Button
+                android:text="0"
+                android:textSize="@dimen/numeric_keyboard.textSize"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@color/highlightRecallDigits"
+                android:id="@+id/key_0" />
+
+            <Button
                 android:text="1"
                 android:textSize="@dimen/numeric_keyboard.textSize"
                 android:layout_width="0dp"
@@ -90,6 +100,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_4" />
+
             <Button
                 android:text="5"
                 android:textSize="@dimen/numeric_keyboard.textSize"
@@ -99,7 +110,6 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_5" />
-
 
             <Button
                 android:text="6"
@@ -137,15 +147,6 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:background="@color/highlightRecallDigits"
                 android:id="@+id/key_9" />
-            <Button
-                android:text="0"
-                android:textSize="@dimen/numeric_keyboard.textSize"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:foreground="?attr/selectableItemBackground"
-                android:background="@color/highlightRecallDigits"
-                android:id="@+id/key_0" />
         </TableRow>
 
 </playChallenge.writtenNumbersChallenge.recall.keyboard.NumericKeyboardView>

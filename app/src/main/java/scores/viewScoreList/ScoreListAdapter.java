@@ -40,9 +40,9 @@ class ScoreListAdapter extends ArrayAdapter<Score>
         Score p = getItem(position);
 
         if (p != null) {
-            TextView rank = (TextView) v.findViewById(R.id.rank);
-            TextView score = (TextView) v.findViewById(R.id.score);
-            TextView time = (TextView) v.findViewById(R.id.time);
+            TextView rank = v.findViewById(R.id.rank);
+            TextView score = v.findViewById(R.id.score);
+            TextView time = v.findViewById(R.id.time);
 
             /* Create header row */
             if (position == 0) {
@@ -70,7 +70,7 @@ class ScoreListAdapter extends ArrayAdapter<Score>
                 }
 
                 if (score != null) {
-                    score.setText(String.format("%s digits", p.getScore()));
+                    score.setText(context.getResources().getString(R.string.scoreList_numDigits, p.getScore()));
                     score.setTypeface(null, Typeface.NORMAL);
                 }
 

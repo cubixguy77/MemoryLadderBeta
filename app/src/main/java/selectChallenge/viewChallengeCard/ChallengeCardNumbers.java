@@ -66,10 +66,15 @@ public class ChallengeCardNumbers extends ChallengeCard implements IChallengeCar
         onContract();
 
         DigitSource digitSource = DigitSource.values()[NumberChallenge.getDigitSourceSetting(challenge).getValue()];
-        if (digitSource == DigitSource.RANDOM)
+        if (digitSource == DigitSource.DECIMAL) {
             challengeText.setText(getResources().getString(R.string.challengeList_numDigits, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
-        else if (digitSource == DigitSource.PI)
+        }
+        else if (digitSource == DigitSource.BINARY) {
+            challengeText.setText(getResources().getString(R.string.challengeList_numDigits_binary, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        }
+        else if (digitSource == DigitSource.PI) {
             challengeText.setText(getResources().getString(R.string.challengeList_numDigits_pi, NumberChallenge.getNumDigitsSetting(challenge).getValue()));
+        }
 
         digitsPerGroupView.setModel(NumberChallenge.getDigitsPerGroupSetting(challenge));
         digitSourceView.setModel(NumberChallenge.getDigitSourceSetting(challenge));

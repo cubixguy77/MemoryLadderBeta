@@ -37,11 +37,14 @@ public class GridData implements Serializable {
     }
 
     public void loadData() {
-        if (digitSource == DigitSource.RANDOM) {
+        if (digitSource == DigitSource.DECIMAL) {
             data = MemoryDataSetFactory.getDecimalNumberData(numDigits);
         }
         else if (digitSource == DigitSource.PI) {
             data = MemoryDataSetFactory.getPiData(numDigits);
+        }
+        else if (digitSource == DigitSource.BINARY) {
+            data = MemoryDataSetFactory.getBinaryData(numDigits);
         }
     }
 

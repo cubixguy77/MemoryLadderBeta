@@ -25,13 +25,11 @@ public class DigitSourceView extends BaseSettingView {
         this.setting = new Setting(1,1,0,"Test1",1,true);
         initializeViews(context);
     }
-
     public DigitSourceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setting = new Setting(1,1,0,"Test2",1,true);
         initializeViews(context);
     }
-
     public DigitSourceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.setting = new Setting(1,1,0,"Test3",1,true);
@@ -58,7 +56,8 @@ public class DigitSourceView extends BaseSettingView {
 
     private void displayValue(int value) {
         switch (DigitSource.values()[value]) {
-            case RANDOM: digitSourceValueText.setText(getResources().getString(R.string.random)); break;
+            case DECIMAL: digitSourceValueText.setText(getResources().getString(R.string.decimal)); break;
+            case BINARY: digitSourceValueText.setText(getResources().getString(R.string.binary)); break;
             case PI: digitSourceValueText.setText(getResources().getString(R.string.pi)); break;
             default: break;
         }
@@ -77,8 +76,9 @@ public class DigitSourceView extends BaseSettingView {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(getResources().getString(R.string.digit_source));
         final CharSequence[] items = {
-                getResources().getString(R.string.random),
-                getResources().getString(R.string.pi)
+                getResources().getString(R.string.decimal),
+                getResources().getString(R.string.pi),
+                getResources().getString(R.string.binary)
         };
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int selectionIndex) {

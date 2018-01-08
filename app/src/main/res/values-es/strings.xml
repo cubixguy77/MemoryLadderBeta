@@ -18,6 +18,9 @@
     <string name="challengeList_numDigits_pi">%d Dígitos de Pi</string>
     <string name="digit_source">Banco de Cifras</string>
     <string name="pi">π (pi)</string>
-    <string name="random">Números Aleatorios</string>
+    <string name="decimal">Decimal</string>
     <string name="no_time_limit">Sin Límites</string>
+    <string name="challengeList_numDigits_binary">%d Dígitos Binarios</string>
+    <string name="binary">Binario</string>
+    <string name="scoreList.numDigits">%s Dígitos</string>
 </resources>

@@ -40,6 +40,17 @@ class MemoryDataSetFactory {
         return data;
     }
 
+    static char[] getBinaryData(int numDigits) {
+        char[] data = new char[numDigits];
+        Random rand = new Random();
+
+        for (int i=0; i<numDigits; i++) {
+            data[i] = Character.forDigit(rand.nextInt(2), 10);
+        }
+
+        return data;
+    }
+
     @Nullable
     private static String getStringFromRawResourse(int rawRes, int numCharsToTake) {
 

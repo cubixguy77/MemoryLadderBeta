@@ -4,10 +4,14 @@
 
     <string name="challengeList.numDigits">%s Digits</string>
     <string name="challengeList_numDigits_pi">%d Digits of Pi</string>
+    <string name="challengeList_numDigits_binary">%d Binary Digits</string>
 
     <string name="scoreList.Rank">Rank</string>
     <string name="scoreList.Score">Score</string>
     <string name="scoreList.Time">Time</string>
+
+    <string name="scoreList.numDigits">%s Digits</string>
+
     <string name="tabLabel.MyScores">My Scores</string>
     <string name="tabLabel.Results">Results</string>
     <string name="add_challenge">Add Challenge</string>
@@ -37,10 +41,11 @@
     <string name="feedback.EmailSubjectText">Feedback for Memory Ladder</string>
     <string name="feedback.EmailMessageBodyText">It\'s a great app, but it really needs:</string>
     <string name="digit_source">Digit Source</string>
-    <string name="random">Random</string>
+    <string name="decimal">Decimal</string>
     <string name="pi">π (pi)</string>
     <string name="rate_this_app">Rate This App</string>
     <string name="no_time_limit">No Limit</string>
+    <string name="binary">Binary</string>
 
 
 </resources>
