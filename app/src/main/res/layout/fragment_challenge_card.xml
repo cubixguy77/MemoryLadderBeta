@@ -19,7 +19,7 @@
             android:layout_height="80dp"
             android:orientation="horizontal">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/challengeText"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
@@ -32,9 +32,12 @@
                 android:paddingLeft="8dp"
                 android:paddingStart="8dp"
                 android:scrollHorizontally="true"
-                android:textSize="@dimen/challenge_card.textSize"
                 android:textStyle="bold"
-                tools:text="100 Digits of pi" />
+                app:autoSizeTextType="uniform"
+                app:autoSizeMinTextSize="@dimen/challenge_card.textSize.small"
+                app:autoSizeMaxTextSize="@dimen/challenge_card.textSize.large"
+                app:autoSizeStepGranularity="2sp"
+                tools:text="100 Digitos Binarios" />
 
             <ImageView
                 android:id="@+id/expandContractButton"
