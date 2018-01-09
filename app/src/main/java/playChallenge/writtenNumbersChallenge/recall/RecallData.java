@@ -75,13 +75,9 @@ public class RecallData extends GridData {
 
         data[startIndex] = digit;
 
-        if (cursorStart+1 == maxDigits) { // Just entered last character of the group
-            if (numDigitsAtCell(position + 1) <= 0) {
-                /* Row Filled, do not advance cursor */
-            }
-            else {
-                Bus.getBus().onNextCell();
-            }
+        /* Just entered last character of the group */
+        if (cursorStart+1 == maxDigits) {
+            Bus.getBus().onNextCell();
         }
     }
 
