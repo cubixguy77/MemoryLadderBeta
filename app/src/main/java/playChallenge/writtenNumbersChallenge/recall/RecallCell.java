@@ -37,7 +37,7 @@ public class RecallCell extends android.support.v7.widget.AppCompatEditText {
         setFilters(new InputFilter[] {new InputFilter.LengthFilter(numDigitsPerCell)});
 
         setGravity(Gravity.CENTER);
-        setRawInputType(InputType.TYPE_CLASS_TEXT); // Disables keyboard
+        setRawInputType(InputType.TYPE_NULL); // Disables keyboard
         setTextIsSelectable(true);
         setSelectAllOnFocus(true);
 
