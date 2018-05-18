@@ -130,6 +130,7 @@ public class NumberMemoryActivity extends BaseActivityChallenge implements GameS
 
     /*
      * This method is called between onStart() and onPostCreate(Bundle).
+     * The views in the application subscribe to onLoad() and restore their state
      */
     @Override
     protected void onRestoreInstanceState(Bundle inState) {
