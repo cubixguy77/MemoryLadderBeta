@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     private static final int DATABASE_VERSION = 3;
 
     @Inject
-    DatabaseHelper() {
+    public DatabaseHelper() {
         super(MyApplication.getAppContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -305,6 +305,12 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
         return db.delete(ChallengeTableContract.ChallengeTable.TABLE_NAME, ChallengeTableContract.ChallengeTable.CHALLENGE_CHALLENGE_KEY + "=" + challenge.getChallengeKey(), null) > 0;
     }
 
+    public void deleteAllChallenges() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME, null, null);
+        db.delete(ChallengeTableContract.ChallengeTable.TABLE_NAME, null, null);
+    }
+
     private boolean deleteChallengeSettings(Challenge challenge) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(ChallengeSettingTableContract.ChallengeSettingTable.TABLE_NAME, ChallengeSettingTableContract.ChallengeSettingTable.CHALLENGE_SETTING_CHALLENGE_KEY + "=" + challenge.getChallengeKey(), null);
@@ -324,7 +330,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements DatabaseAPI {
     private Challenge insertChallenge(SQLiteDatabase db, Challenge challenge) {
         db.beginTransaction();
 
-        long challengeKey = -1;
+        long challengeKey;
         try {
             ContentValues values = new ContentValues();
             values.put(ChallengeTableContract.ChallengeTable.CHALLENGE_GAME_KEY, challenge.getGameKey());
