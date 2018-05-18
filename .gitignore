@@ -91,3 +91,4 @@ app/app-release.apk
 .gradle/3.2.1/taskArtifacts/taskArtifacts.lock
 .gradle/3.3/taskArtifacts/fileHashes.bin
 .gradle/3.3/
+app/
