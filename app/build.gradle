@@ -19,9 +19,18 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            useProguard false
+            buildConfigField "boolean", "RANDOMIZE_DATA", "false"
+        }
+
+        release {
             debuggable false
+            minifyEnabled true
+            useProguard true
+            buildConfigField "boolean", "RANDOMIZE_DATA", "true"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

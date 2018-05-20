@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 import selectChallenge.MyApplication;
+import speednumbers.mastersofmemory.com.presentation.BuildConfig;
 import speednumbers.mastersofmemory.com.presentation.R;
 
 class MemoryDataSetFactory {
@@ -18,8 +19,14 @@ class MemoryDataSetFactory {
         char[] data = new char[numDigits];
         Random rand = new Random();
 
-        for (int i=0; i<numDigits; i++) {
-            data[i] = Character.forDigit(rand.nextInt(10), 10);
+        if (BuildConfig.RANDOMIZE_DATA) {
+            for (int i = 0; i < numDigits; i++) {
+                data[i] = Character.forDigit(rand.nextInt(10), 10);
+            }
+        } else {
+            for (int i = 0; i < numDigits; i++) {
+                data[i] = (char) ('0' + (i % 10));
+            }
         }
 
         return data;
@@ -44,8 +51,14 @@ class MemoryDataSetFactory {
         char[] data = new char[numDigits];
         Random rand = new Random();
 
-        for (int i=0; i<numDigits; i++) {
-            data[i] = Character.forDigit(rand.nextInt(2), 10);
+        if (BuildConfig.RANDOMIZE_DATA) {
+            for (int i = 0; i < numDigits; i++) {
+                data[i] = Character.forDigit(rand.nextInt(2), 10);
+            }
+        } else {
+            for (int i = 0; i < numDigits; i++) {
+                data[i] = (char) ('0' + (i % 2));
+            }
         }
 
         return data;

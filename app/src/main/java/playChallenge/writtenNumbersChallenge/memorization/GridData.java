@@ -25,7 +25,7 @@ public class GridData implements Serializable {
         );
     }
 
-    private GridData(int numDigits, int numDigitsPerColumn, DigitSource digitSource)  {
+    public GridData(int numDigits, int numDigitsPerColumn, DigitSource digitSource)  {
         this.numDigits = numDigits;
         this.numDigitsPerColumn = numDigitsPerColumn;
         this.digitSource = digitSource;
